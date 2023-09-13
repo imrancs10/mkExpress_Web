@@ -1,0 +1,32 @@
+
+
+.loginlogo {
+    width: 15vw;
+}
+.login-container
+{
+    width: 100vw;
+    height: 100%;
+}
+@media only screen and (max-width: 600px) {
+    .login-container {
+        height: 100vh;
+    }
+
+    .loginlogo {
+        
+        width: 55vw;
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .login-container {
+        margin: 40px 0;
+    }
+}
+@media only screen and (max-width: 900px) {
+    .login-container {
+        margin: 40px 0 !important;
+    }
+}

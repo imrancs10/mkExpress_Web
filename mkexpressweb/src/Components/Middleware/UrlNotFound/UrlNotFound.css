@@ -1,0 +1,33 @@
+.unf{
+    display: flex;
+    flex-flow: column wrap;
+    place-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.unf .fa-face-sad-tear{
+    font-size: 10vw;
+    color: rgb(245, 119, 119);
+}
+
+.unf .nft{
+    text-transform: capitalize;
+    color: rgb(254, 185, 101);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.unf a{
+    text-decoration: none;
+    color: blue;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 800px) {
+    .unf .fa-face-sad-tear{
+        font-size: 30vw;
+    }
+}
