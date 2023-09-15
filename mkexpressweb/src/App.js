@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './Components/Common/Header';
 import ForgetPassword from './Components/Login/ForgetPassword';
 import Dashboard from './Components/Dashboard/Dashboard';
+import Customer from './Components/Customer/Customer';
+import Member from './Components/Member/Member';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -18,15 +20,17 @@ function App() {
   if (window.location.pathname === '/forgetpassword')
     return <ForgetPassword />
   if (!loginDetails.isAuthenticated)
-    return <Login setLoginDetails={setLoginDetails}/>
+    return <Login setLoginDetails={setLoginDetails} />
   return (
     <>
       <Router>
-        <Header loginDetails={loginDetails}/>
+        <Header loginDetails={loginDetails} />
         <div id='root-container'>
           <ErrorBoundary>
             <Routes>
-            <Route path='/' element={<Dashboard />} />
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/customer' element={<Customer />} />
+              <Route path='/members' element={<Member />} />
               <Route path='*' element={<UrlNotFound />} />
             </Routes>
           </ErrorBoundary>
