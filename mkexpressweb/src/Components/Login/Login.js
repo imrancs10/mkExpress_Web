@@ -5,6 +5,8 @@ import { Api } from '../../API/API';
 import { apiUrls } from '../../API/ApiUrl';
 import { validationMessage } from '../Utility/ValidationMessage';
 import ErrorLabel from '../Common/ErrorLabel';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../Utility/ConstantValues';
 
 export default function Login() {
     const modelTemplete = {
@@ -16,7 +18,7 @@ export default function Login() {
     const [errors, setErrors] = useState({});
     const textChangeHandler = (e) => {
         var { name, value } = e.target;
-        setModel(...model, [name] = value);
+        setModel({...model, [name]:value});
     }
     const validateForm = () => {
         var {userName,password}=model
@@ -36,9 +38,13 @@ export default function Login() {
     
         Api.Post(apiUrls.authController.getToken, model)
             .then(res => {
+                if(res.data.id>0)
+                {
+                    toast.success(toastMessage.saveSuccess);
+                }
 
             }).catch(err => {
-
+                toast.error(toastMessage.saveError);
             })
     }
     axios.interceptors.response.use(
@@ -60,8 +66,8 @@ export default function Login() {
     )
     return (
         <>
-            <div class="container login-container d-flex justify-content-center my-2" >
-                <div class="row justify-content-center" >
+            <div className="container login-container d-flex justify-content-center my-2" >
+                <div className="row justify-content-center" >
                     <div className='col-md-6 col-lg-6 col-xl-6 col-sm-9'>
                         <div className='card card-info'>
                             <div className='card-header text-center text-uppercase bold' style={{ fontWeight: '800' }}>Employee/User Login</div>
@@ -90,7 +96,7 @@ export default function Login() {
                                         </div>
                                     </div>
                                     <div className='col-12 mb-2'>
-                                        <button className='btn brn-sm btn-primary w-100' onClick={e => loginHandler(e)} >Login <i className="fa-brands fa-golang"></i> {isLoading && <i class="fa-solid fa-spinner fa-spin" style="color: #e22c9f;"></i>}</button>
+                                        <button className='btn brn-sm btn-primary w-100' onClick={e => loginHandler(e)} >Login <i className="fa-brands fa-golang"></i> {isLoading && <i className="fa-solid fa-spinner fa-spin" style={{color: '#e22c9f'}}></i>}</button>
                                     </div>
                                 </div>
                             </div>

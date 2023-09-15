@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios from 'axios'
 import axiosRetry from 'axios-retry';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 import jwt_decode from "jwt-decode";
+import { apiUrls } from './ApiUrl';
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_TOKEN_STORAGE_KEY;
@@ -87,8 +88,8 @@ axios.interceptors.response.use(
         return res;
     },
     (err) => {
-          //Hide Loader on api call completion
-          document.body.classList.remove('loading-indicator');
+        //Hide Loader on api call completion
+        document.body.classList.remove('loading-indicator');
         if (err.status === 500)
             toast.error('Something Went Wrong');
 
@@ -107,13 +108,14 @@ axios.interceptors.request.use(
         var token = localStorage.getItem(tokenStorageKey);
         if (token === undefined || token === null)
             return req;
-
-        token = JSON.parse(token);
-        var header = req.headers;
-        var tokenData = jwt_decode(token.accessToken);
-        header['Authorization'] = `bearer ${token.accessToken}`;
-        header['userId'] = tokenData.userId;
-        req.headers = header;
+        if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
+            token = JSON.parse(token);
+            var header = req.headers;
+            var tokenData = jwt_decode(token.accessToken);
+            header['Authorization'] = `bearer ${token.accessToken}`;
+            header['userId'] = tokenData.userId;
+            req.headers = header;
+        }
         return req;
     }
 )

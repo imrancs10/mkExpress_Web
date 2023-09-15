@@ -5,7 +5,7 @@ import ErrorBoundary from './Components/Middleware/ErrorBoundary';
 import Login from './Components/Login/Login';
 import UrlNotFound from './Components/Middleware/UrlNotFound/UrlNotFound';
 import Footer from './Components/Common/Footer/Footer';
-import { ToastContainer, toast } from 'react-toastify';
+import {toast,ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
           </Routes>
           <Footer></Footer>
         </ErrorBoundary>
+        <ToastContainer></ToastContainer>
       </Router>
-      <ToastContainer></ToastContainer>
     </>
   );
 }
