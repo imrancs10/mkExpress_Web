@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState} from 'react'
+import axios from 'axios';
 import { common } from '../Utility/common';
 export default function ButtonBox({
     text,
@@ -12,9 +13,11 @@ export default function ButtonBox({
     modelDismiss,
     modalId,
     disabled,
-    style
+    style,
+    showLoader
 }) {
     btnList = common.defaultIfEmpty(btnList, []);
+    showLoader = common.defaultIfEmpty(showLoader, false);
     type = common.defaultIfEmpty(type, "button");
     id = common.defaultIfEmpty(id, "");
     text = common.defaultIfEmpty(text, "");
@@ -33,6 +36,26 @@ export default function ButtonBox({
         res.className = typeData.className;
         res.icon = typeData.icon;
     });
+
+    const [isLoading, setIsLoading] = useState(false);
+    axios.interceptors.response.use(
+        (res) => {
+            setIsLoading(false);
+            return res;
+        },
+        (err) => {
+            setIsLoading(false);
+            return Promise.reject(err);
+        }
+    );
+
+    axios.interceptors.request.use(
+        (req) => {
+            setIsLoading(true);
+            return req;
+        }
+    )
+
     return (
         <>
             {btnList.length === 0 && <button
@@ -43,7 +66,7 @@ export default function ButtonBox({
                 data-bs-dismiss={modelDismiss ? "modal" : ""}
                 className={'btn ' + className}
                 data-bs-toggle={modalId === "" ? "" : "modal"}
-                data-bs-target={modalId === "" ? "" : modalId} style={style}><i className={icon}></i> {text}</button>}
+                data-bs-target={modalId === "" ? "" : modalId} style={style}><i className={icon}></i> {text} {showLoader && isLoading && <i className="fa-solid fa-spinner fa-spin" style={{color: '#e22c9f'}}></i>}</button>}
 
             {btnList.length > 0 &&
                 <div className="btn-group" role="group" aria-label="Basic example">
@@ -60,7 +83,7 @@ export default function ButtonBox({
                                 className={'btn ' + ele.className}
                                 data-bs-toggle={ele.modalId === "" ? "" : "modal"}
                                 data-bs-target={ele.modalId === "" ? "" : ele.modalId}
-                            ><i className={ele.icon}></i> {ele.text}</button>
+                            ><i className={ele.icon}></i> {ele.text} {ele?.showLoader && isLoading && <i className="fa-solid fa-spinner fa-spin" style={{color: '#e22c9f'}}></i>}</button>
                         })
                     }
 

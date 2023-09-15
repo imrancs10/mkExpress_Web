@@ -27,7 +27,17 @@
 .App-link {
   color: #61dafb;
 }
-
+.page-item.active .page-link {
+  background-color: #246081 !important;
+  color:white !important;
+ }
+ 
+ .btn-primary {
+   background-color: #246081 !important;
+   border-color: #246081 !important;
+   color: white;
+ }
+ 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +45,20 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn-sm{
+  font-size: .675rem !important;
+}
+.card-header-text{
+  font-size: .875rem !important;
+}
+.table-sm thead tr th{
+  font-size: .675rem !important;
+  text-wrap: nowrap;
+}
+
+.table-scroller
+{
+  overflow: auto;
 }

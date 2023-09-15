@@ -8,7 +8,7 @@ import ErrorLabel from '../Common/ErrorLabel';
 import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
 
-export default function Login() {
+export default function Login({setLoginDetails}) {
     const modelTemplete = {
         userName: "",
         password: ""
@@ -40,10 +40,12 @@ export default function Login() {
             .then(res => {
                 if(res.data.id>0)
                 {
+                    setLoginDetails({...res.data});
                     toast.success(toastMessage.saveSuccess);
                 }
 
             }).catch(err => {
+                setLoginDetails({isAuthenticated:false});
                 toast.error(toastMessage.saveError);
             })
     }
@@ -74,7 +76,7 @@ export default function Login() {
                             <div className='card-body'>
                                 <div className='row'>
                                     <div className='col-12 mb-4 text-center'>
-                                        <img className='loginlogo' src='/logo512.png'></img>
+                                        <img className='loginlogo' src='/logo512.png' alt='login logo'></img>
                                         <div className='text-center text-uppercase bold' style={{ fontWeight: '800' }}>{process.env.REACT_APP_COMPANY_NAME}</div>
                                     </div>
                                     <div className='col-12 mb-2'>
@@ -83,17 +85,18 @@ export default function Login() {
                                                 <span className="input-group-text" id="basic-addon1"><i style={{ fontSize: '20px' }} className="fa-solid fa-user"></i></span>
                                             </div>
                                             <input type="text" name="userName" value={model.userName} onChange={e => textChangeHandler(e)} className="form-control form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-                                            <ErrorLabel message={errors.userName}/>
                                         </div>
+                                        <ErrorLabel message={errors.userName}/>
                                     </div>
                                     <div className='col-12 mb-2'>
-                                        <div className="input-group mb-3">
+                                        <div className="input-group">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text" id="basic-addon1"><i style={{ fontSize: '20px' }} className="fa-solid fa-key"></i></span>
                                             </div>
                                             <input type="password" name="password" value={model.password} onChange={e => textChangeHandler(e)} className="form-control  form-control-sm" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-                                            <ErrorLabel message={errors.password}/>
-                                        </div>
+                                        </div>    
+                                        <ErrorLabel message={errors.password}/>     
+                                        <div className='w-100 text-end  mb-3'><a href="\forgetpassword" style={{fontSize:'10px'}}>Forget password</a></div>                                   
                                     </div>
                                     <div className='col-12 mb-2'>
                                         <button className='btn brn-sm btn-primary w-100' onClick={e => loginHandler(e)} >Login <i className="fa-brands fa-golang"></i> {isLoading && <i className="fa-solid fa-spinner fa-spin" style={{color: '#e22c9f'}}></i>}</button>
