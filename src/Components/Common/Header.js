@@ -40,7 +40,7 @@ export default function Header({ loginDetails }) {
                                 <a className="nav-link" href="#">Containers</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Shipments</a>
+                                <Link className="nav-link" to="/shipments">Shipments</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Pickup Dispatch</a>

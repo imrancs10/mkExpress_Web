@@ -12,6 +12,7 @@ import ForgetPassword from './Components/Login/ForgetPassword';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Customer from './Components/Customer/Customer';
 import Member from './Components/Member/Member';
+import Shipment from './Components/Shipments/Shipment';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -31,6 +32,7 @@ function App() {
               <Route path='/' element={<Dashboard />} />
               <Route path='/customer' element={<Customer />} />
               <Route path='/members' element={<Member />} />
+              <Route path='/shipments' element={<Shipment />} />
               <Route path='*' element={<UrlNotFound />} />
             </Routes>
           </ErrorBoundary>

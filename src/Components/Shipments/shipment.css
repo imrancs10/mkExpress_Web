@@ -1,0 +1,8 @@
+.ship-btn-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.ship-btn-container .btn-sm {
+    text-wrap: nowrap;
+}
