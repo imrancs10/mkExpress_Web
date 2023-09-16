@@ -19,7 +19,7 @@ export default function ShipmentsButtons() {
                     <button type="button" className="btn btn-primary btn-sm">Hold</button>
                     <button type="button" className="btn btn-primary btn-sm">Assign For Delivery</button>
                     <button type="button" className="btn btn-primary btn-sm">Export to Excel</button>
-                    <button type="button" className="btn btn-primary btn-sm">New Shipment</button>
+                    <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNewShipment">New Shipment</button>
                 </div>
               </div>
             </div>
