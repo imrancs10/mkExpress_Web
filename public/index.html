@@ -98,6 +98,30 @@
     flex-grow: 1;
     max-width: 100%;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    transition: all 1s;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0.363); 
+    transition: all 1s;
+    border-radius:4px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    transition: all 1s;
+    background: #555; 
+  }
 </style>
 
 </html>

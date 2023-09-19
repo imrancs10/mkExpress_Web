@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './Header.css'
 
 export default function Header({ loginDetails }) {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light header-container">
                 {/* <!-- Container wrapper --> */}
                 <div className="container-fluid">
                     {/* <!-- Toggle button --> */}
@@ -62,6 +63,9 @@ export default function Header({ loginDetails }) {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Cod Report</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/admin">Admin</a>
                             </li>
                         </ul>
                         {/* <!-- Left links --> */}

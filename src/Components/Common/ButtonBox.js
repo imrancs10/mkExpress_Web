@@ -101,77 +101,77 @@ const modifyOnType = (type, text, className,icon) => {
 
     if (type.toLowerCase() === "save") {
         return {
-            icon: icon===""?"bi bi-save":icon,
+            icon: icon===""?"fa-solid fa-floppy-disk":icon,
             text: text === "" ? "Save" : text,
             className: className += " btn-info"
         }
     }
     if (type.toLowerCase() === "cancel") {
         return {
-            icon:icon===""?"bi bi-x-square":icon,
+            icon:icon===""?"fa-solid fa-xmark":icon,
             text: text === "" ? "Cancel" : text,
             className: className += " btn-danger"
         }
     }
     if (type.toLowerCase() === "delete") {
         return {
-            icon: icon===""?"bi bi-trash":icon,
+            icon: icon===""?"fa-solid fa-trash-can":icon,
             text: text === "" ? "Delete" : text,
             className: className += " btn-warning"
         }
     }
     if (type.toLowerCase() === "update") {
         return {
-            icon: icon===""?"bi bi-arrow-clockwise":icon,
+            icon: icon===""?"fa-solid fa-pen-to-square":icon,
             text: text === "" ? "Update" : text,
             className: className += " btn-warning"
         }
     }
     if (type.toLowerCase() === "reset") {
         return {
-            icon: icon===""?"bi bi-arrow-clockwise":icon,
+            icon: icon===""?"fa-solid fa-arrow-rotate-left":icon,
             text: text === "" ? "Reset" : text,
             className: className += " btn-success"
         }
     }
     if (type.toLowerCase() === "upload") {
         return {
-            icon: icon===""?"bi bi-cloud-arrow-up":icon,
+            icon: icon===""?"fa-solid fa-upload":icon,
             text: text === "" ? "Upload" : text,
             className: className += " btn-warning"
         }
     }
     if (type.toLowerCase() === "print") {
         return {
-            icon: icon===""?"bi bi-printer":icon,
+            icon: icon===""?"fa-solid fa-print":icon,
             text: text === "" ? "Print" : text,
             className: className += " btn-warning"
         }
     }
     if (type.toLowerCase() === "go") {
         return {
-            icon: icon===""?"bi bi-arrow-left-circle":icon,
+            icon: icon===""?"fa-brands fa-golang":icon,
             text: text === "" ? "Go" : text,
             className: className += " btn-success"
         }
     }
     if (type.toLowerCase() === "back") {
         return {
-            icon: icon===""?"bi bi-arrow-left":icon,
+            icon: icon===""?"fa-solid fa-backward-fast":icon,
             text: text === "" ? "Back" : text,
             className: className += " btn-secondary"
         }
     }
     if (type.toLowerCase() === "add") {
         return {
-            icon: icon===""?"bi bi-cloud-plus":icon,
+            icon: icon===""?"fa-solid fa-cart-plus":icon,
             text: text === "" ? "Add" : text,
             className: className += " btn-info"
         }
     }
     if (type.toLowerCase() === "view") {
         return {
-            icon: icon===""?"bi bi-eye":icon,
+            icon: icon===""?"fa-solid fa-eye":icon,
             text: text === "" ? "View" : text,
             className: className += " btn-primary"
         }

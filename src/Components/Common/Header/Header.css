@@ -1,0 +1,13 @@
+.header-container{
+    box-shadow: 2px 3px 10px 0px gray;
+    z-index: 1000000;
+}
+.header-container .nav-item:hover {
+    transition: all .2s;
+    border-bottom: 1px solid salmon;
+    border-top: 1px solid salmon;
+    border-radius: 20%;
+}
+.header-container .nav-item {
+transition: all .2s;
+}
