@@ -1,4 +1,4 @@
-const RegexFormat={};
+import RegexFormat from "./RegexFormat";
 const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
 const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 
@@ -8,6 +8,9 @@ const common = {
         if (input === undefined || input === null || input === "")
             return defaultValue;
         return input;
+    },
+    concatClassIfNotEmpty: (input, concatClass, condition) => {
+        return condition ? `${input} ${concatClass}` : input;
     },
     formatTableData: (input, action, rowData) => {
         var returnVal = '';

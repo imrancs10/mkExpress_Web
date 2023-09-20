@@ -1,4 +1,4 @@
-const apiPrfix = "api";
+const apiPrfix = "api/v1";
 export const apiUrls = {
     authController: {
         getToken: `auth/login`,

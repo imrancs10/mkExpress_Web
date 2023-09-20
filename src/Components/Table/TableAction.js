@@ -11,23 +11,23 @@ export default function TableAction({ option, dataId, data,rowIndex }) {
         view: {
             title: "View",
             handler: () => { },
-            icon: 'bi bi-eye-fill'
+            icon: 'fa-solid fa-eye'
         },
         edit: {
             title: "Edit",
             handler: () => { },
-            icon: 'bi bi-pencil-fill'
+            icon: 'fa-solid fa-pen-to-square'
         },
         delete: {
             title: "Delete",
             handler: () => { },
-            icon: 'bi bi-trash-fill',
+            icon: 'fa-solid fa-trash-can',
             showModel: true
         },
         print: {
             title: "Print",
             handler: () => { },
-            icon: 'bi bi-printer',
+            icon: 'fa-solid fa-print',
         },
         popupModelId: 'model',
         buttons: []

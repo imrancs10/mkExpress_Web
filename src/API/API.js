@@ -108,14 +108,14 @@ axios.interceptors.request.use(
         var token = localStorage.getItem(tokenStorageKey);
         if (token === undefined || token === null)
             return req;
-        if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
-            token = JSON.parse(token);
-            var header = req.headers;
-            var tokenData = jwt_decode(token.accessToken);
-            header['Authorization'] = `bearer ${token.accessToken}`;
-            header['userId'] = tokenData.userId;
-            req.headers = header;
-        }
+        // if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
+        //     token = JSON.parse(token);
+        //     var header = req.headers;
+        //     var tokenData = jwt_decode(token.accessToken);
+        //     header['Authorization'] = `bearer ${token.accessToken}`;
+        //     header['userId'] = tokenData.userId;
+        //     req.headers = header;
+        // }
         return req;
     }
 )
