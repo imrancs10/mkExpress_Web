@@ -1,22 +1,22 @@
-const apiPrfix = "api/v1";
+const apiPrfix = "v1";
 export const apiUrls = {
     authController: {
-        getToken: `auth/login`,
+        getToken: `${apiPrfix}/auth/user/login`,
     },
     masterDataController: {
-        add: `${apiPrfix}/master-data`,
-        update: `${apiPrfix}/master-data`,
-        delete: `${apiPrfix}/master-data/`,
-        get: `${apiPrfix}/master-data/get/`,
-        getAll: `${apiPrfix}/master-data`,
-        search: `${apiPrfix}/master-data/search`,
-        getByMasterDataType: `${apiPrfix}/master-data/get/by-type`,
-        getByMasterDataTypes: `${apiPrfix}/master-data/get/by-types`,
-        addDataType: `${apiPrfix}/master-data-type`,
-        updateDataType: `${apiPrfix}/master-data-type`,
-        deleteDataType: `${apiPrfix}/master-data-type/`,
-        getDataType: `${apiPrfix}/master-data-type/get/`,
-        getAllDataType: `${apiPrfix}/master-data-type`,
-        searchDataType: `${apiPrfix}/master-data-type/search`,
+        add: `${apiPrfix}/masterData/master-data`,
+        update: `${apiPrfix}/masterData/master-data`,
+        delete: `${apiPrfix}/masterData/master-data/`,
+        get: `${apiPrfix}/masterData/master-data/get/`,
+        getAll: `${apiPrfix}/masterData/master-data`,
+        search: `${apiPrfix}/masterData/master-data/search`,
+        getByMasterDataType: `${apiPrfix}/masterData/master-data/get/by-type`,
+        getByMasterDataTypes: `${apiPrfix}/masterData/master-data/get/by-types`,
+        addDataType: `${apiPrfix}/masterData/master-data-type`,
+        updateDataType: `${apiPrfix}/masterData/master-data-type`,
+        deleteDataType: `${apiPrfix}/masterData/master-data-type/`,
+        getDataType: `${apiPrfix}/masterData/master-data-type/get/`,
+        getAllDataType: `${apiPrfix}/masterData/master-data-type`,
+        searchDataType: `${apiPrfix}/masterData/master-data-type/search`,
     },
 }

@@ -19,7 +19,7 @@ import AdminLayout from './Components/Admin/AdminLayout';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
-    isAuthenticated: true
+    isAuthenticated: false
   });
   if (window.location.pathname === '/forgetpassword')
     return <ForgetPassword />
