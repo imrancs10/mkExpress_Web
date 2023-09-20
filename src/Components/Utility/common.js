@@ -4,6 +4,14 @@ const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Ei
 
 
 const common = {
+    generateMasterDataCode: (value) => {
+        return value.toLowerCase().trim().replaceAll(RegexFormat.specialCharectors, "_").replaceAll(RegexFormat.endWithHyphen, '');
+    },
+    guid: () => {
+        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    },
     defaultIfEmpty: (input, defaultValue) => {
         if (input === undefined || input === null || input === "")
             return defaultValue;
@@ -86,8 +94,8 @@ const common = {
         return new Date(year, month, 0).getDate();
     },
     getHtmlDate: (date, format = "yyyymmdd") => {
-        if(date===undefined)
-        return "";
+        if (date === undefined)
+            return "";
         if (typeof date !== "object") {
             date = new Date(date);
         }
@@ -231,7 +239,7 @@ const common = {
     contactNoEncoder: (contactNo) => {
         return contactNo?.replace('+', '%2B');
     },
-    doNothing:(e)=>{
+    doNothing: (e) => {
         e.preventDefault();
         return false;
     }

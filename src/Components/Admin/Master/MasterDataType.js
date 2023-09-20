@@ -15,7 +15,7 @@ import Inputbox from '../../Common/Inputbox';
 
 export default function MasterDataType() {  
     const masterDataModelTemplate = {
-        id: 0,
+        id: common.guid(),
         code: '',
         value: ''
     }
@@ -63,17 +63,15 @@ export default function MasterDataType() {
             return
         }
 
-        let data = common.assignDefaultValue(masterDataModelTemplate, masterDataTypeModel);
+        let data = masterDataTypeModel;
         if (isRecordSaving) {
             Api.Put(apiUrls.masterDataController.addDataType, data).then(res => {
-                if (res.data.id > 0) {
+                if (res.data.id !==null) {
                     common.closePopup('add-masterDataType');
                     toast.success(toastMessage.saveSuccess);
                     handleSearch('');
                 }
-            }).catch(err => {
-                toast.error(toastMessage.saveError);
-            });
+            })
         }
         else {
             Api.Post(apiUrls.masterDataController.updateDataType, masterDataTypeModel).then(res => {
@@ -82,9 +80,7 @@ export default function MasterDataType() {
                     toast.success(toastMessage.updateSuccess);
                     handleSearch('');
                 }
-            }).catch(err => {
-                toast.error(toastMessage.updateError);
-            });
+            })
         }
     }
     const handleEdit = (masterDataId) => {
