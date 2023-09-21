@@ -15,13 +15,13 @@ import TableView from '../../Table/TableView';
 import RegexFormat from '../../Utility/RegexFormat'
 
 export default function MasterData() {
-    const workTypeCode = 'work_type';
     const [masterDataTypeList, setMasterDataTypeList] = useState([]);
     const masterDataModelTemplate = {
-        id: 0,
+        id: common.guid(),
         code: '',
         value: '',
-        masterDataType: ''
+        masterDataType: '',
+        remark: ''
     }
     const [masterDataModel, setMasterDataModel] = useState(masterDataModelTemplate);
     const [isRecordSaving, setIsRecordSaving] = useState(true);
@@ -40,6 +40,8 @@ export default function MasterData() {
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
             return;
+        if (searchTerm === null || searchTerm === undefined)
+            searchTerm = "";
         Api.Get(apiUrls.masterDataController.search + `?PageNo=${pageNo}&PageSize=${pageSize}&SearchTerm=${searchTerm}`).then(res => {
             tableOptionTemplet.data = res.data.data;
             tableOptionTemplet.totalRecords = res.data.totalRecords;
@@ -55,8 +57,7 @@ export default function MasterData() {
         }
         else {
             data[name] = value;
-            if (data.masterDataType !== workTypeCode)
-                data.code = value.toLowerCase().trim().replaceAll(RegexFormat.specialCharectors, "_").replaceAll(RegexFormat.endWithHyphen, '');
+            data.code = value.toLowerCase().trim().replaceAll(RegexFormat.specialCharectors, "_").replaceAll(RegexFormat.endWithHyphen, '');
         }
         setMasterDataModel({ ...data });
 
@@ -72,10 +73,10 @@ export default function MasterData() {
             return
         }
 
-        let data = common.assignDefaultValue(masterDataModelTemplate, masterDataModel);
+        let data = masterDataModel;
         if (isRecordSaving) {
             Api.Put(apiUrls.masterDataController.add, data).then(res => {
-                if (res.data.id > 0) {
+                if (res.data.id != null) {
                     common.closePopup('closePopupMasterData');
                     toast.success(toastMessage.saveSuccess);
                     handleSearch(filterMasterDataType);
@@ -86,7 +87,7 @@ export default function MasterData() {
         }
         else {
             Api.Post(apiUrls.masterDataController.update, masterDataModel).then(res => {
-                if (res.data.id > 0) {
+                if (res.data.id != null) {
                     common.closePopup('closePopupMasterData');
                     toast.success(toastMessage.updateSuccess);
                     handleSearch(filterMasterDataType);
@@ -98,10 +99,10 @@ export default function MasterData() {
         setIsRecordSaving(false);
         setErrors({});
         Api.Get(apiUrls.masterDataController.get + masterDataId).then(res => {
-            if (res.data.id > 0) {
+            if (res.data.id !== null) {
                 var data = res.data;
                 data.masterDataType = res.data.masterDataTypeCode;
-                setMasterDataModel(data);
+                setMasterDataModel({ ...data });
             }
         });
     };
@@ -143,14 +144,14 @@ export default function MasterData() {
         items: [
             {
                 title: "Master Data'",
-                icon: "bi bi-bezier",
+                icon: "fa-solid fa-share-nodes",
                 isActive: false,
             }
         ],
         buttons: [
             {
                 text: "Master Data",
-                icon: 'bx bx-plus',
+                icon: 'fa-solid fa-plus',
                 modelId: 'add-masterData',
                 handler: saveButtonHandler
             }
@@ -184,27 +185,27 @@ export default function MasterData() {
     const validateError = () => {
         const { value, masterDataType, code } = masterDataModel;
         const newError = {};
-        if (!value || value === "") newError.value = validationMessage.masterDataRequired;
-        if (!masterDataType || masterDataType === "") newError.masterDataType = validationMessage.masterDataTypeRequired;
-        if (masterDataType === workTypeCode) {
-            if (!code || code === "") newError.code = validationMessage.masterDataCodeRequired;
-        }
+        if (!value || value === "") newError.value = validationMessage.reqMasterData;
+        if (!masterDataType || masterDataType === "" || masterDataType === "0") newError.masterDataType = validationMessage.reqMasterDataType;
         return newError;
     }
     return (
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
-            <label style={{ fontWeight: 'normal', width: '50%', textAlign: 'left', whiteSpace: 'nowrap', fontSize: '12px' }}>
-                <span> Master Data Type  </span>
-                <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value) }} value={filterMasterDataType}>
-                    <option value="">Select </option>
-                    {
-                        masterDataTypeList?.map(ele => {
-                            return <option key={ele.id} value={ele.code}>{ele.value}</option>
-                        })
-                    }
-                </select>
-            </label>
+            <div className="d-flex justify-content-end bd-highlight">
+                <div className="p-2 bd-highlight">
+                    <Label text="Master Data Type" fontSize='12px'></Label>
+                </div>
+                <div className="p-2 bd-highlight">
+                    <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value) }} value={filterMasterDataType}>
+                        <option value="">Select </option>
+                        {
+                            masterDataTypeList?.map(ele => {
+                                return <option key={ele.id} value={ele.code}>{ele.value}</option>
+                            })
+                        }
+                    </select></div>
+            </div>
             <hr />
             <TableView option={tableOption}></TableView>
 
@@ -227,13 +228,8 @@ export default function MasterData() {
                                                 <ErrorLabel message={errors?.masterDataType}></ErrorLabel>
                                             </div>
                                             <div className="col-md-12">
-                                                <Inputbox labelText="Master Data"  className="form-control-sm" labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={masterDataModel.value} errorMessage={errors?.value} />
+                                                <Inputbox labelText="Master Data" className="form-control-sm" labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={masterDataModel.value} errorMessage={errors?.value} />
                                             </div>
-                                            {masterDataModel.masterDataType === workTypeCode &&
-                                                <div className="col-md-12">
-                                                    <Inputbox labelText="Code"  className="form-control-sm" isRequired={true} onChangeHandler={handleTextChange} name="code" value={masterDataModel.code} errorMessage={errors?.code} />
-                                                </div>
-                                            }
                                         </form>
                                     </div>
                                 </div>

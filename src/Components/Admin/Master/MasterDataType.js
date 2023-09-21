@@ -67,7 +67,7 @@ export default function MasterDataType() {
         if (isRecordSaving) {
             Api.Put(apiUrls.masterDataController.addDataType, data).then(res => {
                 if (res.data.id !==null) {
-                    common.closePopup('add-masterDataType');
+                    common.closePopup('close-masterDataType');
                     toast.success(toastMessage.saveSuccess);
                     handleSearch('');
                 }
@@ -75,8 +75,8 @@ export default function MasterDataType() {
         }
         else {
             Api.Post(apiUrls.masterDataController.updateDataType, masterDataTypeModel).then(res => {
-                if (res.data.id > 0) {
-                    common.closePopup('add-masterDataType');
+                if (res.data.id!==null) {
+                    common.closePopup('close-masterDataType');
                     toast.success(toastMessage.updateSuccess);
                     handleSearch('');
                 }
@@ -87,7 +87,7 @@ export default function MasterDataType() {
         setIsRecordSaving(false);
         setErrors({});
         Api.Get(apiUrls.masterDataController.getDataType + masterDataId).then(res => {
-            if (res.data.id > 0) {
+            if (res.data.id !=null) {
                 setMasterDataTypeModel(res.data);
             }
         });
@@ -125,18 +125,18 @@ export default function MasterDataType() {
     }
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
     const breadcrumbOption = {
-        title: 'Master Data',
+        title: 'Master Data Type',
         items: [
             {
                 title: "Master Data Type'",
-                icon: "bi bi-bezier",
+                icon: "fa-solid fa-code-branch",
                 isActive: false,
             }
         ],
         buttons: [
             {
                 text: "Master Data Type",
-                icon: 'bx bx-plus',
+                icon: 'fa-solid fa-plus',
                 modelId: 'add-masterDataType',
                 handler: saveButtonHandler
             }
@@ -177,7 +177,7 @@ export default function MasterDataType() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">New Master Data Type</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" id='close-masterDataType' className="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                         </div>
                         <div className="modal-body">
                             <div className="form-horizontal form-material">
