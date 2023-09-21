@@ -14,9 +14,11 @@ const validationMessage = {
     reqItemName:"Please enter item name!",
     reqNumberOfPieces:"Please enter number of peices!",
     reqDimensions:"Please enter dimention!",
-    reqWeight:"Enter enetr weight!",
-    reqMasterData:"Please enter master data",
-    reqMasterDataType:"Please enter master data type",
+    reqWeight:"Enter enter weight!",
+    reqMasterData:"Please enter master data!",
+    reqMasterDataType:"Please enter master data type!",
+    invalidBothCity:"Both cities can't be same!",
+    invalidBothStore:"Both stores can't be same!",
 }
 
 export {validationMessage};
