@@ -16,6 +16,7 @@ import Shipment from './Components/Shipments/Shipment';
 import MasterData from './Components/Admin/Master/MasterData';
 import MasterDataType from './Components/Admin/Master/MasterDataType';
 import AdminLayout from './Components/Admin/AdminLayout';
+import CustomerDetails from './Components/Admin/Customer/CustomerDetails';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -39,6 +40,7 @@ function App() {
               <Route path='/admin' element={<AdminLayout />}>
                 <Route path='/admin/master/data' element={<MasterData />} />
                 <Route path='/admin/master/type' element={<MasterDataType />} />
+                <Route path='/admin/customer' element={<CustomerDetails />} />
               </Route>
               <Route path='*' element={<UrlNotFound />} />
             </Routes>

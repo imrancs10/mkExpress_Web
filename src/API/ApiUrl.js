@@ -20,11 +20,11 @@ export const apiUrls = {
         searchDataType: `${apiPrfix}/masterData/master-data-type/search`,
     },
     customerController:{
-        add: `${apiPrfix}/customers/customer`,
-        update: `${apiPrfix}/customers/customer`,
-        delete: `${apiPrfix}/customers/customer/`,
-        get: `${apiPrfix}/customers/customer/get/`,
-        getAll: `${apiPrfix}/customers/customer`,
-        search: `${apiPrfix}/customers/customer/search`,
+        add: `${apiPrfix}/customer`,
+        update: `${apiPrfix}/customer`,
+        delete: `${apiPrfix}/customer/`,
+        get: `${apiPrfix}/customer/get/`,
+        getAll: `${apiPrfix}/customer`,
+        search: `${apiPrfix}/customer/search`,
     }
 }

@@ -59,6 +59,9 @@ export default function NewShipment() {
             value = parseInt(value);
         }
         setShipmentModel({ ...shipmentModel, [name]: value });
+        if (!!errors[name]) {
+            setErrors({ ...errors, [name]: null })
+          }
     }
 
     const validateError = () => {
@@ -103,14 +106,14 @@ export default function NewShipment() {
     }
     return (
         <>
-            <div class="modal fade" id="modalNewShipment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNewShipmentLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="modalNewShipmentLabel">New Shipment</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="modalNewShipment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNewShipmentLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="modalNewShipmentLabel">New Shipment</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <div className='row'>
                                 <div className='col-sm-12 col-md-6'>
                                     <Label text="Customer" isRequired={true} fontSize='12px' bold={true}></Label>
@@ -125,7 +128,7 @@ export default function NewShipment() {
                             </div>
                             <div className='row mt-2'>
                                 <div className='col-md-4 col-sm-12 mb-2'>
-                                    <div class="card border border-primary">
+                                    <div className="card border border-primary">
                                         <div className='card-body'>
                                             <div className='card-title'>Shipper</div>
                                             <div className='col-12'>
@@ -176,7 +179,7 @@ export default function NewShipment() {
                                     </div>
                                 </div>
                                 <div className='col-md-4 col-sm-12 mb-2'>
-                                    <div class="card border border-primary">
+                                    <div className="card border border-primary">
                                         <div className='card-body'>
                                             <div className='card-title'>Consignee</div>
                                             <div className='col-12'>
@@ -227,7 +230,7 @@ export default function NewShipment() {
                                     </div>
                                 </div>
                                 <div className='col-md-4 col-sm-12'>
-                                    <div class="card border border-primary">
+                                    <div className="card border border-primary">
                                         <div className='card-body'>
                                             <div className='card-title'>Commodity</div>
 
@@ -262,7 +265,7 @@ export default function NewShipment() {
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                             <ButtonBox type="save" onClickHandler={handleCreateShipment} className="btn-sm"></ButtonBox>
                             <ButtonBox type="cancel" className="btn-sm" modelDismiss={true}></ButtonBox>
                         </div>

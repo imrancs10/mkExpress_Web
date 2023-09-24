@@ -1,7 +1,7 @@
 import React from 'react'
 import { common } from '../Utility/common'
 
-export default function AlertMessage({ type, message,textAlign }) {
+export default function AlertMessage({ type, message, textAlign }) {
     type = common.defaultIfEmpty(type, "info");
     textAlign = common.defaultIfEmpty(textAlign, "start");
     message = common.defaultIfEmpty(message, "This is an alter message!");
@@ -37,10 +37,10 @@ export default function AlertMessage({ type, message,textAlign }) {
     }
     return (
         <>
-            <div className={`alert alert-${getAlertColor()} d-flex align-items-${textAlign}`} role="alert">
-                <i className={`bi bi-${getAlertIcon()}`}/>
+            <div className={`alert alert-${getAlertColor()} d-flex justify-content-${textAlign}`} style={{padding:'5px',margin:0}} role="alert">
+                <i className={`bi bi-${getAlertIcon()}`} />
                 <div>
-                   {message}
+                    {message}
                 </div>
             </div>
         </>

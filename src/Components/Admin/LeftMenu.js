@@ -78,6 +78,9 @@ export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, se
                                                         <li>
                                                             <LeftMenuItem hasAccess={hasAccess} icon="fa-solid fa-share-nodes" menuName="Master Data" link="admin/master/data" />
                                                         </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} icon="fa-solid fa-person-military-pointing" menuName="Customers" link="admin/customer" />
+                                                        </li>
                                                     </ul>
                                                 </>
                                                 }

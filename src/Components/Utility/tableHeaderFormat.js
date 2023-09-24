@@ -33,6 +33,13 @@ const headerFormat = {
     { name: 'Status Duration', prop: 'mobile', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Scheduled Delivery Date', prop: 'role', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Location', prop: 'personalPhone', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  customerDetail:[
+    { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Name', prop: 'name', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Contact No', prop: 'contactNo', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Max Delivery Attempt', prop: 'maxDeliveryAttempt', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
   ]
 }
 

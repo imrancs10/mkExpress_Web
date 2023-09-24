@@ -8,6 +8,10 @@ import ShipmentsButtons from './ShipmentsButtons';
 import ShipmentSearchPanel from './ShipmentSearchPanel';
 import { common } from '../Utility/common';
 import NewShipment from './NewShipment';
+import ThirdPartyShipment from './ThirdPartyShipment';
+import ScanToPrint from './ScanToPrint';
+import BulkScanToPrint from './BulkScanToPrint';
+import AssignToTransfer from './AssignToTransfer';
 
 export default function Shipment() {
     const filterYearStartFrom=2022;
@@ -86,6 +90,10 @@ export default function Shipment() {
             <ShipmentsButtons></ShipmentsButtons>
             <TableView option={tableOption}></TableView>
             <NewShipment></NewShipment>
+            <ThirdPartyShipment></ThirdPartyShipment>
+            <ScanToPrint></ScanToPrint>
+            <BulkScanToPrint></BulkScanToPrint>
+            <AssignToTransfer></AssignToTransfer>
         </>
     )
 }
