@@ -45,8 +45,27 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <div class="loader">
+      <img src="./loader.gif" style="height: 100px;width: 8rem;">
+    </div>
 </body>
 <style>
+  .loading-indicator .loader{
+    width: 100vw;
+    height: 100vh;    
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffffcc;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  } 
+  .loading-indicator .loader img{
+    z-index: 100000000;
+  }
   .Toastify__toast-container
   {
     z-index: 1000000;
