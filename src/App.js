@@ -6,6 +6,7 @@ import Login from './Components/Login/Login';
 import UrlNotFound from './Components/Middleware/UrlNotFound/UrlNotFound';
 import Footer from './Components/Common/Footer/Footer';
 import { ToastContainer } from 'react-toastify'
+import jwt_decode from "jwt-decode";
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './Components/Common/Header/Header';
 import ForgetPassword from './Components/Login/ForgetPassword';
@@ -20,8 +21,23 @@ import CustomerDetails from './Components/Admin/Customer/CustomerDetails';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
-    isAuthenticated: true
+    isAuthenticated: false
   });
+
+  useEffect(() => {
+    var loginStorageData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
+    try {
+      var loginStorageJsonData = JSON.parse(loginStorageData);
+      var tokenData = jwt_decode(loginStorageJsonData.accessToken);
+
+      if (loginStorageJsonData?.isAuthenticated === undefined || loginStorageJsonData?.isAuthenticated === false)
+        setLoginDetails({ isAuthenticated: false })
+
+    } catch (error) {
+      setLoginDetails({ isAuthenticated: false })
+    }
+  }, [])
+
   if (window.location.pathname === '/forgetpassword')
     return <ForgetPassword />
   if (!loginDetails.isAuthenticated)

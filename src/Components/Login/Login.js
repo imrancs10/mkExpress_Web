@@ -7,6 +7,7 @@ import { validationMessage } from '../Utility/ValidationMessage';
 import ErrorLabel from '../Common/ErrorLabel';
 import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
+import { common } from '../Utility/common';
 
 export default function Login({setLoginDetails}) {
     const modelTemplete = {
@@ -38,10 +39,14 @@ export default function Login({setLoginDetails}) {
     
         Api.Post(apiUrls.authController.getToken, model)
             .then(res => {
-                if(res.data.id>0)
+                if(common.validateGuid(res.data?.userResponse?.id))
                 {
                     setLoginDetails({...res.data});
                     toast.success(toastMessage.saveSuccess);
+                    window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY,JSON.stringify(res.data));
+                }
+                else{
+                    setLoginDetails({ isAuthenticated: false})
                 }
 
             }).catch(err => {
