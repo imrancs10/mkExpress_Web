@@ -5,7 +5,7 @@ import ErrorBoundary from './Components/Middleware/ErrorBoundary';
 import Login from './Components/Login/Login';
 import UrlNotFound from './Components/Middleware/UrlNotFound/UrlNotFound';
 import Footer from './Components/Common/Footer/Footer';
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import jwt_decode from "jwt-decode";
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './Components/Common/Header/Header';
@@ -18,6 +18,7 @@ import MasterData from './Components/Admin/Master/MasterData';
 import MasterDataType from './Components/Admin/Master/MasterDataType';
 import AdminLayout from './Components/Admin/AdminLayout';
 import CustomerDetails from './Components/Admin/Customer/CustomerDetails';
+import { common } from './Components/Utility/common';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -30,13 +31,18 @@ function App() {
       var loginStorageJsonData = JSON.parse(loginStorageData);
       var tokenData = jwt_decode(loginStorageJsonData.accessToken);
 
+      if(common.checkTokenExpiry(tokenData?.exp)) {
+        setLoginDetails({ isAuthenticated: false });
+        toast.warn("Your login session expire. Please login again.");
+      }
+
       if (loginStorageJsonData?.isAuthenticated === undefined || loginStorageJsonData?.isAuthenticated === false)
         setLoginDetails({ isAuthenticated: false })
 
     } catch (error) {
       setLoginDetails({ isAuthenticated: false })
     }
-  }, [])
+  }, []);
 
   if (window.location.pathname === '/forgetpassword')
     return <ForgetPassword />

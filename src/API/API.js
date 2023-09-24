@@ -3,9 +3,10 @@ import axiosRetry from 'axios-retry';
 import { toast } from 'react-toastify'
 import jwt_decode from "jwt-decode";
 import { apiUrls } from './ApiUrl';
+import { common } from '../Components/Utility/common';
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
-const tokenStorageKey = process.env.REACT_APP_TOKEN_STORAGE_KEY;
+const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
 axiosRetry(axios, {
     retries: 3, retryDelay: (retryCount) => {
         return retryCount * 1000;
@@ -106,16 +107,19 @@ axios.interceptors.request.use(
         document.body.classList.add('loading-indicator');
 
         var token = localStorage.getItem(tokenStorageKey);
-        if (token === undefined || token === null)
-            return req;
-        // if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
-        //     token = JSON.parse(token);
-        //     var header = req.headers;
-        //     var tokenData = jwt_decode(token.accessToken);
-        //     header['Authorization'] = `bearer ${token.accessToken}`;
-        //     header['userId'] = tokenData.userId;
-        //     req.headers = header;
-        // }
-        return req;
+
+        if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
+            if (token === undefined || token === null)
+                return req;
+            token = JSON.parse(token);
+            var header = req.headers;
+            var tokenData = jwt_decode(token.accessToken);
+            if (common.validateGuid(token?.userResponse?.id) && common.checkTokenExpiry(tokenData?.exp)) {
+                header['Authorization'] = `bearer ${token.accessToken}`;
+                header['userId'] = token.userResponse?.id;
+                req.headers = header;
+                return req;
+            }
+        }
     }
 )
