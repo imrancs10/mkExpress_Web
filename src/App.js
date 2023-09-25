@@ -32,7 +32,7 @@ function App() {
       var loginStorageJsonData = JSON.parse(loginStorageData);
       var tokenData = jwt_decode(loginStorageJsonData.accessToken);
 
-      if (common.checkTokenExpiry(tokenData?.exp)) {
+      if (!common.checkTokenExpiry(tokenData?.exp)) {
         setLoginDetails({ isAuthenticated: false });
         toast.warn("Your login session expire. Please login again.");
       }

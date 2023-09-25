@@ -85,18 +85,18 @@ axios.interceptors.response.use(
         //Hide Loader on api call completion
         document.body.classList.remove('loading-indicator');
         // Add configurations here
-        if (res.status === 200) {
+        if (res?.status === 200) {
         }
         return res;
     },
     (err) => {
         //Hide Loader on api call completion
         document.body.classList.remove('loading-indicator');
-        if (err.status === 500)
+        if (err?.status === 500)
             toast.error('Something Went Wrong');
 
-        if (err.response.status === 400) {
-            toast.warn(err.response.data.Message)
+        if (err?.response?.status === 400) {
+            toast.warn(err?.response?.data?.Message)
         }
         return Promise.reject(err);
     }
@@ -114,9 +114,9 @@ axios.interceptors.request.use(
                 return req;
             token = JSON.parse(token);
             var header = req.headers;
-            var tokenData = jwt_decode(token.accessToken);
+            var tokenData = jwt_decode(token?.accessToken);
             if (common.validateGuid(token?.userResponse?.id) && common.checkTokenExpiry(tokenData?.exp)) {
-                header['Authorization'] = `bearer ${token.accessToken}`;
+                header['Authorization'] = `bearer ${token?.accessToken}`;
                 header['userId'] = token.userResponse?.id;
                 req.headers = header;
                 return req;

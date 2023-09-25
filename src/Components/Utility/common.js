@@ -248,7 +248,7 @@ const common = {
        return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(guid);
     },
     checkTokenExpiry:(exp)=>{
-       return exp < ((new Date().getTime() + 1) / 1000)
+       return exp > ((new Date().getTime() + 1) / 1000)
     },
     checkAdminRole:(role)=>{
       return  role?.toLowerCase()==="admin"
