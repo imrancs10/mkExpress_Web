@@ -50,7 +50,7 @@ export default function ForgetPassword() {
                             <div className='card-body'>
                                 <div className='row'>
                                 <div className='col-12 mb-4 text-center'>
-                                        <img className='loginlogo' src='/logo512.png' alt='mk express logo'></img>
+                                        <img className='loginlogo' src='/logo512.png' alt='imk express logo'></img>
                                         <div className='text-center text-uppercase bold' style={{ fontWeight: '800' }}>{process.env.REACT_APP_COMPANY_NAME}</div>
                                     </div>
                                     <div className='col-12 mb-2'>
