@@ -1,8 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import './Header.css'
+import { common } from '../../Utility/common';
 
-export default function Header({ loginDetails }) {
+export default function Header({ loginDetails, setLoginDetails }) {
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        var loginModel = {
+            isAuthenticated: false
+        }
+        window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
+        setLoginDetails({ ...loginModel })
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light header-container">
@@ -52,8 +61,8 @@ export default function Header({ loginDetails }) {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/customer">Customer</Link>
                             </li>
-                            <li className="nav-item"> 
-                            <Link className="nav-link" to="/members">Members</Link>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/members">Members</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">System Actions</a>
@@ -64,9 +73,11 @@ export default function Header({ loginDetails }) {
                             <li className="nav-item">
                                 <a className="nav-link" href="#">Cod Report</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/admin">Admin</a>
-                            </li>
+                            {common.checkAdminRole(loginDetails?.userResponse?.role) &&
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/admin">Admin</a>
+                                </li>
+                            }
                         </ul>
                         {/* <!-- Left links --> */}
                     </div>
@@ -76,7 +87,7 @@ export default function Header({ loginDetails }) {
                     <div className="d-flex align-items-center">
                         {/* <!-- Icon --> */}
                         <div className="text-reset me-3 " style={{ fontSize: '11px' }}>
-                            Guest user name
+                            {loginDetails?.userResponse?.firstName !== undefined ? `Hello ${loginDetails?.userResponse?.firstName} ${loginDetails?.userResponse?.lastName}` : 'Hello Guest'}
                         </div>
 
                         {/* <!-- Notifications --> */}
@@ -130,13 +141,13 @@ export default function Header({ loginDetails }) {
                                 aria-labelledby="navbarDropdownMenuAvatar"
                             >
                                 <li>
-                                    <a className="dropdown-item" href="#">My profile</a>
+                                    <Link to="/user-profile" className="dropdown-item">Profile</Link>
                                 </li>
                                 <li>
                                     <a className="dropdown-item" href="#">Settings</a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">Logout</a>
+                                    <a onClick={e => logoutHandler(e)} className="dropdown-item" href="#">Logout</a>
                                 </li>
                             </ul>
                         </div>

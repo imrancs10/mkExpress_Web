@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './login.css'
+import { redirect } from 'react-router-dom'
 import axios from "axios";
 import { Api } from '../../API/API';
 import { apiUrls } from '../../API/ApiUrl';
@@ -42,11 +43,13 @@ export default function Login({setLoginDetails}) {
                 if(common.validateGuid(res.data?.userResponse?.id))
                 {
                     setLoginDetails({...res.data});
-                    toast.success(toastMessage.saveSuccess);
+                    toast.success(toastMessage.loginSuccess);
                     window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY,JSON.stringify(res.data));
+                    redirect("/",{replace:true});
                 }
                 else{
                     setLoginDetails({ isAuthenticated: false})
+                    redirect("/login")
                 }
 
             }).catch(err => {
@@ -79,7 +82,8 @@ export default function Login({setLoginDetails}) {
                         <div className='card card-info'>
                             <div className='card-header text-center text-uppercase bold' style={{ fontWeight: '800' }}>Employee/User Login</div>
                             <div className='card-body'>
-                                <div className='row'>
+                               <form>
+                               <div className='row'>
                                     <div className='col-12 mb-4 text-center'>
                                         <img className='loginlogo' src='/logo512.png' alt='login logo'></img>
                                         <div className='text-center text-uppercase bold' style={{ fontWeight: '800' }}>{process.env.REACT_APP_COMPANY_NAME}</div>
@@ -107,6 +111,7 @@ export default function Login({setLoginDetails}) {
                                         <button className='btn brn-sm btn-primary w-100' onClick={e => loginHandler(e)} >Login <i className="fa-brands fa-golang"></i> {isLoading && <i className="fa-solid fa-spinner fa-spin" style={{color: '#e22c9f'}}></i>}</button>
                                     </div>
                                 </div>
+                               </form>
                             </div>
                         </div>
                     </div>

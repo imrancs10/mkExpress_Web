@@ -249,6 +249,9 @@ const common = {
     },
     checkTokenExpiry:(exp)=>{
        return exp < ((new Date().getTime() + 1) / 1000)
+    },
+    checkAdminRole:(role)=>{
+      return  role?.toLowerCase()==="admin"
     }
 }
 

@@ -1,0 +1,17 @@
+.user-profile img
+{
+    border-radius: 50%;
+    border: 2px solid #27a8e8;
+    width: 150px;
+    height: 150px;
+   
+}
+.user-profile
+{
+    
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -75px;
+}
