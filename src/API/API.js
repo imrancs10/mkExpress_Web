@@ -8,7 +8,8 @@ import { common } from '../Components/Utility/common';
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
 axiosRetry(axios, {
-    retries: 3, retryDelay: (retryCount) => {
+    retries: 3, 
+    retryDelay: (retryCount) => {
         return retryCount * 1000;
     }
 });
@@ -121,5 +122,7 @@ axios.interceptors.request.use(
                 return req;
             }
         }
+        else
+        return req;
     }
 )
