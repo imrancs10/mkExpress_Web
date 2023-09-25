@@ -75,7 +75,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
                             </li>
                             {common.checkAdminRole(loginDetails?.userResponse?.role) &&
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="/admin">Admin</Link>
+                                    <Link className="nav-link" to="/admin">Admin</Link>
                                 </li>
                             }
                         </ul>
