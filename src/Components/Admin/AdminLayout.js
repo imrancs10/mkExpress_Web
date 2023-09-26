@@ -1,11 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import LeftMenu from './LeftMenu'
 import { Outlet } from 'react-router-dom'
 import '../Admin/LeftMenuStyle.css'
 import { common } from '../Utility/common'
 import UnauthorizedAccess from '../Middleware/UnauthorizedAccess'
 
-export default function AdminLayout({ loginDetails, isSidebarCollapsed, setIsSidebarCollapsed }) {
+export default function AdminLayout({ loginDetails }) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   if(!common.checkAdminRole(loginDetails?.userResponse?.role))
   {
     return <UnauthorizedAccess></UnauthorizedAccess>

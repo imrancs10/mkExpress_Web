@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom";
 import LeftMenuItem from './LeftMenuItem';
 import Login from '../Login/Login';
-export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, setIsSidebarCollapsed, accessLogin, setAccessLogin }) {
+export default function LeftMenu({ setAuthData, authData, accessLogin, setAccessLogin,isSidebarCollapsed, setIsSidebarCollapsed }) {
     const tokenStorageKey = process.env.REACT_APP_TOKEN_STORAGE_KEY;
+    
     const [selectParentMenu, setSelectParentMenu] = useState("shop");
     const location = useLocation();
 
@@ -36,7 +37,7 @@ export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, se
         });
     }
     const hasAccess = (menuName) => {
-      return true;
+        return true;
     }
 
     const accessLogout = () => {
@@ -56,7 +57,9 @@ export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, se
                             <div className="simplebar-offset" style={{ right: '0px', bottom: '0px' }}>
                                 <div className="simplebar-content-wrapper" style={{ height: '100%', overflow: 'hidden' }}>
                                     <div className="simplebar-content" style={{ padding: '0px' }}>
-                                      
+                                        <div className='toggle-icon' onClick={e=>setIsSidebarCollapsed(pre=>!pre)} title={`${isSidebarCollapsed ? "Expand Menu" :"Collaps Menu"} `}>
+                                            <i className={`fa-solid fa-angles-up ${isSidebarCollapsed ? "fa-rotate-90" :"fa-rotate-270"} `}></i>
+                                        </div>
                                         <ul className="metismenu" id="menu">
                                             {/* {hasUserPermission('dashobardview') &&
                                                 <> */}
@@ -69,30 +72,33 @@ export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, se
                                                         <div className="parent-icon">
                                                             <i className="fa-solid fa-database"></i>
                                                         </div>
-                                                        <div className="menu-title">Master Data</div>
+                                                        <div className="menu-title">{isSidebarCollapsed?"":"Master Data"}</div>
                                                     </a>
                                                     <ul name="master" className={selectParentMenu === 'master' ? 'mm-collapse mm-show' : "mm-collapse"}>
                                                         <li>
-                                                            <LeftMenuItem hasAccess={hasAccess} icon="fa-solid fa-code-branch" menuName="Master Data Type" link="admin/master/type" />
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-code-branch" menuName="Master Data Type" link="admin/master/type" />
                                                         </li>
                                                         <li>
-                                                            <LeftMenuItem hasAccess={hasAccess} icon="fa-solid fa-share-nodes" menuName="Master Data" link="admin/master/data" />
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-share-nodes" menuName="Master Data" link="admin/master/data" />
                                                         </li>
                                                         <li>
-                                                            <LeftMenuItem hasAccess={hasAccess} icon="fa-solid fa-person-military-pointing" menuName="Customers" link="admin/customer" />
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-person-military-pointing" menuName="Customers" link="admin/customer" />
+                                                        </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-map-location" menuName="Logistic Region" link="admin/logistic-region" />
                                                         </li>
                                                     </ul>
                                                 </>
                                                 }
                                             </li>
-                                            <li>
+                                            {/* <li>
                                                 <a href="#" onClick={e => logoutHandler(e)} data-bs-toggle="modal" data-bs-target="#accessLoginModel">
                                                     <div className="parent-icon">
-                                                        <i className="bi bi-lock"></i>
+                                                        <i className="fa-solid fa-lock"></i>
                                                     </div>
-                                                    <div className="menu-title">App Logout</div>
+                                                    <div className="menu-title">{isSidebarCollapsed?"":"Logout"}</div>
                                                 </a>
-                                            </li>
+                                            </li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -108,7 +114,7 @@ export default function LeftMenu({ setAuthData, authData, isSidebarCollapsed, se
                         <div className="simplebar-scrollbar" style={{ height: '0px', display: 'none' }}></div>
                     </div>
                 </aside>
-            </section>           
+            </section>
         </>
     )
 }

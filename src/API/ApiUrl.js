@@ -26,5 +26,13 @@ export const apiUrls = {
         get: `${apiPrfix}/customer/get/`,
         getAll: `${apiPrfix}/customer`,
         search: `${apiPrfix}/customer/search`,
+    },
+    logisticRegionController:{
+        add: `${apiPrfix}/logisticRegion`,
+        update: `${apiPrfix}/logisticRegion`,
+        delete: `${apiPrfix}/logisticRegion/`,
+        get: `${apiPrfix}/logisticRegion/get/`,
+        getAll: `${apiPrfix}/logisticRegion`,
+        search: `${apiPrfix}/logisticRegion/search`,
     }
 }

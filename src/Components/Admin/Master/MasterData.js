@@ -114,6 +114,7 @@ export default function MasterData() {
             { name: 'Code', prop: 'code' }
         ],
         data: [],
+        showSerialNo:true,
         totalRecords: 0,
         pageSize: pageSize,
         pageNo: pageNo,
@@ -228,7 +229,7 @@ export default function MasterData() {
                                                 <ErrorLabel message={errors?.masterDataType}></ErrorLabel>
                                             </div>
                                             <div className="col-md-12">
-                                                <Inputbox labelText="Master Data" className="form-control-sm" labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={masterDataModel.value} errorMessage={errors?.value} />
+                                                <Inputbox labelText="Master Data" className="form-control-sm" maxLength={10000} labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={masterDataModel.value} errorMessage={errors?.value} />
                                             </div>
                                         </form>
                                     </div>

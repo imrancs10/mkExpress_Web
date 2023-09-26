@@ -99,7 +99,8 @@ export default function MasterDataType() {
             { name: 'Code', prop: 'code' }
         ],
         data: [],
-        totalRecords: 0,
+        totalRecords: 0, 
+        showSerialNo:true,
         pageSize: pageSize,
         pageNo: pageNo,
         setPageNo: setPageNo,
@@ -185,7 +186,7 @@ export default function MasterDataType() {
                                     <div className="card-body">
                                         <div className="row g-3">
                                             <div className="col-md-12">
-                                                <Inputbox isRequired={true} errorMessage={errors?.value} labelText="Master Data" onChangeHandler={handleTextChange} name="value" value={masterDataTypeModel.value} type="text" id='value' className="form-control form-control-sm" />
+                                                <Inputbox isRequired={true} maxLength={1000} errorMessage={errors?.value} labelText="Master Data" onChangeHandler={handleTextChange} name="value" value={masterDataTypeModel.value} type="text" id='value' className="form-control form-control-sm" />
                                             </div>
                                         </div>
                                     </div>

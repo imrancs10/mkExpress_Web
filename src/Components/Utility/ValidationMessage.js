@@ -22,6 +22,11 @@ const validationMessage = {
     reqPreferredPickupTime:"Please enter preferred pickup time",
     invalidBothCity:"Both cities can't be same!",
     invalidBothStore:"Both stores can't be same!",
+    reqCountry:"Please select country!",
+    reqStation:"Please select station!",
+    reqProvince:"Please select province!",
+    reqStation:"Please select station!",
+    reqParentStation:"Please select parent station!",
 }
 
 export {validationMessage};

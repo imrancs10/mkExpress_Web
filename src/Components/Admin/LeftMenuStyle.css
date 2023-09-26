@@ -50,9 +50,15 @@
 }
 
 .toggle-icon {
-    font-size: 22px;
+    font-size: 15px;
     cursor: pointer;
     color: #3461ff;
+    /* position: absolute; */
+    right: 0px;
+    background: pink;
+    padding: 5px;
+    /* border-radius: 52px; */
+    text-align: right;
 }
 
 

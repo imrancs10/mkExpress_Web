@@ -40,6 +40,15 @@ const headerFormat = {
     { name: 'Contact No', prop: 'contactNo', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Max Delivery Attempt', prop: 'maxDeliveryAttempt', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  logisticRegion:[
+    { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Country', prop: 'country', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Province', prop: 'province', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'City', prop: 'city', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'District', prop: 'district', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Station', prop: 'station', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Parent Station', prop: 'parentStation', action: { hAlign: "center", dAlign: "center" } },
   ]
 }
 
