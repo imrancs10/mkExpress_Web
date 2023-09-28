@@ -12,6 +12,7 @@ import ThirdPartyShipment from './ThirdPartyShipment';
 import ScanToPrint from './ScanToPrint';
 import BulkScanToPrint from './BulkScanToPrint';
 import AssignToTransfer from './AssignToTransfer';
+import ShipmentTracking from './ShipmentTracking';
 
 export default function Shipment() {
     const filterYearStartFrom = 2022;
@@ -38,7 +39,8 @@ export default function Shipment() {
     const [pageSize, setPageSize] = useState(10);
     const [searchFilter, setSearchFilter] = useState(searchFilterTemplate);
     const [clearFilter, setClearFilter] = useState(0);
-    const [selectedRows, setSelectedRows] = useState([])
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [shipmentIdForTracking, setShipmentIdForTracking] = useState("")
     useEffect(() => {
         Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}`)
             .then(res => {
@@ -103,7 +105,12 @@ export default function Shipment() {
             showPrint: true,
             buttons: [{
                 icon: "fa-solid fa-shoe-prints",
-                title: "Shipment Tracking"
+                title: "Shipment Tracking",
+                modelId:"modalShipmentTracking",
+                showModel:true,
+                handler:(id,data)=>{
+                    setShipmentIdForTracking(id);
+                }
             }]
         }
     };
@@ -129,6 +136,7 @@ export default function Shipment() {
             <ScanToPrint></ScanToPrint>
             <BulkScanToPrint></BulkScanToPrint>
             <AssignToTransfer></AssignToTransfer>
+            <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
         </>
     )
 }
