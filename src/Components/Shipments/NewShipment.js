@@ -3,14 +3,19 @@ import ButtonBox from '../Common/ButtonBox'
 import Label from '../Common/Label';
 import ErrorLabel from '../Common/ErrorLabel';
 import { validationMessage } from '../Utility/ValidationMessage';
+import { toastMessage } from '../Utility/ConstantValues';
 import { apiUrls } from '../../API/ApiUrl';
 import { Api } from '../../API/API';
 import Dropdown from '../Common/Dropdown';
+import { common } from '../Utility/common';
+import { toast } from 'react-toastify';
 
 export default function NewShipment() {
     const shipmentModelTemplete = {
+        id: common.guid(),
+        shipmentNumber: common.getShipmentNumber(),
         customerId: "",
-        uniqueRefNumber: "",
+        uniqueRefNo: "",
         fromStoreId: "",
         toStoreId: "",
         shipperAdd3: "",
@@ -35,6 +40,9 @@ export default function NewShipment() {
         codAmount: 0.00,
         dimensions: "",
         weight: "",
+        statusReason: "",
+        status: "",
+        shipmentDetails: []
     };
     const [customerList, setCustomerList] = useState([])
     const [storeList, setStoreList] = useState([]);
@@ -44,12 +52,12 @@ export default function NewShipment() {
     useEffect(() => {
         var apiList = [];
         apiList.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes + '?masterDataTypes=city&masterDataTypes=store'));
-        //apiList.push(Api.Get(apiUrls.customerController.getAll));
+        apiList.push(Api.Get(apiUrls.customerController.getAll));
         Api.MultiCall(apiList)
             .then(res => {
-               // setCustomerList(res[1].data.data);
-                setCityList(res[0].data.filter(x=>x?.masterDataTypeCode==='city'))
-                setStoreList(res[0].data.filter(x=>x?.masterDataTypeCode==='store'))
+                setCustomerList(res[1].data.data);
+                setCityList(res[0].data.filter(x => x?.masterDataTypeCode === 'city'))
+                setStoreList(res[0].data.filter(x => x?.masterDataTypeCode === 'store'))
             });
     }, []);
 
@@ -58,25 +66,30 @@ export default function NewShipment() {
         if (type === 'number') {
             value = parseInt(value);
         }
+        if(name==='weight')
+        {
+            value = parseFloat(value);
+            value=isNaN(value)?0:value;
+        }
         setShipmentModel({ ...shipmentModel, [name]: value });
         if (!!errors[name]) {
             setErrors({ ...errors, [name]: null })
-          }
+        }
     }
 
     const validateError = () => {
         var formError = {};
-        var { customerId, uniqueRefNumber, fromStoreId, toStoreId, shipperAdd2, shipperAdd1, shipperCityId,
+        var { customerId, uniqueRefNo, fromStoreId, toStoreId, shipperAdd2, shipperAdd1, shipperCityId,
             shipperPhone, shipperName, consigneeAdd2, consigneeAdd1, consigneeCityId, consigneePhone, consigneeName,
             itemName, numberOfPieces, dimensions, weight } = shipmentModel;
 
-        if (!itemName || itemName === "") formError.itemName = validationMessage.reqItemName;
+     //   if (!itemName || itemName === "") formError.itemName = validationMessage.reqItemName;
         if (!numberOfPieces || numberOfPieces === 0) formError.numberOfPieces = validationMessage.reqNumberOfPieces;
-        if (!dimensions || dimensions === "") formError.dimensions = validationMessage.reqDimensions;
-        if (!weight || weight === "") formError.weight = validationMessage.reqWeight;
+        //if (!dimensions || dimensions === "") formError.dimensions = validationMessage.reqDimensions;
+        if (!weight || isNaN(weight) || weight === 0) formError.weight = validationMessage.reqWeight;
 
         if (!customerId || customerId === 0) formError.customerId = validationMessage.reqCustomer;
-        if (!uniqueRefNumber || uniqueRefNumber === "") formError.uniqueRefNumber = validationMessage.reqUniqueRefNumber;
+        if (!uniqueRefNo || uniqueRefNo === "") formError.uniqueRefNo = validationMessage.reqUniqueRefNumber;
         if (!fromStoreId || fromStoreId === 0) formError.fromStoreId = validationMessage.reqFromStoreId;
         if (!toStoreId || toStoreId === 0) formError.toStoreId = validationMessage.reqToStoreId;
         if (!shipperAdd2 || shipperAdd2 === "") formError.shipperAdd2 = validationMessage.reqAddress2;
@@ -89,8 +102,7 @@ export default function NewShipment() {
         if (!consigneeAdd1 || consigneeAdd1 === "") formError.consigneeAdd1 = validationMessage.reqAddress1;
         if (!consigneeCityId || consigneeCityId === 0) formError.consigneeCityId = validationMessage.reqCity;
         if (!consigneePhone || consigneePhone === "") formError.consigneePhone = validationMessage.reqPhone;
-        if (consigneeCityId === shipperCityId && consigneeCityId!=="") 
-        {
+        if (consigneeCityId === shipperCityId && consigneeCityId !== "") {
             formError.consigneeCityId = validationMessage.invalidBothCity;
             formError.shipperCityId = validationMessage.invalidBothCity;
         }
@@ -103,10 +115,43 @@ export default function NewShipment() {
             setErrors({ ...err });
             return;
         }
+        var model = shipmentModel;
+        model.shipmentDetails=[];
+        model.shipmentDetails.push({
+            shipmentId: model.id,
+            fromStoreId: model.fromStoreId,
+            toStoreId: model.toStoreId,
+            shipperName: model.shipperName,
+            shipperEmail: model.shipperEmail,
+            shipperPhone: model.shipperPhone,
+            shipperSecondPhone: model.shipperSecondPhone,
+            shipperAddress1: model.shipperAdd1,
+            shipperAddress2: model.shipperAdd2,
+            shipperAddress3: model.shipperAdd3,
+            shipperCityId: model.shipperCityId,
+            consigneeName: model.consigneeName,
+            consigneeEmail: model.consigneeEmail,
+            consigneePhone: model.consigneePhone,
+            consigneeSecondPhone: model.consigneeSecondPhone,
+            consigneeAddress1: model.consigneeAdd1,
+            consigneeAddress2: model.consigneeAdd2,
+            consigneeAddress3: model.consigneeAdd3,
+            consigneeCityId: model.consigneeCityId,
+            weight: model.weight,
+            totalPieces: model.totalPieces,
+            dimension: model.dimensions,
+            description: model.description
+        })
+        Api.Put(apiUrls.shipmentController.create, model)
+            .then(res => {
+                if (common.validateGuid(res.data?.id)) {
+                    toast.success(toastMessage.saveSuccess);
+                }
+            })
     }
     return (
         <>
-            <div className="modal fade" id="modalNewShipment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNewShipmentLabel" aria-hidden="true">
+            <div className="modal fade" id="modalNewShipment" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalNewShipmentLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -117,13 +162,13 @@ export default function NewShipment() {
                             <div className='row'>
                                 <div className='col-sm-12 col-md-6'>
                                     <Label text="Customer" isRequired={true} fontSize='12px' bold={true}></Label>
-                                    <Dropdown data={customerList} text="name" value={shipmentModel.customerId} name="customerId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select Customer'/>
-                                   <ErrorLabel message={errors?.customerId} />
+                                    <Dropdown data={customerList} text="name" value={shipmentModel.customerId} name="customerId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select Customer' />
+                                    <ErrorLabel message={errors?.customerId} />
                                 </div>
                                 <div className='col-sm-12 col-md-6'>
                                     <Label text="Unique Reference Number" isRequired={true} bold={true} fontSize='12px'></Label>
-                                    <input type='text' name="uniqueRefNumber" value={shipmentModel.uniqueRefNumber} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Unique Reference Number'></input>
-                                    <ErrorLabel message={errors?.uniqueRefNumber} />
+                                    <input type='text' name="uniqueRefNo" value={shipmentModel.uniqueRefNo} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Unique Reference Number'></input>
+                                    <ErrorLabel message={errors?.uniqueRefNo} />
                                 </div>
                             </div>
                             <div className='row mt-2'>
@@ -133,8 +178,8 @@ export default function NewShipment() {
                                             <div className='card-title'>Shipper</div>
                                             <div className='col-12'>
                                                 <Label text="From Store" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={storeList}  value={shipmentModel.fromStoreId} name="fromStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store'/>
-                                               
+                                                <Dropdown data={storeList} value={shipmentModel.fromStoreId} name="fromStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
+
                                                 <ErrorLabel message={errors?.fromStoreId} />
                                             </div>
                                             <div className='col-12'>
@@ -157,9 +202,9 @@ export default function NewShipment() {
                                             </div>
                                             <div className='col-12'>
                                                 <Label text="City" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={cityList} value={shipmentModel.shipperCityId} name="shipperCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City'/>
-                                               
-                                               <ErrorLabel message={errors?.shipperCityId} />
+                                                <Dropdown data={cityList} value={shipmentModel.shipperCityId} name="shipperCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
+
+                                                <ErrorLabel message={errors?.shipperCityId} />
                                             </div>
                                             <div className='col-12'>
                                                 <Label text="Address 1" isRequired={true} bold={true} fontSize='12px'></Label>
@@ -184,8 +229,8 @@ export default function NewShipment() {
                                             <div className='card-title'>Consignee</div>
                                             <div className='col-12'>
                                                 <Label text="To Store" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={storeList}  value={shipmentModel.toStoreId} name="toStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store'/>
-                                               
+                                                <Dropdown data={storeList} value={shipmentModel.toStoreId} name="toStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
+
                                                 <ErrorLabel message={errors?.toStoreId} />
                                             </div>
                                             <div className='col-12'>
@@ -208,8 +253,8 @@ export default function NewShipment() {
                                             </div>
                                             <div className='col-12'>
                                                 <Label text="City" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={cityList} value={shipmentModel.consigneeCityId} name="consigneeCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City'/>
-                                               
+                                                <Dropdown data={cityList} value={shipmentModel.consigneeCityId} name="consigneeCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
+
                                                 <ErrorLabel message={errors?.consigneeCityId} />
                                             </div>
                                             <div className='col-12'>

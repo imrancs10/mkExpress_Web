@@ -198,7 +198,7 @@ export default function MasterData() {
                     <Label text="Master Data Type" fontSize='12px'></Label>
                 </div>
                 <div className="p-2 bd-highlight">
-                    <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value) }} value={filterMasterDataType}>
+                    <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value);setPageNo(1) }} value={filterMasterDataType}>
                         <option value="">Select </option>
                         {
                             masterDataTypeList?.map(ele => {

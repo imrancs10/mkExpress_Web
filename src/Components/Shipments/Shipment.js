@@ -14,38 +14,40 @@ import BulkScanToPrint from './BulkScanToPrint';
 import AssignToTransfer from './AssignToTransfer';
 
 export default function Shipment() {
-    const filterYearStartFrom=2022;
+    const filterYearStartFrom = 2022;
     const searchFilterTemplate = {
         customer: 0,
-        reason:0,
-        status:0,
-        courier:0,
-        station:0,
-        consigneeCity:0,
-        createdFrom:common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
-        createdTo:common.getHtmlDate(new Date()),
-        deliveredFrom:common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
-        deliveredTo:common.getHtmlDate(new Date()),
-        receivedFrom:common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
-        receivedTo:common.getHtmlDate(new Date()),
-        codDateFrom:common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
-        codDateTo:common.getHtmlDate(new Date()),
-        returnFrom:common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
-        returnTo:common.getHtmlDate(new Date()),
-        searchTerm:""
+        reason: 0,
+        status: 0,
+        courier: 0,
+        station: 0,
+        consigneeCity: 0,
+        createdFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
+        createdTo: common.getHtmlDate(new Date()),
+        deliveredFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
+        deliveredTo: common.getHtmlDate(new Date()),
+        receivedFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
+        receivedTo: common.getHtmlDate(new Date()),
+        codDateFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
+        codDateTo: common.getHtmlDate(new Date()),
+        returnFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
+        returnTo: common.getHtmlDate(new Date()),
+        searchTerm: ""
     }
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [searchFilter, setSearchFilter] = useState(searchFilterTemplate);
     const [clearFilter, setClearFilter] = useState(0);
+    const [selectedRows, setSelectedRows] = useState([])
     useEffect(() => {
-        // Api.Get(apiUrls.authController.getToken)
-        //     .then(res => {
-        //         tableOptionTemplet.data = res.data.data;
-        //         tableOptionTemplet.totalRecords = res.data.totalRecords;
-        //         setTableOption(tableOptionTemplet);
-        //     })
-    }, [pageNo, pageSize,clearFilter])
+        Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}`)
+            .then(res => {
+                tableOptionTemplet.data = res.data.data;
+                tableOptionTemplet.totalRecords = res.data.totalRecords;
+                setTableOption(tableOptionTemplet);
+            })
+    }, [pageNo, pageSize, clearFilter])
+
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
             return;
@@ -57,8 +59,37 @@ export default function Shipment() {
 
         });
     }
+    const selectAllRowHandler = (e) => {
+        if (!e.target.checked) {
+            setSelectedRows([]);
+            return;
+        }
+        var selectedIds = tableOption.data.map(x => x.id);
+        setSelectedRows([...selectedIds]);
+    }
+
+    const selectRowHandler = (e, data) => {
+        if (!e.target.checked) {
+            var filterIds = selectedRows.filter((x) => {
+             return   x !== data?.id
+            })
+            setSelectedRows([...filterIds]);
+            return;
+        }
+        var selectedIds = selectedRows;
+        selectedIds.push(data?.id);
+        setSelectedRows([...selectedIds]);
+    }
+
+    var shipmentTableHeader = headerFormat.shipmentDetails;
+    shipmentTableHeader[0].name = () => {
+        return <input type='checkbox' onChange={e => selectAllRowHandler(e)} checked={tableOption.totalRecords===selectedRows?.length && selectedRows.length>0} id="checkAll"></input>
+    }
+    shipmentTableHeader[0].customColumn = (data) => {
+        return <input type='checkbox' onChange={e => selectRowHandler(e, data)} checked={selectedRows.find(x => x === data?.id) !== undefined}></input>
+    }
     const tableOptionTemplet = {
-        headers: headerFormat.shipmentDetails,
+        headers: shipmentTableHeader,
         data: [],
         showTableTop: true,
         totalRecords: 0,
@@ -69,7 +100,11 @@ export default function Shipment() {
         setPageSize: setPageSize,
         searchHandler: handleSearch,
         actions: {
-
+            showPrint: true,
+            buttons: [{
+                icon: "fa-solid fa-shoe-prints",
+                title: "Shipment Tracking"
+            }]
         }
     };
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
@@ -87,7 +122,7 @@ export default function Shipment() {
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <ShipmentSearchPanel setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
-            <ShipmentsButtons></ShipmentsButtons>
+            <ShipmentsButtons selectedRows={selectedRows}></ShipmentsButtons>
             <TableView option={tableOption}></TableView>
             <NewShipment></NewShipment>
             <ThirdPartyShipment></ThirdPartyShipment>

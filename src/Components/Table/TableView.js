@@ -14,10 +14,12 @@ export default function TableView({ option }) {
     option.data = common.defaultIfEmpty(option.data, []);
     option.setPageNo = common.defaultIfEmpty(option.setPageNo, () => { });
     option.setPageSize = common.defaultIfEmpty(option.setPageSize, () => { });
+    option.pageNo = common.defaultIfEmpty(option.pageNo, 1);
+    option.pageSize = common.defaultIfEmpty(option.pageSize, 20);
     option.searchHandler = common.defaultIfEmpty(option.searchHandler, () => { });
     option.showTableTop = common.defaultIfEmpty(option.showTableTop, true);
     option.showPagination = common.defaultIfEmpty(option.showPagination, true);
-    option.showFooter = common.defaultIfEmpty(option.showFooter, true);
+    option.showFooter = common.defaultIfEmpty(option.showFooter, false);
     option.showSerialNo = common.defaultIfEmpty(option.showSerialNo, false);
     option.tableInCard=common.defaultIfEmpty(option.tableInCard, true);
     option.changeRowClassHandler = common.defaultIfEmpty(option.changeRowClassHandler, () => { return '' });
@@ -64,7 +66,7 @@ export default function TableView({ option }) {
                                                             tabIndex="0"
                                                             aria-controls="example"
                                                             key={index}
-                                                        >{ele.name}</th>
+                                                        >{typeof ele.name==="string"? ele.name:ele?.name(ele,index)}</th>
                                                     })
                                                 }
 
@@ -76,7 +78,7 @@ export default function TableView({ option }) {
                                                     option.data.map((dataEle, dataIndex) => {
                                                         return <tr key={dataIndex}>
                                                             {option.showAction && <td><TableAction data={dataEle} dataId={dataEle.id} rowIndex={dataIndex} option={option.actions}></TableAction></td>}
-                                                            {option.showSerialNo && <td className="text-center">{dataIndex + 1}</td>}
+                                                            {option.showSerialNo && <td className="text-center" style={{ fontSize: '12px' }}>{((option.pageNo-1)*option.pageSize)+ dataIndex + 1}</td>}
                                                             {
                                                                 option.headers.map((headerEle, headerIndex) => {
                                                                     return <td
@@ -128,6 +130,8 @@ export default function TableView({ option }) {
                                                                 }, 0)}{ele?.action?.suffixFooterText === undefined ? "" : ele.action?.suffixFooterText}</th>
                                                             else if (typeof (ele?.action?.footerSum) === 'function')
                                                                 return <th className={ele?.action?.hAlign === undefined ? "" : "text-" + ele?.action?.hAlign?.trim()} key={index}>{ele?.action?.footerSum(option?.data, ele, ele?.action?.footerSumInDecimal)}{ele?.action?.suffixFooterText === undefined ? "" : ele.action?.suffixFooterText}</th>
+                                                                else
+                                                                return <th></th>
                                                         })
                                                     }
                                                 </tr>

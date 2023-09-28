@@ -26,7 +26,6 @@ export default function CustomerDetails() {
   const [pageNo, setPageNo] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [errors, setErrors] = useState({});
-  const VAT = parseFloat(process.env.REACT_APP_VAT);
   const handleDelete = (id) => {
     Api.Delete(apiUrls.customerController.delete + id).then(res => {
       if (res.data === 1) {

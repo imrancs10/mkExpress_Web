@@ -4,7 +4,7 @@ import ButtonBox from '../Common/ButtonBox'
 export default function ScanToPrint() {
     return (
         <>
-            <div className="modal fade" id="modalScanToPrint" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalScanToPrintLabel" aria-hidden="true">
+            <div className="modal fade" id="modalScanToPrint" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalScanToPrintLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">

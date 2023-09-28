@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { usePagination, DOTS } from '../Hooks/usePaginagtion';
+import { usePagination } from '../Hooks/usePaginagtion';
 import { common } from '../Utility/common'
 
 export default function Pagination({ option }) {

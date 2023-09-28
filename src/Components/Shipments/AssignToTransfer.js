@@ -5,12 +5,12 @@ import Dropdown from '../Common/Dropdown'
 
 export default function AssignToTransfer() {
     const tableOptionTemplate={
-        showTableTop:false,
+        showTableTop:false
     };
     const [tableOption, setTableOption] = useState(tableOptionTemplate);
     return (
         <>
-            <div className="modal fade" id="modalAssignToTransfer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAssignToTransferLabel" aria-hidden="true">
+            <div className="modal fade" id="modalAssignToTransfer" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalAssignToTransferLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -26,8 +26,8 @@ export default function AssignToTransfer() {
                         </div>
                         <div className="modal-footer">
                             <div className='d-flex justify-content-end w-50'>
-                                <Dropdown className="form-control form-control-sm"></Dropdown>
-                                <Dropdown className="form-control form-control-sm mx-2"></Dropdown>
+                                {/* <Dropdown className="form-control form-control-sm"></Dropdown>
+                                <Dropdown className="form-control form-control-sm mx-2"></Dropdown> */}
                                 <ButtonBox type="save" style={{width:'100px'}} className="btn btn-sm"></ButtonBox>
                             </div>
                         </div>

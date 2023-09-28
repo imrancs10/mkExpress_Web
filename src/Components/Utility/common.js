@@ -65,7 +65,7 @@ const common = {
             return returnVal
         }
         if (input.match(RegexFormat.dateTimeRegex) !== null)
-            return common.getHtmlDate(input.match(RegexFormat.dateRegex)[0], 'ddmmyyyy');
+            return common.getHtmlDate(input.match(RegexFormat.dateRegex)[0], 'ddmmyyyyhhmmss');
         if (action?.upperCase) {
             if (input !== undefined && input !== "")
                 return input.toUpperCase()
@@ -105,6 +105,8 @@ const common = {
             return `${date.getFullYear()}-${month}-${day}`;
         if (format === "ddmmyyyy")
             return `${day}-${month}-${date.getFullYear()}`;
+            if (format === "ddmmyyyyhhmmss")
+            return `${day}-${month}-${date.getFullYear()} ${date.getHours().toString().padStart(2,"0")}:${date.getMinutes().toString().padStart(2,"0")}:${date.getSeconds().toString().padStart(2,"0")}`;
 
     },
     closePopup: (closeButonId, callback) => {
@@ -252,6 +254,18 @@ const common = {
     },
     checkAdminRole:(role)=>{
       return  role?.toLowerCase()==="admin"
+    },
+    getShipmentNumber:()=>{
+        var d=new Date();
+        var shipmentNumber="";
+        shipmentNumber=d.getFullYear().toString();
+        shipmentNumber+=(d.getMonth()+1).toString();
+        shipmentNumber+=d.getDate().toString();
+        shipmentNumber+=d.getHours().toString();
+        shipmentNumber+=d.getMinutes().toString();
+        shipmentNumber+=d.getSeconds().toString();
+        shipmentNumber+=d.getMilliseconds().toString();
+        return shipmentNumber;
     }
 }
 

@@ -25,7 +25,6 @@ const validationMessage = {
     reqCountry:"Please select country!",
     reqStation:"Please select station!",
     reqProvince:"Please select province!",
-    reqStation:"Please select station!",
     reqParentStation:"Please select parent station!",
 }
 

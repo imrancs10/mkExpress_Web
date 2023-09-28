@@ -34,5 +34,14 @@ export const apiUrls = {
         get: `${apiPrfix}/logisticRegion/get/`,
         getAll: `${apiPrfix}/logisticRegion`,
         search: `${apiPrfix}/logisticRegion/search`,
+    },
+    shipmentController:{
+        create: `${apiPrfix}/shipment`,
+        update: `${apiPrfix}/shipment`,
+        delete: `${apiPrfix}/shipment/`,
+        get: `${apiPrfix}/shipment/get/`,
+        getTrackingByShipmentId: `${apiPrfix}/shipment/get/tracking`,
+        getAll: `${apiPrfix}/shipment`,
+        search: `${apiPrfix}/shipment/search`,
     }
 }
