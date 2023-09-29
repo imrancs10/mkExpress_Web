@@ -6,3 +6,43 @@
 .ship-btn-container .btn-sm {
     text-wrap: nowrap;
 }
+
+.pod-img {
+    width: 100%;
+    word-wrap: break-word;
+    flex-wrap: wrap;
+}
+
+.pod-img img {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    border: 1px solid green;
+    border-radius: 4px; 
+    transition: .5s all;
+    cursor: pointer;
+}
+
+.pod-img img:hover{
+    box-shadow: 2px 2px 5px gray;
+    transition: .5s all;
+}
+
+.print-container
+{
+    padding: 20px;
+}
+.print-container table{
+    /* border: 1px solid; */
+}
+.print-container table tr{
+
+}
+.print-container table tr td{
+    border: 1px solid;
+    padding: 0 4px;
+}
+.print-container table tr td.v-bar{
+    height: 400px;
+    width: 10%;
+}

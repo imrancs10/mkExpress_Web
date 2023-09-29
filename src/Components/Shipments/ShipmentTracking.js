@@ -3,6 +3,7 @@ import { Api } from '../../API/API';
 import { apiUrls } from '../../API/ApiUrl';
 import Label from '../Common/Label';
 import { common } from '../Utility/common';
+import './shipment.css';
 
 export default function ShipmentTracking({ shipmentId }) {
     const [trackingDetails, setTrackingDetails] = useState([]);
@@ -17,7 +18,7 @@ export default function ShipmentTracking({ shipmentId }) {
 
     }, [shipmentId])
 
-    return (
+   return (
         <>
             <div className="modal fade" id="modalShipmentTracking" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalShipmentTrackingLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
@@ -142,6 +143,18 @@ export default function ShipmentTracking({ shipmentId }) {
                                                 </div>
                                                 <div className='col-12'>
                                                     <Label text={`Attached Images Urls:`}></Label>
+                                                    <div className='d-flex content-justify-start pod-img w-100'>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,36 +163,36 @@ export default function ShipmentTracking({ shipmentId }) {
                             </div>
                             <div className='row'>
                                 <div className='col-12'>
-                                   <div style={{overflowX:'auto'}}>
-                                   <table className="table table-sm table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Date</th>
-                                                <th>Activity</th>
-                                                <th>Comment 1</th>
-                                                <th>Comment 2</th>
-                                                <th>Comment 3</th>
-                                                <th>By</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                trackingDetails?.map((res,index)=>{
-                                                    return <tr>
-                                                        <td>{index+1}</td>
-                                                        <td>{res?.createdAt}</td>
-                                                        <td>{res?.activity}</td>
-                                                        <td>{res?.comment1}</td>
-                                                        <td>{res?.comment2}</td>
-                                                        <td>{res?.comment3}</td>
-                                                        <td>{res?.commentByName}</td>
-                                                    </tr>
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                   </div>
+                                    <div style={{ overflowX: 'auto' }}>
+                                        <table className="table table-sm table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Date</th>
+                                                    <th>Activity</th>
+                                                    <th>Comment 1</th>
+                                                    <th>Comment 2</th>
+                                                    <th>Comment 3</th>
+                                                    <th>By</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    trackingDetails?.map((res, index) => {
+                                                        return <tr style={{ fontSize: '12px' }}>
+                                                            <td>{index + 1}</td>
+                                                            <td>{common.formatDate(res?.createdAt)}</td>
+                                                            <td>{res?.activity}</td>
+                                                            <td>{res?.comment1}</td>
+                                                            <td>{res?.comment2}</td>
+                                                            <td>{res?.comment3}</td>
+                                                            <td>{res?.commentByName}</td>
+                                                        </tr>
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

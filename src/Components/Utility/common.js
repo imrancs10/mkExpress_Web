@@ -105,8 +105,8 @@ const common = {
             return `${date.getFullYear()}-${month}-${day}`;
         if (format === "ddmmyyyy")
             return `${day}-${month}-${date.getFullYear()}`;
-            if (format === "ddmmyyyyhhmmss")
-            return `${day}-${month}-${date.getFullYear()} ${date.getHours().toString().padStart(2,"0")}:${date.getMinutes().toString().padStart(2,"0")}:${date.getSeconds().toString().padStart(2,"0")}`;
+        if (format === "ddmmyyyyhhmmss")
+            return `${day}-${month}-${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
 
     },
     closePopup: (closeButonId, callback) => {
@@ -245,27 +245,43 @@ const common = {
         e.preventDefault();
         return false;
     },
-    validateGuid:(guid)=>
-    {
-       return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(guid);
+    validateGuid: (guid) => {
+        return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(guid);
     },
-    checkTokenExpiry:(exp)=>{
-       return exp > ((new Date().getTime() + 1) / 1000)
+    checkTokenExpiry: (exp) => {
+        return exp > ((new Date().getTime() + 1) / 1000)
     },
-    checkAdminRole:(role)=>{
-      return  role?.toLowerCase()==="admin"
+    checkAdminRole: (role) => {
+        return role?.toLowerCase() === "admin"
     },
-    getShipmentNumber:()=>{
-        var d=new Date();
-        var shipmentNumber="";
-        shipmentNumber=d.getFullYear().toString();
-        shipmentNumber+=(d.getMonth()+1).toString();
-        shipmentNumber+=d.getDate().toString();
-        shipmentNumber+=d.getHours().toString();
-        shipmentNumber+=d.getMinutes().toString();
-        shipmentNumber+=d.getSeconds().toString();
-        shipmentNumber+=d.getMilliseconds().toString();
+    getShipmentNumber: () => {
+        var d = new Date();
+        var shipmentNumber = "";
+        shipmentNumber = d.getFullYear().toString();
+        shipmentNumber += (d.getMonth() + 1).toString();
+        shipmentNumber += d.getDate().toString();
+        shipmentNumber += d.getHours().toString();
+        shipmentNumber += d.getMinutes().toString();
+        shipmentNumber += d.getSeconds().toString();
+        shipmentNumber += d.getMilliseconds().toString();
         return shipmentNumber;
+    },
+    formatDate: (date) => {
+        var d = new Date(date);
+        var h = d.getHours();
+        var meridian = "AM";
+        if (h > 12) {
+            h = h - 12;
+            meridian = "PM";
+        }
+        if (h === 12) {
+            meridian = "PM";
+        }
+        if (h === 0) {
+            h = 12;
+            meridian = "AM";
+        }
+        return `${(d.getDate()).toString().padStart(2, "0")}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d.getFullYear()} ${h.toString().padStart(2, "0")}:${(d.getMinutes()).toString().padStart(2, "0")}:${(d.getSeconds()).toString().padStart(2, "0")} ${meridian}`
     }
 }
 

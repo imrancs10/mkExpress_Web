@@ -13,6 +13,7 @@ import ScanToPrint from './ScanToPrint';
 import BulkScanToPrint from './BulkScanToPrint';
 import AssignToTransfer from './AssignToTransfer';
 import ShipmentTracking from './ShipmentTracking';
+import PrintShipmentSlip from './PrintShipmentSlip';
 
 export default function Shipment() {
     const filterYearStartFrom = 2022;
@@ -40,6 +41,7 @@ export default function Shipment() {
     const [searchFilter, setSearchFilter] = useState(searchFilterTemplate);
     const [clearFilter, setClearFilter] = useState(0);
     const [selectedRows, setSelectedRows] = useState([]);
+    const [shipmentIdForPrint, setShipmentIdForPrint] = useState("")
     const [shipmentIdForTracking, setShipmentIdForTracking] = useState("")
     useEffect(() => {
         Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}`)
@@ -73,7 +75,7 @@ export default function Shipment() {
     const selectRowHandler = (e, data) => {
         if (!e.target.checked) {
             var filterIds = selectedRows.filter((x) => {
-             return   x !== data?.id
+                return x !== data?.id
             })
             setSelectedRows([...filterIds]);
             return;
@@ -85,10 +87,10 @@ export default function Shipment() {
 
     var shipmentTableHeader = headerFormat.shipmentDetails;
     shipmentTableHeader[0].name = () => {
-        return <input type='checkbox' onChange={e => selectAllRowHandler(e)} checked={tableOption.totalRecords===selectedRows?.length && selectedRows.length>0} id="checkAll"></input>
+        return <input type='checkbox' onChange={e => selectAllRowHandler(e)} checked={tableOption.totalRecords === selectedRows?.length && selectedRows.length > 0} id="checkAll"></input>
     }
     shipmentTableHeader[0].customColumn = (data) => {
-        return <input type='checkbox' onChange={e => selectRowHandler(e, data)} checked={selectedRows.find(x => x === data?.id) !== undefined}></input>
+        return <input type='checkbox' onChange={e => selectRowHandler(e, data)} checked={selectedRows?.find(x => x === data?.id) !== undefined}></input>
     }
     const tableOptionTemplet = {
         headers: shipmentTableHeader,
@@ -103,12 +105,19 @@ export default function Shipment() {
         searchHandler: handleSearch,
         actions: {
             showPrint: true,
+            print: {
+                handler: (id) => {
+                    setShipmentIdForPrint(id);
+                },
+                title: "Print Order Receipt",
+                modelId: 'modalPrintShipmentSlip'
+            },
             buttons: [{
                 icon: "fa-solid fa-shoe-prints",
                 title: "Shipment Tracking",
-                modelId:"modalShipmentTracking",
-                showModel:true,
-                handler:(id,data)=>{
+                modelId: "modalShipmentTracking",
+                showModel: true,
+                handler: (id, data) => {
                     setShipmentIdForTracking(id);
                 }
             }]
@@ -137,6 +146,7 @@ export default function Shipment() {
             <BulkScanToPrint></BulkScanToPrint>
             <AssignToTransfer></AssignToTransfer>
             <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
+            <PrintShipmentSlip shipmentIds={shipmentIdForPrint} />
         </>
     )
 }

@@ -40,6 +40,7 @@ export const apiUrls = {
         update: `${apiPrfix}/shipment`,
         delete: `${apiPrfix}/shipment/`,
         get: `${apiPrfix}/shipment/get/`,
+        getByIds: `${apiPrfix}/shipment/get/by-ids/`,
         getTrackingByShipmentId: `${apiPrfix}/shipment/get/tracking`,
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
