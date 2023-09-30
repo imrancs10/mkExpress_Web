@@ -1,5 +1,4 @@
 import ButtonBox from "../Common/ButtonBox"
-import Inputbox from "../Common/Inputbox"
 const headerFormat = {
   customerDetails: [
     { name: 'Id', prop: 'id', action: { hAlign: "center", dAlign: "center" } },
@@ -9,12 +8,18 @@ const headerFormat = {
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
   ],
   memberDetails: [
-    { name: 'Name', prop: 'name', action: { hAlign: "center", dAlign: "center" } },
+    {
+      name: 'Name', prop: 'name', customColumn: (data) => {
+        return `${data?.firstName} ${data?.lastName}`
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
     { name: 'Email', prop: 'email', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Gender', prop: 'genderName', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Mobile', prop: 'mobile', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Role', prop: 'role', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Personal Phone', prop: 'personalPhone', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Id Number', prop: 'idNumber', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Station', prop: 'station', action: { hAlign: "center", dAlign: "center" } },
   ],
 
   shipmentDetails: [
@@ -22,7 +27,7 @@ const headerFormat = {
       name: () => {
       },
       customColumn: () => {
-        
+
       },
       action: { hAlign: "center", dAlign: "center" }
     },

@@ -44,5 +44,17 @@ export const apiUrls = {
         getTrackingByShipmentId: `${apiPrfix}/shipment/get/tracking`,
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
+    },
+    memberController:{
+        add: `${apiPrfix}/members`,
+        update: `${apiPrfix}/members`,
+        delete: `${apiPrfix}/members/`,
+        get: `${apiPrfix}/members/get/`,
+        getAll: `${apiPrfix}/members`,
+        search: `${apiPrfix}/members/search`,
+        activeDeactive: `${apiPrfix}/members/update/active/`,
+        changeStation: `${apiPrfix}/members/update/station`,
+        resetPassword: `${apiPrfix}/members/password/reset/`,
+        changePassword: `${apiPrfix}/members/password/change`,
     }
 }

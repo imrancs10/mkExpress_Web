@@ -1,0 +1,13 @@
+.inp-password
+{
+position: relative;
+}
+.inp-password i
+{
+    position: absolute;
+    top: 8px;
+    right: 5px;
+}
+.inp-password input{
+    padding-right: 30px;
+}

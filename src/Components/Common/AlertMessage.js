@@ -4,7 +4,7 @@ import { common } from '../Utility/common'
 export default function AlertMessage({ type, message, textAlign }) {
     type = common.defaultIfEmpty(type, "info");
     textAlign = common.defaultIfEmpty(textAlign, "start");
-    message = common.defaultIfEmpty(message, "This is an alter message!");
+    message = common.defaultIfEmpty(message, "This is an alert message!");
 
     const getAlertColor = () => {
         switch (type) {

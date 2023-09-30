@@ -282,7 +282,12 @@ const common = {
             meridian = "AM";
         }
         return `${(d.getDate()).toString().padStart(2, "0")}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d.getFullYear()} ${h.toString().padStart(2, "0")}:${(d.getMinutes()).toString().padStart(2, "0")}:${(d.getSeconds()).toString().padStart(2, "0")} ${meridian}`
-    }
+    },
+    genderList: [
+        { id: 0, value: 'I Prefer Not To Say' },
+        { id: 1, value: 'Male' },
+        { id: 2, value: 'Female' },
+    ]
 }
 
 export { common };

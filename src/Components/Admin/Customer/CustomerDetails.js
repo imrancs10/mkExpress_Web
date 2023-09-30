@@ -28,7 +28,7 @@ export default function CustomerDetails() {
   const [errors, setErrors] = useState({});
   const handleDelete = (id) => {
     Api.Delete(apiUrls.customerController.delete + id).then(res => {
-      if (res.data === 1) {
+      if (res.data > 0) {
         handleSearch('');
         toast.success(toastMessage.deleteSuccess);
       }
@@ -70,7 +70,7 @@ export default function CustomerDetails() {
     let data = customerModel;
     if (isRecordSaving) {
       Api.Put(apiUrls.customerController.add, data).then(res => {
-        if (res.data.id !== null) {
+        if (common.validateGuid(res.data.id)) {
           common.closePopup('closePopupCustomerDetails');
           toast.success(toastMessage.saveSuccess);
           handleSearch('');
@@ -81,7 +81,7 @@ export default function CustomerDetails() {
     }
     else {
       Api.Post(apiUrls.customerController.update, data).then(res => {
-        if (res.data.id !== null) {
+        if (common.validateGuid(res.data.id)) {
           common.closePopup('closePopupCustomerDetails');
           toast.success(toastMessage.updateSuccess);
           handleSearch('');
@@ -92,7 +92,6 @@ export default function CustomerDetails() {
     }
   }
   const handleEdit = (customerId) => {
-
     Api.Get(apiUrls.customerController.get + customerId).then(res => {
       if (res.data.id !==null) {
         setCustomerModel(res.data);

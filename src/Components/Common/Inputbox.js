@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { common } from '../Utility/common'
 import ErrorLabel from './ErrorLabel'
 import Label from './Label'
+import '../CSS/common.css'
 
 export default function Inputbox({ labelText, isRequired, type, name, labelTextHelp, max, min, id, className, onChangeHandler, maxLength, errorMessage, showError, showLabel, value, placeholder, disabled,
     labelFontSize, overrideClass, onChangeHandlerData, checked, style, onBlur, title, disableTitle }) {
+    const [showPassword, setShowPassword] = useState(false);
     labelText = common.defaultIfEmpty(labelText, "Label1");
     isRequired = common.defaultIfEmpty(isRequired, false);
     type = common.defaultIfEmpty(type, "text");
@@ -34,24 +36,27 @@ export default function Inputbox({ labelText, isRequired, type, name, labelTextH
     return (
         <>
             {showLabel && <Label text={labelText} helpText={labelTextHelp} fontSize={labelFontSize} isRequired={isRequired}></Label>}
-            <input
-                maxLength={maxLength}
-                min={min}
-                max={max}
-                onChange={e => onChangeHandler(e, onChangeHandlerData)}
-                name={name}
-                value={value}
-                type={type}
-                id={id}
-                className={overrideClass ? className : "form-control " + className}
-                placeholder={placeholder}
-                disabled={disabled ? "disabled" : ""}
-                checked={checked}
-                style={style}
-                onBlur={e => onBlur(e)}
-                data-toggle={disableTitle?"": "tooltip"}
-                title={title}
-            />
+            <div className={type?.toLowerCase() === 'password' ? 'inp-password' : ''}>
+                <input
+                    maxLength={maxLength}
+                    min={min}
+                    max={max}
+                    onChange={e => onChangeHandler(e, onChangeHandlerData)}
+                    name={name}
+                    value={value}
+                    type={showPassword && type?.toLowerCase() === 'password' ? 'text' : type}
+                    id={id}
+                    className={overrideClass ? className : "form-control " + className}
+                    placeholder={placeholder}
+                    disabled={disabled ? "disabled" : ""}
+                    checked={checked}
+                    style={style}
+                    onBlur={e => onBlur(e)}
+                    data-toggle={disableTitle ? "" : "tooltip"}
+                    title={title}
+                />
+                {type?.toLowerCase() === 'password' && <i title={showPassword ? 'Hide Password' : 'Show Password'} onClick={e => setShowPassword(pre => !pre)} className={'fa-solid ' + (showPassword ? 'fa-eye-slash' : 'fa-eye')}></i>}
+            </div>
             {showError && <ErrorLabel message={errorMessage}></ErrorLabel>}
         </>
     )
