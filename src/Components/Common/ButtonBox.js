@@ -134,6 +134,13 @@ const modifyOnType = (type, text, className,icon) => {
             className: className += " btn-success"
         }
     }
+    if (type.toLowerCase() === "yes") {
+        return {
+            icon: icon===""?"fa-regular fa-circle-check":icon,
+            text: text === "" ? "Reset" : text,
+            className: className += " btn-success"
+        }
+    }
     if (type.toLowerCase() === "upload") {
         return {
             icon: icon===""?"fa-solid fa-upload":icon,

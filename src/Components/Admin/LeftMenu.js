@@ -87,6 +87,9 @@ export default function LeftMenu({ setAuthData, authData, accessLogin, setAccess
                                                         <li>
                                                             <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-map-location" menuName="Logistic Region" link="admin/logistic-region" />
                                                         </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-taxi" menuName="Journey" link="admin/journey" />
+                                                        </li>
                                                     </ul>
                                                 </>
                                                 }

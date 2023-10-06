@@ -32,6 +32,10 @@ const validationMessage = {
     reqStation:"Please select station!",
     reqProvince:"Please select province!",
     reqParentStation:"Please select parent station!",
+    reqFromStation:"Please select from station!",
+    reqToStation:"Please select to station!",
+    InvalidFromToStation:"From and to station can't be same!",
+    InvalidStation:"Station is already added in list!",
 }
 
 export {validationMessage};

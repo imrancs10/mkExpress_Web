@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
 
 export default function MemberChangePassword({ data }) {
-    debugger;
     const modalTemplate = {
         userName: data?.email,
         oldPassword: "",

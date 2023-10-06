@@ -10,6 +10,9 @@ import { toastMessage } from '../Utility/ConstantValues';
 import { validationMessage } from '../Utility/ValidationMessage';
 import AddMemberModal from './AddMemberModal';
 import MemberChangePassword from './MemberChangePassword';
+import MemberChangeRole from './MemberChangeRole';
+import MemberAssignStation from './MemberAssignStation';
+import MemberActivateDeactivate from './MemberActivateDeactivate';
 
 export default function Member() {
     const memberModelTemplate = {
@@ -30,7 +33,7 @@ export default function Member() {
     const [pageSize, setPageSize] = useState(10);
     const [isRecordSaving, setIsRecordSaving] = useState(true);
     const [memberModel, setMemberModel] = useState(memberModelTemplate);
-   
+
     const [selectedMemberId, setSelectedMemberId] = useState({});
 
     useEffect(() => {
@@ -97,9 +100,40 @@ export default function Member() {
                     title: "Change Password",
                     icon: 'fa-solid fa-key',
                     modelId: 'memberChangePassword',
-                    showModel:true,
-                    handler: (id,data)=>{
-                        setSelectedMemberId({...data});
+                    showModel: true,
+                    handler: (id, data) => {
+                        setSelectedMemberId({ ...data });
+                    }
+                },
+                {
+                    title: "Assign Station",
+                    icon: 'fa-solid fa-house-medical-circle-check',
+                    modelId: 'memberAssignStation',
+                    showModel: true,
+                    handler: (id, data) => {
+                        setSelectedMemberId({ ...data });
+                    }
+                },
+                {
+                    title: "Change Role",
+                    icon: 'fa-solid fa-person-walking-arrow-loop-left',
+                    modelId: 'memberChangeRole',
+                    showModel: true,
+                    handler: (id, data) => {
+                        setSelectedMemberId({ ...data });
+                    }
+                },
+                {
+                    title: (id, data) => {
+                        return data?.isActive ? 'Deactive' : 'Activate'
+                    },
+                    icon: (id, data) => {
+                        return data?.isActive ? 'fa-solid fa-user-slash text-danger' : 'fa-solid fa-user text-success'
+                    },
+                    modelId: 'memberActiveDeactive',
+                    showModel: true,
+                    handler: (id, data) => {
+                        setSelectedMemberId({ ...data });
                     }
                 }
             ]
@@ -110,7 +144,7 @@ export default function Member() {
         setMemberModel({ ...memberModelTemplate });
         setIsRecordSaving(true);
     }
-    
+
     const breadcrumbOption = {
         title: 'Members',
         items: [
@@ -130,7 +164,7 @@ export default function Member() {
         ]
     }
 
-   
+
     useEffect(() => {
         if (isRecordSaving) {
             setMemberModel({ ...memberModelTemplate });
@@ -141,8 +175,11 @@ export default function Member() {
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <TableView option={tableOption}></TableView>
-          <AddMemberModal isRecordSaving={isRecordSaving} setMemberModel={setMemberModel} memberModel={memberModel} handleSearch={handleSearch}></AddMemberModal>
-          <MemberChangePassword data={selectedMemberId}></MemberChangePassword>
+            <AddMemberModal isRecordSaving={isRecordSaving} setMemberModel={setMemberModel} memberModel={memberModel} handleSearch={handleSearch}></AddMemberModal>
+            <MemberChangePassword data={selectedMemberId}></MemberChangePassword>
+            <MemberChangeRole data={selectedMemberId}></MemberChangeRole>
+            <MemberAssignStation data={selectedMemberId}></MemberAssignStation>
+            <MemberActivateDeactivate data={selectedMemberId}/>
         </>
     )
 }

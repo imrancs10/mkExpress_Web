@@ -1,0 +1,41 @@
+.journey-container
+{
+    border: 1px solid #8080803b;
+    padding: 5px;
+    border-radius: 4px;
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+    height: 60px;
+    overflow-y: hidden;
+}
+.journey-container span{
+    font-size: 18px;
+    display: inline-block;
+    width: max-content;
+    word-wrap: none;
+}
+.journey-container span:not(:first-child)::before{
+content: '\2192';
+font-size: 20px;
+color: blue; margin: 0 10px;
+font-weight: bold;
+}
+.journey-container span:last-child::before{
+    content: '\2192';
+    font-size: 25px;
+    color: red; margin: 0 10px;
+    font-weight: bold;
+    }
+    .journey-container span:nth-child(2)::before{
+        content: '\2192';
+        font-size: 25px;
+        margin: 0 10px;
+        color:green;
+        font-weight: bold;
+        }
+
+        .w90
+        {
+            width: 90%;
+        }

@@ -22,6 +22,7 @@ import { common } from './Components/Utility/common';
 import UserProfile from './Components/Login/UserProfile';
 import UnauthorizedAccess from './Components/Middleware/UnauthorizedAccess';
 import LogisticRegion from './Components/Admin/LogisticRegion/LogisticRegion';
+import MasterJourney from './Components/Admin/MasterJourney/MasterJourney';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -71,7 +72,8 @@ function App() {
                 <Route path='/admin/master/data' element={<MasterData />} />
                 <Route path='/admin/master/type' element={<MasterDataType />} />
                 <Route path='/admin/customer' element={<CustomerDetails />} />
-                <Route path='/admin/logistic-region' element={<LogisticRegion />} />
+                <Route path='/admin/logistic-region' element={<LogisticRegion />} /> 
+                <Route path='/admin/journey' element={<MasterJourney />} />
               </Route>
               <Route path='*' element={<UrlNotFound />} />
               <Route path='/unauthorized' element={<UnauthorizedAccess/>}/>

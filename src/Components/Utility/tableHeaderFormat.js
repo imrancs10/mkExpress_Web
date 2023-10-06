@@ -1,4 +1,17 @@
 import ButtonBox from "../Common/ButtonBox"
+
+const getJourneyRoute = (data) => {
+  return <>
+    <div className='journey-container text-start'>
+      <span style={{fontSize:'13px'}}>{`${data?.fromStationName} - ${data?.fromStationCode}`} </span>
+      {
+        data?.masterJourneyDetails?.map((res, ind) => {
+          return <span style={{fontSize:'13px'}}>{`${res?.subStationName} - ${res?.subStationCode}`} </span>
+        })
+      }
+      <span style={{fontSize:'13px'}}>{`${data?.toStationName} - ${data?.toStationCode}`} </span>
+    </div></>
+}
 const headerFormat = {
   customerDetails: [
     { name: 'Id', prop: 'id', action: { hAlign: "center", dAlign: "center" } },
@@ -91,6 +104,13 @@ const headerFormat = {
     { name: 'District', prop: 'district', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Station', prop: 'station', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Parent Station', prop: 'parentStation', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  masterJourney: [
+    {
+      name: 'Journey', prop: 'masterDataTypeValue', customColumn: (data => {
+        return getJourneyRoute(data);
+      })
+    },
   ]
 }
 

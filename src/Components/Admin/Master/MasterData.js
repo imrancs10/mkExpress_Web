@@ -57,7 +57,12 @@ export default function MasterData() {
         }
         else {
             data[name] = value;
-            data.code = value.toLowerCase().trim().replaceAll(RegexFormat.specialCharectors, "_").replaceAll(RegexFormat.endWithHyphen, '');
+            if (name === 'code'  && !data.value?.includes(',')) {
+                data.code = value?.trim()?.toUpperCase();
+            }
+            if(data?.masterDataType!=='station') {
+                data.code = value.toLowerCase().trim().replaceAll(RegexFormat.specialCharectors, "_").replaceAll(RegexFormat.endWithHyphen, '');
+            }
         }
         setMasterDataModel({ ...data });
 
@@ -114,7 +119,7 @@ export default function MasterData() {
             { name: 'Code', prop: 'code' }
         ],
         data: [],
-        showSerialNo:true,
+        showSerialNo: true,
         totalRecords: 0,
         pageSize: pageSize,
         pageNo: pageNo,
@@ -188,6 +193,7 @@ export default function MasterData() {
         const newError = {};
         if (!value || value === "") newError.value = validationMessage.reqMasterData;
         if (!masterDataType || masterDataType === "" || masterDataType === "0") newError.masterDataType = validationMessage.reqMasterDataType;
+        if (masterDataType === 'station' && !value?.includes(',') && code === "") newError.code = "Code is required";
         return newError;
     }
     return (
@@ -198,7 +204,7 @@ export default function MasterData() {
                     <Label text="Master Data Type" fontSize='12px'></Label>
                 </div>
                 <div className="p-2 bd-highlight">
-                    <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value);setPageNo(1) }} value={filterMasterDataType}>
+                    <select className='form-control form-control-sm' onChange={e => { handleSearch(e.target.value); setFilterMasterDataType(e.target.value); setPageNo(1) }} value={filterMasterDataType}>
                         <option value="">Select </option>
                         {
                             masterDataTypeList?.map(ele => {
@@ -231,6 +237,10 @@ export default function MasterData() {
                                             <div className="col-md-12">
                                                 <Inputbox labelText="Master Data" className="form-control-sm" maxLength={10000} labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={masterDataModel.value} errorMessage={errors?.value} />
                                             </div>
+                                            {masterDataModel.masterDataType === 'station' && !masterDataModel?.value?.includes(',') && <div className="col-md-12">
+                                                <Inputbox labelText="Master Data Code" className="form-control-sm" maxLength={10000} labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="code" value={masterDataModel.code} errorMessage={errors?.value} />
+                                            </div>
+                                            }
                                         </form>
                                     </div>
                                 </div>
