@@ -24,6 +24,7 @@ export const apiUrls = {
         getJourney: `${apiPrfix}/masterData/master-journey/get/`,
         getAllJourney: `${apiPrfix}/masterData/master-journey`,
         searchJourney: `${apiPrfix}/masterData/master-journey/search`,
+        getJourneyDropdown: `${apiPrfix}/masterData/master-journey/dropdown/journey`,
     },
     customerController:{
         add: `${apiPrfix}/customer`,
@@ -50,6 +51,7 @@ export const apiUrls = {
         getTrackingByShipmentId: `${apiPrfix}/shipment/get/tracking`,
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
+        validateShipments: `${apiPrfix}/shipment/validate/`,
     },
     memberController:{
         add: `${apiPrfix}/members`,
@@ -63,5 +65,16 @@ export const apiUrls = {
         changeRole: `${apiPrfix}/members/update/role/`,
         resetPassword: `${apiPrfix}/members/password/reset/`,
         changePassword: `${apiPrfix}/members/password/change`,
+    },
+    containerController:{
+        add: `${apiPrfix}/containers`,
+        update: `${apiPrfix}/containers`,
+        delete: `${apiPrfix}/containers/`,
+        get: `${apiPrfix}/containers/get/`,
+        getAll: `${apiPrfix}/containers`,
+        search: `${apiPrfix}/containers/search`,
+        checkIn: `${apiPrfix}/containers/in/`,
+        checkOut: `${apiPrfix}/containers/out`,
+        getContainerJourney: `${apiPrfix}/containers/get/journey/`,
     }
 }

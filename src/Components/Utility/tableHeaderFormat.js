@@ -3,13 +3,13 @@ import ButtonBox from "../Common/ButtonBox"
 const getJourneyRoute = (data) => {
   return <>
     <div className='journey-container text-start'>
-      <span style={{fontSize:'13px'}}>{`${data?.fromStationName} - ${data?.fromStationCode}`} </span>
+      <span style={{ fontSize: '13px' }}>{`${data?.fromStationName} - ${data?.fromStationCode}`} </span>
       {
         data?.masterJourneyDetails?.map((res, ind) => {
-          return <span style={{fontSize:'13px'}}>{`${res?.subStationName} - ${res?.subStationCode}`} </span>
+          return <span style={{ fontSize: '13px' }}>{`${res?.subStationName} - ${res?.subStationCode}`} </span>
         })
       }
-      <span style={{fontSize:'13px'}}>{`${data?.toStationName} - ${data?.toStationCode}`} </span>
+      <span style={{ fontSize: '13px' }}>{`${data?.toStationName} - ${data?.toStationCode}`} </span>
     </div></>
 }
 const headerFormat = {
@@ -96,6 +96,30 @@ const headerFormat = {
     { name: 'Max Delivery Attempt', prop: 'maxDeliveryAttempt', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
   ],
+  containerDetail: [
+    { name: 'Container No.', prop: 'containerNo', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Total Shipments', prop: 'totalShipments', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Journey', prop: 'journey', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'ClosedBy', prop: 'closedByMember', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  containerShipments: [
+    { name: 'Shipment No.', prop: 'shipmentNumber', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Status', prop: 'status', action: { hAlign: "center", dAlign: "center" } },
+    {
+      name: 'Consignee City', prop: 'cosigneeCity', customColumn: (data) => {
+        return data?.shipmentDetail?.consigneeCity;
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
+    {
+      name: 'Shipper City', prop: 'ShipperCity', customColumn: (data) => {
+        return data?.shipmentDetail?.shipperCity;
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
+    { name: 'Action', prop: 'closedOn', action: { hAlign: "center", dAlign: "center" } },
+  ],
   logisticRegion: [
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
     { name: 'Country', prop: 'country', action: { hAlign: "center", dAlign: "center" } },
@@ -104,6 +128,13 @@ const headerFormat = {
     { name: 'District', prop: 'district', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Station', prop: 'station', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Parent Station', prop: 'parentStation', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  containerTracking: [
+    { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Code', prop: 'code', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'CreatedBy', prop: 'checkInBy', action: { hAlign: "center", dAlign: "center" } },
   ],
   masterJourney: [
     {

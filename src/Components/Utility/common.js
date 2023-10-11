@@ -94,7 +94,7 @@ const common = {
         return new Date(year, month, 0).getDate();
     },
     getHtmlDate: (date, format = "yyyymmdd") => {
-        if (date === undefined)
+        if (date === undefined || date===null)
             return "";
         if (typeof date !== "object") {
             date = new Date(date);

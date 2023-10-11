@@ -47,7 +47,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
                                 <Link className="nav-link" to="/">Dashboard</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Containers</a>
+                            <Link className="nav-link" to="/containers">Containers</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/shipments">Shipments</Link>

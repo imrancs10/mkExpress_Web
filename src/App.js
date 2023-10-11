@@ -23,6 +23,7 @@ import UserProfile from './Components/Login/UserProfile';
 import UnauthorizedAccess from './Components/Middleware/UnauthorizedAccess';
 import LogisticRegion from './Components/Admin/LogisticRegion/LogisticRegion';
 import MasterJourney from './Components/Admin/MasterJourney/MasterJourney';
+import ContainerDetail from './Components/Container/ContainerDetail';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -67,6 +68,7 @@ function App() {
               <Route path='/customer' element={<Customer />} />
               <Route path='/members' element={<Member />} />
               <Route path='/shipments' element={<Shipment />} />
+              <Route path='/containers' element={<ContainerDetail />} />
               <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails}/>} />
               <Route path='/admin' element={<AdminLayout loginDetails={loginDetails} />}>
                 <Route path='/admin/master/data' element={<MasterData />} />

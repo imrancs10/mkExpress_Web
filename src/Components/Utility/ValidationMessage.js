@@ -36,6 +36,10 @@ const validationMessage = {
     reqToStation:"Please select to station!",
     InvalidFromToStation:"From and to station can't be same!",
     InvalidStation:"Station is already added in list!",
+    shipmentAlreadyAdded:"Shipment already added!",
+    reqContainerRoute:"Please select container route!",
+    reqContainerType:"Please select container type!",
+    reqShipments:"Please add Shipments in container!",
 }
 
 export {validationMessage};
