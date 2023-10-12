@@ -1,4 +1,6 @@
 import ButtonBox from "../Common/ButtonBox"
+import { common } from "./common"
+import {CheckInStation,CheckOutStation} from '../Container/ContainerCheckinModel'
 
 const getJourneyRoute = (data) => {
   return <>
@@ -135,6 +137,32 @@ const headerFormat = {
     { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
     { name: 'CreatedBy', prop: 'checkInBy', action: { hAlign: "center", dAlign: "center" } },
+  ],
+  containerCheckInOut: [
+    { name: 'Station', prop: 'stationName', action: { hAlign: "start", dAlign: "start" } },
+    {
+      name: 'Arrived At', prop: 'arrivalAt',
+      customColumn: (data) => {
+        if (data.isSourceStation)
+          return "Not Applicable";
+        else if (data?.arrivalAt === "0001-01-01T00:00:00")
+          return <ButtonBox type="check-success" onClickHandler={CheckInStation} onClickHandlerData={data} className="btn-sm btn-success" text="Check-In"></ButtonBox>
+        else
+          return common.getHtmlDate(data?.arrivalAt, 'ddmmyyyyhhmmss');
+
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
+    {
+      name: 'Departure On', prop: 'departureOn',
+      customColumn: (data) => {
+        if (data.isDestinationStation)
+          return "Not Applicable";
+        else if (data?.departureOn === "0001-01-01T00:00:00")
+          return <ButtonBox type="check-danger" onClickHandler={CheckOutStation} onClickHandlerData={data} className="btn-sm btn-danger" text="Check-Out"></ButtonBox>
+        else
+          return common.getHtmlDate(data?.departureOn, 'ddmmyyyyhhmmss');
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
   ],
   masterJourney: [
     {

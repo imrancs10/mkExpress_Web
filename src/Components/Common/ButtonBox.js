@@ -106,81 +106,95 @@ const modifyOnType = (type, text, className,icon) => {
             className: className += " btn-info"
         }
     }
-    if (type.toLowerCase() === "cancel") {
+   else if (type.toLowerCase() === "cancel") {
         return {
             icon:icon===""?"fa-solid fa-xmark":icon,
             text: text === "" ? "Cancel" : text,
             className: className += " btn-danger"
         }
     }
-    if (type.toLowerCase() === "delete") {
+   else if (type.toLowerCase() === "delete") {
         return {
             icon: icon===""?"fa-solid fa-trash-can":icon,
             text: text === "" ? "Delete" : text,
             className: className += " btn-warning"
         }
     }
-    if (type.toLowerCase() === "update") {
+   else if (type.toLowerCase() === "update") {
         return {
             icon: icon===""?"fa-solid fa-pen-to-square":icon,
             text: text === "" ? "Update" : text,
             className: className += " btn-warning"
         }
     }
-    if (type.toLowerCase() === "reset") {
+   else if (type.toLowerCase() === "reset") {
         return {
             icon: icon===""?"fa-solid fa-arrow-rotate-left":icon,
             text: text === "" ? "Reset" : text,
             className: className += " btn-success"
         }
     }
-    if (type.toLowerCase() === "yes") {
+   else if (type.toLowerCase() === "yes") {
         return {
             icon: icon===""?"fa-regular fa-circle-check":icon,
             text: text === "" ? "Reset" : text,
             className: className += " btn-success"
         }
     }
-    if (type.toLowerCase() === "upload") {
+   else if (type.toLowerCase() === "upload") {
         return {
             icon: icon===""?"fa-solid fa-upload":icon,
             text: text === "" ? "Upload" : text,
             className: className += " btn-warning"
         }
     }
-    if (type.toLowerCase() === "print") {
+   else if (type.toLowerCase() === "print") {
         return {
             icon: icon===""?"fa-solid fa-print":icon,
             text: text === "" ? "Print" : text,
             className: className += " btn-warning"
         }
     }
-    if (type.toLowerCase() === "go") {
+   else if (type.toLowerCase() === "go") {
         return {
             icon: icon===""?"fa-brands fa-golang":icon,
             text: text === "" ? "Go" : text,
             className: className += " btn-success"
         }
     }
-    if (type.toLowerCase() === "back") {
+   else if (type.toLowerCase() === "back") {
         return {
             icon: icon===""?"fa-solid fa-backward-fast":icon,
             text: text === "" ? "Back" : text,
             className: className += " btn-secondary"
         }
     }
-    if (type.toLowerCase() === "add") {
+   else if (type.toLowerCase() === "add") {
         return {
             icon: icon===""?"fa-solid fa-cart-plus":icon,
             text: text === "" ? "Add" : text,
             className: className += " btn-info"
         }
     }
-    if (type.toLowerCase() === "view") {
+   else if (type.toLowerCase() === "view") {
         return {
             icon: icon===""?"fa-solid fa-eye":icon,
             text: text === "" ? "View" : text,
             className: className += " btn-primary"
+        }
+    }
+    else if (type.toLowerCase() === "check-success") {
+        return {
+            icon: icon===""?"fa-solid fa-check":icon,
+            text: text === "" ? "View" : text,
+            className: className += " btn-success"
+        }
+    }
+    else if (type.toLowerCase() === "check-danger") {
+        return {
+            icon: icon===""?"fa-solid fa-check":icon,
+            text: text === "" ? "View" : text,
+            className: className += " btn-danger"
         }
     }
     return {

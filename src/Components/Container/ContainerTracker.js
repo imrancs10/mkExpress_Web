@@ -37,9 +37,9 @@ export default function ContainerTracker({ containerId }) {
         var A = common.getHtmlDate(ele?.arrivalAt, 'ddmmyyyyhhmmss');
         var D = common.getHtmlDate(ele?.departureOn, 'ddmmyyyyhhmmss');
         if (ele?.sequenceNo !== 1 && A !== '01-01-1 00:00:00')
-            text += `Arrival : ${A},`;
+            text += `Arri: ${A},`;
         if (ele?.sequenceNo !== count && D !== '01-01-1 00:00:00')
-            text += ` Departure : ${D}`;
+            text += ` Dep: ${D}`;
         return text;
     }
     const tableOptionShipmentTemplet = {
@@ -80,7 +80,7 @@ export default function ContainerTracker({ containerId }) {
                         </div>
                         <div className="modal-body">
                             <div className='row'>
-                                <div className='col-12 d-flex'>
+                                <div className='col-12 d-flex justify-content-between'>
                                     <Label text={`Container No: ${model?.containerNo}`} />
                                     <Label text={`Closed On: ${common.getHtmlDate(model?.closedOn,'ddmmyyyyhhmmss')}`} />
                                     <Label text={`Created On: ${common.getHtmlDate(model?.createdAt,'ddmmyyyyhhmmss')}`} />

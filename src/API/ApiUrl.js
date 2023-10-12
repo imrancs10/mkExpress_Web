@@ -74,7 +74,7 @@ export const apiUrls = {
         getAll: `${apiPrfix}/containers`,
         search: `${apiPrfix}/containers/search`,
         checkIn: `${apiPrfix}/containers/in/`,
-        checkOut: `${apiPrfix}/containers/out`,
+        checkOut: `${apiPrfix}/containers/out/`,
         getContainerJourney: `${apiPrfix}/containers/get/journey/`,
     }
 }

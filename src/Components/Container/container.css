@@ -1,4 +1,5 @@
 .timeline {
+	width: 90%;
 	height: 20px;
 	list-style: none;
 	text-align: justify;
@@ -50,6 +51,7 @@
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
+	width: 120px;
 }
 
 .timeline li:nth-child(odd):after {
