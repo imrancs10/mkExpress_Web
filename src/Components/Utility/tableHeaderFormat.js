@@ -103,8 +103,8 @@ const headerFormat = {
     { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Total Shipments', prop: 'totalShipments', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Journey', prop: 'journey', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
+    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'ClosedBy', prop: 'closedByMember', action: { hAlign: "center", dAlign: "center" } },
   ],
   containerShipments: [
@@ -119,8 +119,7 @@ const headerFormat = {
       name: 'Shipper City', prop: 'ShipperCity', customColumn: (data) => {
         return data?.shipmentDetail?.shipperCity;
       }, action: { hAlign: "center", dAlign: "center" }
-    },
-    { name: 'Action', prop: 'closedOn', action: { hAlign: "center", dAlign: "center" } },
+    }
   ],
   logisticRegion: [
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
@@ -135,7 +134,7 @@ const headerFormat = {
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
     { name: 'Code', prop: 'code', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'CreatedBy', prop: 'checkInBy', action: { hAlign: "center", dAlign: "center" } },
   ],
   containerCheckInOut: [

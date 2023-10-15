@@ -21,8 +21,8 @@ export default function AddContainer({ handleSearch }) {
         shipmentNumber: '',
         containerDetails: []
     };
+
     const [containerModel, setContainerModel] = useState(containerModelTemplate);
-    const [isRecordSaving, setIsRecordSaving] = useState(true);
     const [errors, setErrors] = useState({});
     const [shipmentError, setShipmentError] = useState()
     const [journeyList, setJourneyList] = useState([]);
@@ -47,6 +47,7 @@ export default function AddContainer({ handleSearch }) {
         if (!containerDetails || containerDetails?.length === 0) newError.containerDetails = validationMessage.reqShipments;
         return newError;
     }
+
     const handleTextChange = (e) => {
         var { value, name, type } = e.target;
         setContainerModel({ ...containerModel, [name]: value });
@@ -54,6 +55,7 @@ export default function AddContainer({ handleSearch }) {
             setErrors({ ...errors, [name]: null })
         }
     }
+
     const handleSave = () => {
         const formError = validateError();
         if (Object.keys(formError).length > 0) {
@@ -61,28 +63,16 @@ export default function AddContainer({ handleSearch }) {
             return
         }
         let data = containerModel;
-        if (isRecordSaving) {
             Api.Put(apiUrls.containerController.add, data).then(res => {
                 if (common.validateGuid(res.data.id)) {
                     common.closePopup('closePopupContainer');
                     toast.success(toastMessage.saveSuccess);
+                    resetForm();
                     handleSearch('');
                 }
             }).catch(err => {
                 toast.error(toastMessage.saveError);
             });
-        }
-        else {
-            Api.Post(apiUrls.customerController.update, data).then(res => {
-                if (common.validateGuid(res.data.id)) {
-                    common.closePopup('closePopupContainer');
-                    toast.success(toastMessage.updateSuccess);
-                    handleSearch('');
-                }
-            }).catch(err => {
-                toast.error(toastMessage.updateError);
-            });
-        }
     }
 
     const validateShipment = () => {
@@ -120,6 +110,7 @@ export default function AddContainer({ handleSearch }) {
                 setShipmentError(err?.response?.data?.Message)
             });
     }
+
     const tableOptionTemplet = {
         headers: headerFormat.containerShipments,
         showPagination: false,
@@ -132,15 +123,22 @@ export default function AddContainer({ handleSearch }) {
     };
 
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
+
+    const resetForm=()=>{
+        setContainerModel({...containerModelTemplate});
+        tableOptionTemplet.data=[];
+        tableOptionTemplet.totalRecords=0;
+        setTableOption(tableOptionTemplet);
+      }
     return (
         <>
-            <div id="add-container" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
+            <div id="add-container"  data-bs-backdrop="static" data-bs-keyboard="false" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Container</h5>
-                            <button type="button" className="btn-close" id='closePopupContainer' data-bs-dismiss="modal" aria-hidden="true"></button>
+                            <button type="button" className="btn-close" id='closePopupContainer' onClick={e=>{resetForm()}} data-bs-dismiss="modal" aria-hidden="true"></button>
                             <h4 className="modal-title" id="myModalLabel"></h4>
                         </div>
                         <div className="modal-body">
@@ -177,8 +175,8 @@ export default function AddContainer({ handleSearch }) {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <ButtonBox text={isRecordSaving ? "Save" : "Update"} type="save" onClickHandler={handleSave} className="btn-sm" />
-                            <ButtonBox type="cancel" className="btn-sm" modelDismiss={true} />
+                            <ButtonBox text="Save" type="save" onClickHandler={handleSave} className="btn-sm" />
+                            <ButtonBox type="cancel" className="btn-sm" onClickHandler={resetForm} modelDismiss={true} />
                         </div>
                     </div>
                 </div>

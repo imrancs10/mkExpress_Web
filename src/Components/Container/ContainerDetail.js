@@ -6,27 +6,38 @@ import { apiUrls } from '../../API/ApiUrl';
 import { headerFormat } from '../Utility/tableHeaderFormat';
 import AddContainer from './AddContainer';
 import ContainerCheckinModel from './ContainerCheckinModel';
-import ContainerCheckoutModel from './ContainerCheckoutModel';
 import ContainerTracker from './ContainerTracker';
+import CloseContainerModel from './CloseContainerModel';
+import { common } from '../Utility/common';
+import Inputbox from '../Common/Inputbox';
+import ButtonBox from '../Common/ButtonBox';
 
 export default function ContainerDetail() {
+    const date = new Date();
+    const currYear = date.getFullYear();
+    const containerFilterTemplate = {
+        fromDate: common.getHtmlDate(new Date(date.setFullYear(currYear - 1))),
+        toDate: common.getHtmlDate(new Date())
+    }
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [selectedContainerId, setSelectedContainerId] = useState("")
+    const [closeContainerId, setCloseContainerId] = useState("")
+    const [containerFilter, setContainerFilter] = useState(containerFilterTemplate);
 
     useEffect(() => {
-        Api.Get(apiUrls.containerController.getAll + `?pageNo=${pageNo}&PageSize=${pageSize}`)
+        Api.Get(apiUrls.containerController.getAll + `?pageNo=${pageNo}&PageSize=${pageSize}&fromDate=${containerFilter.fromDate}&toDate=${containerFilter.toDate}`)
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption({...tableOptionTemplet});
+                setTableOption({ ...tableOptionTemplet });
             })
     }, [pageNo, pageSize])
 
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
             return;
-        Api.Get(apiUrls.containerController.search + `?PageNo=${pageNo}&PageSize=${pageSize}&SearchTerm=${searchTerm}`)
+        Api.Get(apiUrls.containerController.search + `?PageNo=${pageNo}&PageSize=${pageSize}&SearchTerm=${searchTerm}&fromDate=${containerFilter.fromDate}&toDate=${containerFilter.toDate}`)
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
@@ -44,23 +55,38 @@ export default function ContainerDetail() {
         setPageSize: setPageSize,
         searchHandler: handleSearch,
         actions: {
-            view:{
-                icon:'fa-solid fa-shoe-prints',
-                title:'Track Container',
-                modelId:'containerTracking',
-                showModel:true,
-                handler:(id)=>{
+            view: {
+                icon: 'fa-solid fa-shoe-prints',
+                title: 'Track Container',
+                modelId: 'containerTracking',
+                showModel: true,
+                handler: (id) => {
                     setSelectedContainerId(id);
                 }
             },
-            showDelete:false,
-            showEdit:false
+            showDelete: false,
+            showEdit: false,
+            buttons: [
+                {
+                    icon: 'fa-solid fa-box text-danger',
+                    title: 'Close Container',
+                    modelId: 'containerCloseModel',
+                    showModel: true,
+                    handler: (id) => {
+                        setCloseContainerId(id);
+                    },
+                    showButton: (id, data) => {
+                        return !data?.isClosed;
+                    }
+                }
+            ]
         }
     };
-    const saveButtonHandler=()=>{
+    const saveButtonHandler = () => {
 
     }
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
+
     const breadcrumbOption = {
         title: 'Container',
         items: [
@@ -72,33 +98,45 @@ export default function ContainerDetail() {
         ],
         buttons: [
             {
-              text: "Add Container",
-              icon: 'fa-solid fa-box-open',
-              modelId: 'add-container',
-              handler: saveButtonHandler
+                text: "Add Container",
+                icon: 'fa-solid fa-box-open',
+                modelId: 'add-container',
+                handler: saveButtonHandler
             },
             {
-                text: "Check-in",
+                text: "Check-in/out",
                 icon: 'fa-solid fa-right-to-bracket',
                 modelId: 'add-container-check-in',
                 handler: saveButtonHandler
-              },
-              {
-                text: "Check-out",
-                icon: 'fa-solid fa-right-from-bracket',
-                modelId: 'add-container-check-out',
-                handler: saveButtonHandler
-              }
-          ]
+            }
+        ]
+    }
+
+    const handleTextChange = (e) => {
+        var { name, value } = e.target;
+        setContainerFilter({ ...containerFilter, [name]: value });
     }
     return (
         <>
-            <Breadcrumb option={breadcrumbOption}></Breadcrumb>
-            <TableView option={tableOption}></TableView>
-            <AddContainer></AddContainer>
+            <div className='my-2'>
+                <Breadcrumb option={breadcrumbOption}></Breadcrumb>
+                <div className='d-flex justify-content-end my-2'>
+                    <div className='mx-2'>
+                        <Inputbox type="date" showLabel={false} title="From Date" className="form-control-sm mx-2" value={containerFilter.fromDate} name="fromDate" onChangeHandler={handleTextChange} />
+                    </div>
+                    <div className='mx-2'>
+                        <Inputbox type="date" showLabel={false} title="To Date" className="form-control-sm mx-2" value={containerFilter.toDate} name="toDate" onChangeHandler={handleTextChange} />
+                    </div>
+                    <div className='mx-2'>
+                        <ButtonBox type="go" className="btn-sm" onClickHandler={e => { handleSearch("") }} />
+                    </div>
+                </div>
+                <TableView option={tableOption}></TableView>
+            </div>
+            <AddContainer handleSearch={handleSearch}></AddContainer>
             <ContainerCheckinModel></ContainerCheckinModel>
-            <ContainerCheckoutModel></ContainerCheckoutModel>
             <ContainerTracker containerId={selectedContainerId}></ContainerTracker>
+            <CloseContainerModel containerId={closeContainerId} />
         </>
     )
 }

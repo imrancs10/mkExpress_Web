@@ -64,8 +64,13 @@ const common = {
         if (input === common.defaultDate) {
             return returnVal
         }
-        if (input.match(RegexFormat.dateTimeRegex) !== null)
-            return common.getHtmlDate(input.match(RegexFormat.dateRegex)[0], 'ddmmyyyyhhmmss');
+        if (input.match(RegexFormat.dateTimeRegex) !== null) {
+            if (action?.ampm)
+                return common.getHtmlDate(input, 'ddmmyyyyhhmmss', 12);
+            else
+                return common.getHtmlDate(input, 'ddmmyyyyhhmmss');
+        }
+
         if (action?.upperCase) {
             if (input !== undefined && input !== "")
                 return input.toUpperCase()
@@ -93,21 +98,28 @@ const common = {
     daysInMonth: (month, year) => {
         return new Date(year, month, 0).getDate();
     },
-    getHtmlDate: (date, format = "yyyymmdd") => {
-        if (date === undefined || date===null)
+    getHtmlDate: (date, format = "yyyymmdd", hourFormat = 24) => {
+        if (date === undefined || date === null)
             return "";
         if (typeof date !== "object") {
             date = new Date(date);
         }
         var month = (date.getMonth() + 1).toString().padStart(2, '0');
         var day = (date.getDate()).toString().padStart(2, '0');
-        if (format === "yyyymmdd")
-            return `${date.getFullYear()}-${month}-${day}`;
-        if (format === "ddmmyyyy")
-            return `${day}-${month}-${date.getFullYear()}`;
-        if (format === "ddmmyyyyhhmmss")
-            return `${day}-${month}-${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+        var h = date.getHours().toString().padStart(2, "0");
+        var m = date.getMinutes().toString().padStart(2, "0");
+        var s = date.getSeconds().toString().padStart(2, "0");
+        var y = date.getFullYear();
 
+        if (format === "yyyymmdd")
+            return `${y}-${month}-${day}`;
+        else if (format === "ddmmyyyy")
+            return `${day}-${month}-${y}`;
+        else if (format === "ddmmyyyyhhmmss") {
+            if (hourFormat === 12)
+                return `${day}-${month}-${y} ${common.timeConvert(date.toTimeString())}`;
+            return `${day}-${month}-${y} ${h}:${m}:${s}`;
+        }
     },
     closePopup: (closeButonId, callback) => {
         closeButonId = closeButonId === undefined || closeButonId === '' ? 'closePopup' : closeButonId;
@@ -287,7 +299,20 @@ const common = {
         { id: 0, value: 'I Prefer Not To Say' },
         { id: 1, value: 'Male' },
         { id: 2, value: 'Female' },
-    ]
+    ],
+    timeConvert: (time) => {
+        debugger;
+        time=time.substr(0,8);
+        // Check correct time format and split into components
+        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+        if (time.length > 1) { // If time format correct
+            time = time.slice(1);  // Remove full string match value
+            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+            time[0] = (+(time[0] % 12) || 12).toString().padStart(2,"0"); // Adjust hours
+        }
+        return time.join(''); // return adjusted time or original string
+    }
 }
 
 export { common };

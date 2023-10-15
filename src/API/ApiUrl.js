@@ -68,6 +68,8 @@ export const apiUrls = {
     },
     containerController:{
         add: `${apiPrfix}/containers`,
+        addShipmentInContainer: `${apiPrfix}/containers/add/shipments/`,
+        removeShipmentFromContainer: `${apiPrfix}/containers/remove/shipments/`,
         update: `${apiPrfix}/containers`,
         delete: `${apiPrfix}/containers/`,
         get: `${apiPrfix}/containers/get/`,
@@ -75,6 +77,7 @@ export const apiUrls = {
         search: `${apiPrfix}/containers/search`,
         checkIn: `${apiPrfix}/containers/in/`,
         checkOut: `${apiPrfix}/containers/out/`,
+        closeContainer: `${apiPrfix}/containers/close/`,
         getContainerJourney: `${apiPrfix}/containers/get/journey/`,
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Inputbox from '../Common/Inputbox'
 import ButtonBox from '../Common/ButtonBox'
 import { Api } from '../../API/API';
@@ -7,14 +7,12 @@ import { headerFormat } from '../Utility/tableHeaderFormat';
 import TableView from '../Table/TableView';
 import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
-
 export default function ContainerCheckinModel() {
   const containerModelTemplate = {
     containerNo: '',
     containerId: '',
     containerJourneyId: ''
   }
-  const [containerError, setContainerError] = useState();
   const [containerModel, setContainerModel] = useState(containerModelTemplate);
 
   const tableOptionTrackingTemplet = {
@@ -29,6 +27,8 @@ export default function ContainerCheckinModel() {
   };
 
   const [tableOptionTracking, setTableOptionTracking] = useState(tableOptionTrackingTemplet);
+
+
   const validateContainer = () => {
     Api.Get(apiUrls.containerController.getContainerJourney + containerModel.containerNo)
       .then(res => {
@@ -39,27 +39,32 @@ export default function ContainerCheckinModel() {
       });
   }
 
-
+const resetForm=()=>{
+  setContainerModel({...containerModelTemplate});
+  tableOptionTrackingTemplet.data=[];
+  tableOptionTrackingTemplet.totalRecords=0;
+  setTableOptionTracking(tableOptionTrackingTemplet);
+}
   const handleTextChange = (e) => {
     var { value, name } = e.target;
     setContainerModel({ ...containerModel, [name]: value });
   }
   return (
     <>
-      <div id="add-container-check-in" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
+      <div id="add-container-check-in" data-bs-backdrop="static" data-bs-keyboard="false" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Container Check-In</h5>
-              <button type="button" className="btn-close" id='closePopupContainerCheckIn' data-bs-dismiss="modal" aria-hidden="true"></button>
+              <button type="button" className="btn-close" onClick={e=>{resetForm()}} id='closePopupContainerCheckIn' data-bs-dismiss="modal" aria-hidden="true"></button>
               <h4 className="modal-title" id="myModalLabel"></h4>
             </div>
             <div className="modal-body">
               <div className='row'>
                 <div className="col-12">
                   <div style={{ position: 'relative' }}>
-                    <Inputbox type="text" labelText="Scan Container" errorMessage={containerError?.containerNo} name="containerNo" className="form-control-sm" value={containerModel?.containerNo} onChangeHandler={handleTextChange} />
+                    <Inputbox type="text" labelText="Scan Container" name="containerNo" className="form-control-sm" value={containerModel?.containerNo} onChangeHandler={handleTextChange} />
                     <ButtonBox type="add" className="btn-sm" icon="fa-solid fa-plus" style={{ position: 'absolute', top: '27px', right: '3px' }} onClickHandler={validateContainer} />
                   </div>
                 </div>
@@ -69,7 +74,7 @@ export default function ContainerCheckinModel() {
               </div>
             </div>
             <div className="modal-footer">
-              <ButtonBox type="cancel" className="btn-sm" modelDismiss={true} />
+              <ButtonBox type="cancel" className="btn-sm" onClickHandler={resetForm} modelDismiss={true} />
             </div>
           </div>
         </div>
@@ -78,23 +83,22 @@ export default function ContainerCheckinModel() {
   )
 }
 
-const CheckInStation = (e,data) => {
-  Api.Post(apiUrls.containerController.checkIn + `${data?.containerId}/${data?.id}`,{})
+const CheckInStation = (e, data) => {
+  Api.Post(apiUrls.containerController.checkIn + `${data?.containerId}/${data?.id}`, {})
     .then(res => {
       if (res.data === true) {
-        toast.success(toastMessage.saveSuccess)
+        toast.success(toastMessage.saveSuccess);
       }
     });
 }
 
-const CheckOutStation = (e,data) => {
-  debugger;
-  Api.Post(apiUrls.containerController.checkOut + `${data?.containerId}/${data?.id}`,{})
-  .then(res => {
-    if (res.data === true) {
-      toast.success(toastMessage.saveSuccess)
-    }
-  });
+const CheckOutStation = (e, data) => {
+  Api.Post(apiUrls.containerController.checkOut + `${data?.containerId}/${data?.id}`, {})
+    .then(res => {
+      if (res.data === true) {
+        toast.success(toastMessage.saveSuccess);
+      }
+    });
 }
 
 export { CheckInStation, CheckOutStation }

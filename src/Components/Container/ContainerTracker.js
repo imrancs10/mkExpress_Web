@@ -7,9 +7,24 @@ import './container.css';
 import Label from '../Common/Label';
 import TableView from '../Table/TableView';
 import { headerFormat } from '../Utility/tableHeaderFormat';
+import ErrorAudio from './buzzer.wav'
+import Inputbox from '../Common/Inputbox';
+import { validationMessage } from '../Utility/ValidationMessage';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../Utility/ConstantValues';
 
 export default function ContainerTracker({ containerId }) {
     const [model, setModel] = useState({});
+    const [showAddShipmet, setShowAddShipmet] = useState(false);
+    const containerModelTemplate = {
+        id: common.guid(),
+        journeyId: '',
+        containerTypeId: '',
+        shipmentNumber: '',
+        containerDetails: []
+    };
+    const [containerModel, setContainerModel] = useState(containerModelTemplate);
+    const [shipmentError, setShipmentError] = useState()
     useEffect(() => {
         if (!common.validateGuid(containerId))
             return
@@ -19,16 +34,25 @@ export default function ContainerTracker({ containerId }) {
                 var newJourneyDetails = data?.containerJourneys?.sort((a, b) => a.sequenceNo - b.sequenceNo);
                 data.containerJourneys = newJourneyDetails;
                 setModel({ ...res.data });
-                var shipmentDetails=data?.containerDetails.map(res=>{
+                var shipmentDetails = data?.containerDetails.map(res => {
                     return res.shipment;
                 })
-                tableOptionShipmentTemplet.data=shipmentDetails;
-                tableOptionShipmentTemplet.totalRecords=shipmentDetails?.length;
-                setTableOptionShipment(tableOptionShipmentTemplet);
+                var model = containerModel;
+                model.journeyId = data?.journeyId;
+                model.containerTypeId = data?.containerTypeId;
+                model.containerDetails = shipmentDetails;
+                model.id=data?.id;
+                tableOptionShipmentTemplet.data = model.containerDetails;
+                tableOptionShipmentTemplet.totalRecords = model.containerDetails?.length;
+                tableOptionShipmentTemplet.showAction = !res.data?.isClosed;
+                setContainerModel({ ...model });
+                setTableOptionShipment({ ...tableOptionShipmentTemplet });
 
-                tableOptionTrackingTemplet.data=data?.containerTrackings;
-                tableOptionTrackingTemplet.totalRecords=data?.containerTrackings?.length;
-                setTableOptionTracking(tableOptionTrackingTemplet);
+                if (!data?.isClosed) {
+                    tableOptionTrackingTemplet.data = data?.containerTrackings;
+                    tableOptionTrackingTemplet.totalRecords = data?.containerTrackings?.length;
+                    setTableOptionTracking({ ...tableOptionTrackingTemplet });
+                }
             });
     }, [containerId])
 
@@ -42,6 +66,15 @@ export default function ContainerTracker({ containerId }) {
             text += ` Dep: ${D}`;
         return text;
     }
+    const removeShipmentFromContainer = (id, data) => {
+        debugger;
+        Api.Post(apiUrls.containerController.removeShipmentFromContainer + `${containerModel.id}/${data?.shipmentNumber}`,{})
+            .then(res => {
+                if (res.data) {
+                    toast.success(toastMessage.updateSuccess);
+                }
+            })
+    }
     const tableOptionShipmentTemplet = {
         headers: headerFormat.containerShipments,
         showPagination: false,
@@ -50,7 +83,16 @@ export default function ContainerTracker({ containerId }) {
         totalRecords: 0,
         showFooter: false,
         searchHandler: () => { },
-        showAction: false
+        showAction: false,
+        actions: {
+            showDelete: false,
+            showEdit: false,
+            view: {
+                icon: 'fa-solid fa-xmark text-danger',
+                handler: removeShipmentFromContainer,
+                showModel: false,
+            }
+        }
     };
 
     const [tableOptionShipment, setTableOptionShipment] = useState(tableOptionShipmentTemplet);
@@ -67,6 +109,44 @@ export default function ContainerTracker({ containerId }) {
     };
 
     const [tableOptionTracking, setTableOptionTracking] = useState(tableOptionTrackingTemplet);
+
+    const handleTextChange = (e) => {
+        var { value, name, type } = e.target;
+        setContainerModel({ ...containerModel, [name]: value });
+    }
+    const validateShipment = () => {
+        if (containerModel.containerDetails.find(x => x.shipmentNumber === containerModel.shipmentNumber) !== undefined) {
+            setShipmentError(validationMessage.shipmentAlreadyAdded);
+            return;
+        }
+        Api.Post(apiUrls.containerController.addShipmentInContainer + `${containerId}/${containerModel.shipmentNumber}`, {})
+            .then(res => {
+                if (res.data?.errors[0]?.isValid === true) {
+                    setShipmentError();
+                    var model = containerModel;
+                    model.shipmentNumber = "";
+                    model.containerDetails.push(
+                        {
+                            shipmentNumber: containerModel.shipmentNumber,
+                            containerId: containerModel.id,
+                            shipmentId: res.data?.shipments[0]?.id,
+                            ...res.data?.shipments[0]
+                        });
+                    setContainerModel({ ...model });
+                    tableOptionShipmentTemplet.data = model.containerDetails;
+                    tableOptionShipmentTemplet.totalRecords = model.containerDetails.length;
+                    tableOptionShipment({ ...tableOptionShipmentTemplet });
+                }
+                else {
+                    setShipmentError(res.data?.errors[0]?.error)
+                    var AudioPlay = new Audio(ErrorAudio);
+                    AudioPlay.play();
+                }
+            })
+            .catch(err => {
+                setShipmentError(err?.response?.data?.Message)
+            });
+    }
     return (
         <>
             <div id="containerTracking" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -80,26 +160,39 @@ export default function ContainerTracker({ containerId }) {
                         </div>
                         <div className="modal-body">
                             <div className='row'>
+                                {!model?.isClosed && <div className='col-12 d-flex justify-content-end my-2'>
+                                    <ButtonBox type="add" className="btn-sm" onClickHandler={e => { setShowAddShipmet(true); }} text="Add Shipments" />
+                                </div>
+                                }
                                 <div className='col-12 d-flex justify-content-between'>
-                                    <Label text={`Container No: ${model?.containerNo}`} />
-                                    <Label text={`Closed On: ${common.getHtmlDate(model?.closedOn,'ddmmyyyyhhmmss')}`} />
-                                    <Label text={`Created On: ${common.getHtmlDate(model?.createdAt,'ddmmyyyyhhmmss')}`} />
+                                    <Label bold={true} text={`Container No: ${model?.containerNo}`} />
+                                    <Label bold={true} text={`Closed On: ${common.getHtmlDate(model?.closedOn, 'ddmmyyyyhhmmss')}`} />
+                                    <Label bold={true} text={`Created On: ${common.getHtmlDate(model?.createdAt, 'ddmmyyyyhhmmss')}`} />
                                 </div>
                                 <div className='col-12' style={{ position: 'relative' }}>
                                     <ul class="timeline">
                                         {
                                             model?.containerJourneys?.map((ele, ind) => {
-                                                return <li data-year={ele.stationName} data-text={getTimelineText(ele, model?.containerJourneys?.length)}></li>
+                                                return <li key={ind} data-year={ele.stationName} data-text={getTimelineText(ele, model?.containerJourneys?.length)}></li>
                                             })
                                         }
                                     </ul>
                                 </div>
-                                <div className='col-12'>
-                                <TableView option={tableOptionShipment}></TableView>
+                                {!model?.isClosed && showAddShipmet && <>
+                                    <div className="col-12">
+                                        <div style={{ position: 'relative' }}>
+                                            <Inputbox type="text" labelText="Scan Shipment" errorMessage={shipmentError} name="shipmentNumber" className="form-control-sm" value={containerModel.shipmentNumber} onChangeHandler={handleTextChange} />
+                                            <ButtonBox type="add" className="btn-sm" icon="fa-solid fa-plus" style={{ position: 'absolute', top: '27px', right: '3px' }} onClickHandler={validateShipment} />
+                                        </div>
+                                    </div>
+                                </>}
+                                <div className='col-12 my-2'>
+                                    <TableView option={tableOptionShipment}></TableView>
                                 </div>
-                                <div className='col-12'>
-                                <TableView option={tableOptionTracking}></TableView>
+                                {model?.isClosed && <div className='col-12'>
+                                    <TableView option={tableOptionTracking}></TableView>
                                 </div>
+                                }
                             </div>
                         </div>
                         <div className="modal-footer">
