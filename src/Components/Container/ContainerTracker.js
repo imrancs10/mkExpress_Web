@@ -48,7 +48,7 @@ export default function ContainerTracker({ containerId }) {
                 setContainerModel({ ...model });
                 setTableOptionShipment({ ...tableOptionShipmentTemplet });
 
-                if (!data?.isClosed) {
+                if (data?.isClosed) {
                     tableOptionTrackingTemplet.data = data?.containerTrackings;
                     tableOptionTrackingTemplet.totalRecords = data?.containerTrackings?.length;
                     setTableOptionTracking({ ...tableOptionTrackingTemplet });
@@ -165,12 +165,13 @@ export default function ContainerTracker({ containerId }) {
                                 </div>
                                 }
                                 <div className='col-12 d-flex justify-content-between'>
-                                    <Label bold={true} text={`Container No: ${model?.containerNo}`} />
-                                    <Label bold={true} text={`Closed On: ${common.getHtmlDate(model?.closedOn, 'ddmmyyyyhhmmss')}`} />
-                                    <Label bold={true} text={`Created On: ${common.getHtmlDate(model?.createdAt, 'ddmmyyyyhhmmss')}`} />
+                                    <Label bold={true} text={`Container No: ${model?.containerNo??"Not Selected"}`} />
+                                    <Label bold={true} text={`Closed On: ${common.getHtmlDate(model?.closedOn, 'ddmmyyyyhhmmss',12)}`} />
+                                    <Label bold={true} text={`Created On: ${common.getHtmlDate(model?.createdAt, 'ddmmyyyyhhmmss',12)}`} />
                                 </div>
+                                <hr className='my-3'/>
                                 <div className='col-12' style={{ position: 'relative' }}>
-                                    <ul class="timeline">
+                                    <ul className="timeline">
                                         {
                                             model?.containerJourneys?.map((ele, ind) => {
                                                 return <li key={ind} data-year={ele.stationName} data-text={getTimelineText(ele, model?.containerJourneys?.length)}></li>

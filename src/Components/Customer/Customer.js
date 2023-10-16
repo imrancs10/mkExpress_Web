@@ -14,7 +14,7 @@ export default function Customer() {
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption(tableOptionTemplet);
+                setTableOption({...tableOptionTemplet});
             })
     }, [pageNo, pageSize])
 

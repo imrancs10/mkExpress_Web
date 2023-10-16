@@ -11,7 +11,7 @@ import Dropdown from '../Common/Dropdown';
 import Label from '../Common/Label';
 import ErrorLabel from '../Common/ErrorLabel';
 
-export default function MemberChangeRole({data}) {
+export default function MemberChangeRole({data,handleSearch}) {
     const modalTemplate = {
         userId: data?.id,
         roleId: data?.roleId,
@@ -56,6 +56,7 @@ export default function MemberChangeRole({data}) {
                 if (res.data) {
                     common.closePopup('closePopupMemberChangeRole');
                     toast.success(toastMessage.updateSuccess);
+                    handleSearch('');
                 }
             })
     }

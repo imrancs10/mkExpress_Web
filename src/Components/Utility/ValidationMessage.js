@@ -3,6 +3,8 @@ const validationMessage = {
     reqPassword:"Password is required!",
     reqGender:"Gender is required!",
     reqEmail:"Email is required!",
+    reqAddress:"Address is required!",
+    reqZipcode:"Zipcode is required!",
     reqOldPassword:"Old password is required!",
     reqNewPassword:"New password is required!",
     ConfirmPasswordDoesnotMatch:"Confirm password doesn't match!",

@@ -94,18 +94,23 @@ const headerFormat = {
   customerDetail: [
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
     { name: 'Name', prop: 'name', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Email', prop: 'email', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Contact No', prop: 'contactNo', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Address', prop: 'address', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'City', prop: 'city', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Zip code', prop: 'zipCode', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Max Delivery Attempt', prop: 'maxDeliveryAttempt', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Confirmed', prop: 'confirmed', action: {replace:{"true":"Yes","false":"No"}, hAlign: "center", dAlign: "center" } },
   ],
   containerDetail: [
-    { name: 'Container No.', prop: 'containerNo', action: { hAlign: "start", dAlign: "start" } },
-    { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Container No.', prop: 'containerNo', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "start" } },
     { name: 'Total Shipments', prop: 'totalShipments', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Journey', prop: 'journey', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'ClosedBy', prop: 'closedByMember', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Journey', prop: 'journey', action: { hAlign: "center", dAlign: "start" } },
+    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "start",ampm:true } },
+    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "start",ampm:true } },
+    { name: 'ClosedBy', prop: 'closedByMember', action: { hAlign: "center", dAlign: "start" } },
   ],
   containerShipments: [
     { name: 'Shipment No.', prop: 'shipmentNumber', action: { hAlign: "start", dAlign: "start" } },
@@ -132,10 +137,10 @@ const headerFormat = {
   ],
   containerTracking: [
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
-    { name: 'Code', prop: 'code', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'CreatedBy', prop: 'checkInBy', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Code', prop: 'code', action: { hAlign: "center", dAlign: "start" } },
+    { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "start" } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "start",ampm:true } },
+    { name: 'Created By', prop: 'createdMember', action: { hAlign: "center", dAlign: "start" } },
   ],
   containerCheckInOut: [
     { name: 'Station', prop: 'stationName', action: { hAlign: "start", dAlign: "start" } },
@@ -147,9 +152,9 @@ const headerFormat = {
         else if (data?.arrivalAt === "0001-01-01T00:00:00")
           return <ButtonBox type="check-success" onClickHandler={CheckInStation} onClickHandlerData={data} className="btn-sm btn-success" text="Check-In"></ButtonBox>
         else
-          return common.getHtmlDate(data?.arrivalAt, 'ddmmyyyyhhmmss');
+          return common.getHtmlDate(data?.arrivalAt, 'ddmmyyyyhhmmss',12);
 
-      }, action: { hAlign: "center", dAlign: "center" }
+      }, action: { hAlign: "center", dAlign: "center",ampm:true }
     },
     {
       name: 'Departure On', prop: 'departureOn',
@@ -159,8 +164,8 @@ const headerFormat = {
         else if (data?.departureOn === "0001-01-01T00:00:00")
           return <ButtonBox type="check-danger" onClickHandler={CheckOutStation} onClickHandlerData={data} className="btn-sm btn-danger" text="Check-Out"></ButtonBox>
         else
-          return common.getHtmlDate(data?.departureOn, 'ddmmyyyyhhmmss');
-      }, action: { hAlign: "center", dAlign: "center" }
+          return common.getHtmlDate(data?.departureOn, 'ddmmyyyyhhmmss',12);
+      }, action: { hAlign: "center", dAlign: "center",ampm:true }
     },
   ],
   masterJourney: [

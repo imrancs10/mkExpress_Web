@@ -11,6 +11,8 @@ import CloseContainerModel from './CloseContainerModel';
 import { common } from '../Utility/common';
 import Inputbox from '../Common/Inputbox';
 import ButtonBox from '../Common/ButtonBox';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../Utility/ConstantValues';
 
 export default function ContainerDetail() {
     const date = new Date();
@@ -44,6 +46,18 @@ export default function ContainerDetail() {
                 setTableOption({ ...tableOptionTemplet });
             });
     }
+
+    const handleDelete = (id) => {
+        
+        Api.Delete(apiUrls.containerController.delete + `${id}?note=""`)
+            .then(res => {
+                if(res.data){
+                    toast.success(toastMessage.deleteSuccess);
+                    handleSearch('');
+                }
+            });
+    }
+
     const tableOptionTemplet = {
         headers: headerFormat.containerDetail,
         data: [],
@@ -64,8 +78,14 @@ export default function ContainerDetail() {
                     setSelectedContainerId(id);
                 }
             },
-            showDelete: false,
+            delete:{
+                handler:handleDelete,
+                showButton: (id, data) => {
+                    return !data?.isClosed;
+                }
+            },
             showEdit: false,
+            showPrint:true,
             buttons: [
                 {
                     icon: 'fa-solid fa-box text-danger',

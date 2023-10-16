@@ -110,7 +110,8 @@ const common = {
         var m = date.getMinutes().toString().padStart(2, "0");
         var s = date.getSeconds().toString().padStart(2, "0");
         var y = date.getFullYear();
-
+        if(isNaN(month) ||isNaN(day) || isNaN(y))
+       return "Invalid Date";
         if (format === "yyyymmdd")
             return `${y}-${month}-${day}`;
         else if (format === "ddmmyyyy")
@@ -301,7 +302,6 @@ const common = {
         { id: 2, value: 'Female' },
     ],
     timeConvert: (time) => {
-        debugger;
         time=time.substr(0,8);
         // Check correct time format and split into components
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];

@@ -7,13 +7,14 @@ import { toast } from 'react-toastify'
 import { toastMessage } from '../Utility/ConstantValues'
 import { common } from '../Utility/common'
 
-export default function MemberActivateDeactivate({ data }) {
+export default function MemberActivateDeactivate({ data,handleSearch }) {
     const handleActiveDeactive = () => {
         Api.Post(apiUrls.memberController.activeDeactive + data.id,data)
             .then(res => {
                 if (res.data === true) {
                     toast.success(toastMessage.updateSuccess);
                     common.closePopup('closePopupMemberActiveDeactive');
+                    handleSearch('');
                 }
             });
     }

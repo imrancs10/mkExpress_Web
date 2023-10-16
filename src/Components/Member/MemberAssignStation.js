@@ -11,7 +11,7 @@ import Dropdown from '../Common/Dropdown';
 import Label from '../Common/Label';
 import ErrorLabel from '../Common/ErrorLabel';
 
-export default function MemberAssignStation({data}) {
+export default function MemberAssignStation({data,handleSearch}) {
     const modalTemplate = {
         userId: data?.id,
         stationId: data?.stationId,
@@ -56,6 +56,7 @@ export default function MemberAssignStation({data}) {
                 if (res.data) {
                     common.closePopup('closePopupMemberAssignStation');
                     toast.success(toastMessage.updateSuccess);
+                    handleSearch('');
                 }
             })
     }

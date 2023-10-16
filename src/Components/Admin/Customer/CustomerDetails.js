@@ -10,6 +10,9 @@ import { headerFormat } from '../../Utility/tableHeaderFormat';
 import { validationMessage } from '../../Utility/ValidationMessage';
 import Inputbox from '../../Common/Inputbox';
 import ButtonBox from '../../Common/ButtonBox';
+import Dropdown from '../../Common/Dropdown';
+import Label from '../../Common/Label';
+import ErrorLabel from '../../Common/ErrorLabel';
 
 
 export default function CustomerDetails() {
@@ -17,6 +20,10 @@ export default function CustomerDetails() {
     id: common.guid(),
     name: "",
     contactNo: "",
+    email: '',
+    address: '',
+    zipCode: '',
+    cityId: '',
     maxDeliveryAttempt: 1,
     confirmed: false,
     preferredPickupTime: "Immediately",
@@ -26,6 +33,7 @@ export default function CustomerDetails() {
   const [pageNo, setPageNo] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [errors, setErrors] = useState({});
+  const [cityList, setCityList] = useState([]);
   const handleDelete = (id) => {
     Api.Delete(apiUrls.customerController.delete + id).then(res => {
       if (res.data > 0) {
@@ -47,6 +55,12 @@ export default function CustomerDetails() {
 
     });
   }
+  useEffect(() => {
+    Api.Get(apiUrls.masterDataController.getByMasterDataType + "city")
+      .then(res => {
+        setCityList([...res.data]);
+      });
+  }, [])
 
   const handleTextChange = (e) => {
     var { value, name, type } = e.target;
@@ -93,7 +107,7 @@ export default function CustomerDetails() {
   }
   const handleEdit = (customerId) => {
     Api.Get(apiUrls.customerController.get + customerId).then(res => {
-      if (res.data.id !==null) {
+      if (res.data.id !== null) {
         setCustomerModel(res.data);
         setIsRecordSaving(false);
       }
@@ -148,17 +162,14 @@ export default function CustomerDetails() {
     ]
   }
 
-  useEffect(() => {
-    setIsRecordSaving(true);
-    Api.Get(apiUrls.customerController.getAll + `?PageNo=${pageNo}&PageSize=${pageSize}`).then(res => {
-      tableOptionTemplet.data = res.data.data;
-      tableOptionTemplet.totalRecords = res.data.totalRecords;
-      setTableOption({ ...tableOptionTemplet });
-    })
-      .catch(err => {
-
-      });
-  }, [pageNo, pageSize]);
+    useEffect(() => {
+        Api.Get(apiUrls.customerController.getAll + `?pageNo=${pageNo}&PageSize=${pageSize}`)
+            .then(res => {
+                tableOptionTemplet.data = res.data.data;
+                tableOptionTemplet.totalRecords = res.data.totalRecords;
+                setTableOption({...tableOptionTemplet});
+            })
+    }, [pageNo, pageSize])
 
   useEffect(() => {
     if (isRecordSaving) {
@@ -167,9 +178,13 @@ export default function CustomerDetails() {
   }, [isRecordSaving])
 
   const validateError = () => {
-    const { name, contactNo, maxDeliveryAttempt, preferredPickupTime } = customerModel;
+    const { name, contactNo, maxDeliveryAttempt, preferredPickupTime,cityId,email,address,zipCode } = customerModel;
     const newError = {};
     if (!name || name === "") newError.name = validationMessage.reqName;
+    if (!email || email === "") newError.email = validationMessage.reqEmail;
+    if (!address || address === "") newError.address = validationMessage.reqAddress;
+    if (!zipCode || zipCode === "") newError.zipCode = validationMessage.reqZipcode;
+    if (!cityId ||!common.validateGuid(cityId)) newError.cityId = validationMessage.reqCity;
     if (!contactNo || contactNo === "") newError.contactNo = validationMessage.reqContactNo;
     if (!maxDeliveryAttempt || maxDeliveryAttempt < 1) newError.maxDeliveryAttempt = validationMessage.reqDeliveryAttempt;
     if (!preferredPickupTime || preferredPickupTime === "") newError.preferredPickupTime = validationMessage.reqPreferredPickupTime;
@@ -196,18 +211,31 @@ export default function CustomerDetails() {
                 <div className="card">
                   <div className="card-body">
                     <div className="row g-3">
-                      <div className="col-12 col-md-6">
+                      <div className="col-sm-12 col-md-6">
                         <Inputbox labelText="Name" isRequired={true} errorMessage={errors?.name} name="name" value={customerModel.name} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
 
                       </div>
-                      <div className="col-12 col-md-6">
+                      <div className="col-sm-12 col-md-6">
                         <Inputbox labelText="Contact No" isRequired={true} errorMessage={errors?.contactNo} name="contactNo" value={customerModel.contactNo} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
-
                       </div>
                       <div className="col-12">
+                        <Inputbox labelText="Email" isRequired={true} errorMessage={errors?.email} name="email" value={customerModel.email} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
+                      </div>
+                      <div className="col-12">
+                        <Inputbox labelText="Address" isRequired={true} errorMessage={errors?.address} name="address" value={customerModel.address} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
+                      </div>
+                      <div className="col-sm-12 col-md-6">
+                        <Label text="City" isRequired={true} />
+                        <Dropdown data={cityList} name="cityId" value={customerModel.cityId} defaultText="Select City" className="form-control form-control-sm" onChange={handleTextChange} />
+                        <ErrorLabel message={errors?.cityId} />
+                      </div>
+                      <div className="col-sm-12 col-md-6">
+                        <Inputbox labelText="Zip Code" isRequired={true} errorMessage={errors?.zipCode} name="zipCode" value={customerModel.zipCode} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
+                      </div>
+                      <div className="col-sm-12 col-md-6">
                         <Inputbox labelText="Max Delivery Attempt" isRequired={true} errorMessage={errors?.maxDeliveryAttempt} name="maxDeliveryAttempt" value={customerModel.maxDeliveryAttempt} type="number" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
                       </div>
-                      <div className="col-12">
+                      <div className="col-sm-12 col-md-6">
                         <Inputbox labelText="Preferred Pickup Time" errorMessage={errors?.preferredPickupTime} name="preferredPickupTime" value={customerModel.preferredPickupTime} type="text" className="form-control form-control-sm" onChangeHandler={handleTextChange} />
                       </div>
                     </div>

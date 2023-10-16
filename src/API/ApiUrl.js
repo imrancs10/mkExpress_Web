@@ -71,7 +71,7 @@ export const apiUrls = {
         addShipmentInContainer: `${apiPrfix}/containers/add/shipments/`,
         removeShipmentFromContainer: `${apiPrfix}/containers/remove/shipments/`,
         update: `${apiPrfix}/containers`,
-        delete: `${apiPrfix}/containers/`,
+        delete: `${apiPrfix}/containers/delete/`,
         get: `${apiPrfix}/containers/get/`,
         getAll: `${apiPrfix}/containers`,
         search: `${apiPrfix}/containers/search`,

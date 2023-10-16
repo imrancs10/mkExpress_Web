@@ -41,7 +41,7 @@ export default function Member() {
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption(tableOptionTemplet);
+                setTableOption({...tableOptionTemplet});
             })
     }, [pageNo, pageSize]);
 
@@ -175,11 +175,11 @@ export default function Member() {
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <TableView option={tableOption}></TableView>
-            <AddMemberModal isRecordSaving={isRecordSaving} setMemberModel={setMemberModel} memberModel={memberModel} handleSearch={handleSearch}></AddMemberModal>
+            <AddMemberModal handleSearch={handleSearch} isRecordSaving={isRecordSaving} setMemberModel={setMemberModel} memberModel={memberModel} handleSearch={handleSearch}></AddMemberModal>
             <MemberChangePassword data={selectedMemberId}></MemberChangePassword>
-            <MemberChangeRole data={selectedMemberId}></MemberChangeRole>
-            <MemberAssignStation data={selectedMemberId}></MemberAssignStation>
-            <MemberActivateDeactivate data={selectedMemberId}/>
+            <MemberChangeRole  handleSearch={handleSearch} data={selectedMemberId}></MemberChangeRole>
+            <MemberAssignStation  handleSearch={handleSearch} data={selectedMemberId}></MemberAssignStation>
+            <MemberActivateDeactivate  handleSearch={handleSearch} data={selectedMemberId}/>
         </>
     )
 }
