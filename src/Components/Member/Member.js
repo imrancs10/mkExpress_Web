@@ -14,7 +14,7 @@ import MemberChangeRole from './MemberChangeRole';
 import MemberAssignStation from './MemberAssignStation';
 import MemberActivateDeactivate from './MemberActivateDeactivate';
 
-export default function Member() {
+export default function Member({ loginDetails }) {
     const memberModelTemplate = {
         id: common.guid(),
         firstName: "",
@@ -41,7 +41,7 @@ export default function Member() {
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption({...tableOptionTemplet});
+                setTableOption({ ...tableOptionTemplet });
             })
     }, [pageNo, pageSize]);
 
@@ -76,6 +76,9 @@ export default function Member() {
             toast.error(toastMessage.deleteError);
         });
     }
+    const showButtons = (id, data) => {
+        return !(data?.role?.toLowerCase() === 'admin') || common.checkAdminRole(loginDetails?.userResponse?.role);
+    }
     const tableOptionTemplet = {
         headers: headerFormat.memberDetails,
         data: [],
@@ -103,7 +106,8 @@ export default function Member() {
                     showModel: true,
                     handler: (id, data) => {
                         setSelectedMemberId({ ...data });
-                    }
+                    },
+                    showButton: showButtons
                 },
                 {
                     title: "Assign Station",
@@ -112,7 +116,8 @@ export default function Member() {
                     showModel: true,
                     handler: (id, data) => {
                         setSelectedMemberId({ ...data });
-                    }
+                    },
+                    showButton: showButtons
                 },
                 {
                     title: "Change Role",
@@ -121,7 +126,8 @@ export default function Member() {
                     showModel: true,
                     handler: (id, data) => {
                         setSelectedMemberId({ ...data });
-                    }
+                    },
+                    showButton:showButtons
                 },
                 {
                     title: (id, data) => {
@@ -134,7 +140,8 @@ export default function Member() {
                     showModel: true,
                     handler: (id, data) => {
                         setSelectedMemberId({ ...data });
-                    }
+                    },
+                    showButton:showButtons
                 }
             ]
         }
@@ -177,9 +184,9 @@ export default function Member() {
             <TableView option={tableOption}></TableView>
             <AddMemberModal handleSearch={handleSearch} isRecordSaving={isRecordSaving} setMemberModel={setMemberModel} memberModel={memberModel} handleSearch={handleSearch}></AddMemberModal>
             <MemberChangePassword data={selectedMemberId}></MemberChangePassword>
-            <MemberChangeRole  handleSearch={handleSearch} data={selectedMemberId}></MemberChangeRole>
-            <MemberAssignStation  handleSearch={handleSearch} data={selectedMemberId}></MemberAssignStation>
-            <MemberActivateDeactivate  handleSearch={handleSearch} data={selectedMemberId}/>
+            <MemberChangeRole handleSearch={handleSearch} data={selectedMemberId}></MemberChangeRole>
+            <MemberAssignStation handleSearch={handleSearch} data={selectedMemberId}></MemberAssignStation>
+            <MemberActivateDeactivate handleSearch={handleSearch} data={selectedMemberId} />
         </>
     )
 }

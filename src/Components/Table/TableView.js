@@ -91,7 +91,7 @@ export default function TableView({ option }) {
                                                                         onClick={e => clickHandler(dataEle[headerEle.prop], headerEle.action, dataEle)}
                                                                         key={headerIndex}
                                                                         className={option.changeRowClassHandler(dataEle, headerEle.prop, dataIndex, headerIndex) + (headerEle?.action?.dAlign === undefined ? " text-center" : " text-" + headerEle?.action?.dAlign?.trim())}
-                                                                        title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle.title ?? headerEle.name) : ""}
+                                                                        title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle.title ?? headerEle.name) : " "}
                                                                         data-toggle={(headerEle?.action?.showTooltip ?? true) === true ? "tooltip" : ""}
                                                                         data-bs-placement="top"
                                                                         data-bs-original-title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle.title ?? headerEle.name) : ""}>

@@ -42,7 +42,7 @@ export default function ShipmentTracking({ shipmentId }) {
                                     <Label text={`Customer: ${trackingDetails[0]?.shipment?.customerName}`}></Label>
                                 </div>
                                 <div className='col-md-2 col-sm-12'>
-                                    <Label text={`Station: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.toStore}`}></Label>
+                                    <Label text={`Station: ${trackingDetails[0]?.shipment?.shipmentDetail?.toStore}`}></Label>
                                 </div>
                                 <div className='col-md-2 col-sm-12'>
                                     <Label text={`Reason: ${trackingDetails[0]?.shipment?.reason ?? ""}`}></Label>
@@ -55,31 +55,31 @@ export default function ShipmentTracking({ shipmentId }) {
                                             <div className='mb-2' style={{ borderBottom: '1px solid', paddingBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>Shipper</div>
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <Label text={`Country: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.country}`}></Label>
+                                                    <Label text={`Country: ${trackingDetails[0]?.shipment?.shipmentDetail?.country}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`City: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperCity}`}></Label>
+                                                    <Label text={`City: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperCity}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 1: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperAddress1}`}></Label>
+                                                    <Label text={`Address Line 1: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperAddress1}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 2: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperAddress2}`}></Label>
+                                                    <Label text={`Address Line 2: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperAddress2}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 3: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperAddress3}`}></Label>
+                                                    <Label text={`Address Line 3: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperAddress3}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Name: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperName}`}></Label>
+                                                    <Label text={`Name: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperName}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Email: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperEmail}`}></Label>
+                                                    <Label text={`Email: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperEmail}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Phone: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperPhone}`}></Label>
+                                                    <Label text={`Phone: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperPhone}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Second Phone: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.shipperSecondPhone}`}></Label>
+                                                    <Label text={`Second Phone: ${trackingDetails[0]?.shipment?.shipmentDetail?.shipperSecondPhone}`}></Label>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,31 +91,31 @@ export default function ShipmentTracking({ shipmentId }) {
                                             <div className='mb-2' style={{ borderBottom: '1px solid', paddingBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>Consignee</div>
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <Label text={`Country: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.country}`}></Label>
+                                                    <Label text={`Country: ${trackingDetails[0]?.shipment?.shipmentDetail?.country}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`City: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeCity}`}></Label>
+                                                    <Label text={`City: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeCity}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 1: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeAddress1}`}></Label>
+                                                    <Label text={`Address Line 1: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeAddress1}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 2: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeAddress2}`}></Label>
+                                                    <Label text={`Address Line 2: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeAddress2}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Address Line 3: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeAddress3}`}></Label>
+                                                    <Label text={`Address Line 3: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeAddress3}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Name: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeName}`}></Label>
+                                                    <Label text={`Name: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeName}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Email: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeEmail}`}></Label>
+                                                    <Label text={`Email: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeEmail}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Phone: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneePhone}`}></Label>
+                                                    <Label text={`Phone: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneePhone}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Second Phone: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.consigneeSecondPhone}`}></Label>
+                                                    <Label text={`Second Phone: ${trackingDetails[0]?.shipment?.shipmentDetail?.consigneeSecondPhone}`}></Label>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,19 +127,19 @@ export default function ShipmentTracking({ shipmentId }) {
                                             <div className='mb-2' style={{ borderBottom: '1px solid', paddingBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>Commodity</div>
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <Label text={`Weight: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.weight}`}></Label>
+                                                    <Label text={`Weight: ${trackingDetails[0]?.shipment?.shipmentDetail?.weight}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Dimensions: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.dimension}`}></Label>
+                                                    <Label text={`Dimensions: ${trackingDetails[0]?.shipment?.shipmentDetail?.dimension}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Description: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.description}`}></Label>
+                                                    <Label text={`Description: ${trackingDetails[0]?.shipment?.shipmentDetail?.description}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
                                                     <Label text={`COD: ${trackingDetails[0]?.shipment?.codAmount}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
-                                                    <Label text={`Number of pieces: ${trackingDetails[0]?.shipment?.shipmentDetails[0]?.totalPieces}`}></Label>
+                                                    <Label text={`Number of pieces: ${trackingDetails[0]?.shipment?.shipmentDetail?.totalPieces}`}></Label>
                                                 </div>
                                                 <div className='col-12'>
                                                     <Label text={`Attached Images Urls:`}></Label>

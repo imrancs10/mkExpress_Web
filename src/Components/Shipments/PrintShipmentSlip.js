@@ -11,6 +11,8 @@ export default function PrintShipmentSlip({ shipmentIds, width, height }) {
     const [shipmentDetails, setShipmentDetails] = useState([]);
     var printRef = useRef();
     useEffect(() => {
+        if(shipmentIds==="")
+        return;
         Api.Get(apiUrls.shipmentController.getByIds + `${shipmentIds}`)
             .then(res => {
                 setShipmentDetails(res.data);
@@ -37,13 +39,13 @@ export default function PrintShipmentSlip({ shipmentIds, width, height }) {
                            <table>
                                 <thead>
                                     <tr>
-                                        <th colspan="3"><Barcode displayValue={false} value={928937492479272} width={3} height={90} /></th>
-                                        <th colspan="3"></th>
+                                        <th colSpan="3"><Barcode displayValue={false} value={'928937492479272'} width={3} height={90} /></th>
+                                        <th colSpan="3"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="4" rowspan="2">928937492479272</td>
+                                        <td colSpan="4" rowSpan="2">928937492479272</td>
                                         <td>Origin</td>
                                         <td>Riyadh</td>
                                     </tr>
@@ -52,43 +54,43 @@ export default function PrintShipmentSlip({ shipmentIds, width, height }) {
                                         <td>{new Date().toDateString()}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="1">Total COD</td>
-                                        <td colspan="3">0.0</td>
-                                        <td colspan="2" rowspan="3">Riyadh</td>
+                                        <td colSpan="1">Total COD</td>
+                                        <td colSpan="3">0.0</td>
+                                        <td colSpan="2" rowSpan="3">Riyadh</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="1">Weight</td>
-                                        <td colspan="3">8.0</td>
+                                        <td colSpan="1">Weight</td>
+                                        <td colSpan="3">8.0</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="1">Piece</td>
-                                        <td colspan="3">1 of 2</td>
+                                        <td colSpan="1">Piece</td>
+                                        <td colSpan="3">1 of 2</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5">Consignee</td>
-                                        <td rowspan="11" className='v-bar'>
+                                        <td colSpan="5">Consignee</td>
+                                        <td rowSpan="11" className='v-bar'>
                                             <div style={{ transform: 'rotate(90deg)' }}>
-                                                <Barcode displayValue={false} st value={928937492479272} width={2.2} height={90} />
+                                                <Barcode displayValue={false} st value={'928937492479272'} width={2.2} height={90} />
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Name</td>
-                                        <td colspan="4">Satish</td>
+                                        <td colSpan="4">Satish</td>
                                     </tr>
                                     <tr>
                                         <td>Mobile</td>
-                                        <td colspan="2">17182318212381</td>
-                                        <td colspan="2">192u3182yu30</td>
+                                        <td colSpan="2">17182318212381</td>
+                                        <td colSpan="2">192u3182yu30</td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="6">Address</td>
-                                        <td colspan="4" rowspan="2">b hahjadhbajs dajdjadjadjahdjda a jajdajd j ja dja dja jda dadja dja djad</td>
+                                        <td rowSpan="6">Address</td>
+                                        <td colSpan="4" rowSpan="2">b hahjadhbajs dajdjadjadjahdjda a jajdajd j ja dja dja jda dadja dja djad</td>
                                     </tr>
                                     <tr>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" rowspan="3">aajsnd akjduaeqjwnekjwqneq NewShipmentq e
+                                        <td colSpan="4" rowSpan="3">aajsnd akjduaeqjwnekjwqneq NewShipmentq e
                                             qw eqwe
                                             e qwq weightq</td>
                                     </tr>
@@ -97,27 +99,27 @@ export default function PrintShipmentSlip({ shipmentIds, width, height }) {
                                     <tr>
                                     </tr>
                                     <tr>
-                                        <td colspan="4">Riyadh</td>
+                                        <td colSpan="4">Riyadh</td>
                                     </tr>
                                     <tr>
                                         <td>Shipper</td>
-                                        <td colspan="4"></td>
+                                        <td colSpan="4"></td>
                                     </tr>
                                     <tr>
                                         <td>Custome Name</td>
-                                        <td colspan="4"></td>
+                                        <td colSpan="4"></td>
                                     </tr>
                                     <tr>
                                         <td>Description</td>
-                                        <td colspan="5"></td>
+                                        <td colSpan="5"></td>
                                     </tr>
                                     <tr>
                                         <td>Reference</td>
-                                        <td colspan="5"></td>
+                                        <td colSpan="5"></td>
                                     </tr>
                                     <tr>
                                         <td>Remark</td>
-                                        <td colspan="5"></td>
+                                        <td colSpan="5"></td>
                                     </tr>
                                 </tbody>
                             </table>

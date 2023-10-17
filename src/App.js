@@ -66,8 +66,8 @@ function App() {
               <Route path='/' element={<Dashboard />} />
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/customer' element={<Customer />} />
-              <Route path='/members' element={<Member />} />
-              <Route path='/shipments' element={<Shipment />} />
+              <Route path='/members' element={<Member loginDetails={loginDetails}/>} />
+              <Route path='/shipments' element={<Shipment loginDetails={loginDetails}/>} />
               <Route path='/containers' element={<ContainerDetail />} />
               <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails}/>} />
               <Route path='/admin' element={<AdminLayout loginDetails={loginDetails} />}>

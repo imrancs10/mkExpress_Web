@@ -13,7 +13,7 @@ export default function ShipmentsButtons({ selectedRows }) {
                         <ButtonBox modalId="#modalScanToPrint" className="btn btn-primary btn-sm" icon="fa-solid fa-barcode" text="Scan To Print" />
                         <ButtonBox modalId="#modalBulkScanToPrint" className="btn btn-primary btn-sm" icon="fa-solid fa-print" text="Bulk Scan To Print" />
                         <ButtonBox modalId="#modalAssignToTransfer" className="btn btn-primary btn-sm" icon="fa-solid fa-motorcycle" text="Assign for Transfer" />
-                        {isRowSelected && <button type="button" className="btn btn-primary btn-sm"><i className="fa-solid fa-motorcycle"></i> Assign For Pickup</button>}
+                        {isRowSelected && <button type="button" className="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#modalAssignForPickup"><i className="fa-solid fa-motorcycle"></i> Assign For Pickup</button>}
                         {!isRowSelected && <button type="button" className="btn btn-primary btn-sm"><i className="fa-solid fa-motorcycle"></i> </button>}
                         {!isRowSelected && <button type="button" className="btn btn-primary btn-sm"><i className="fa-solid fa-box"></i> Courier RunSheet</button>}
                         {!isRowSelected && <button type="button" className="btn btn-primary btn-sm"><i className="fa-solid fa-person-walking-arrow-loop-left"></i> Assign for return</button>}

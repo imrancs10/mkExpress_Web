@@ -14,6 +14,7 @@ import BulkScanToPrint from './BulkScanToPrint';
 import AssignToTransfer from './AssignToTransfer';
 import ShipmentTracking from './ShipmentTracking';
 import PrintShipmentSlip from './PrintShipmentSlip';
+import AssignForPickup from './AssignForPickup';
 
 export default function Shipment() {
     const filterYearStartFrom = 2022;
@@ -48,7 +49,7 @@ export default function Shipment() {
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption(tableOptionTemplet);
+                setTableOption({...tableOptionTemplet});
             })
     }, [pageNo, pageSize, clearFilter])
 
@@ -147,6 +148,7 @@ export default function Shipment() {
             <AssignToTransfer></AssignToTransfer>
             <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
             <PrintShipmentSlip shipmentIds={shipmentIdForPrint} />
+            <AssignForPickup></AssignForPickup>
         </>
     )
 }

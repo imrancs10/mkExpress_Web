@@ -56,20 +56,20 @@ const headerFormat = {
       },
       action: { hAlign: "center", dAlign: "center" }
     },
-    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'Schedule Pickup Date', prop: 'schedulePickupDate', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Pickup Date', prop: 'pickupDate', action: { hAlign: "center", dAlign: "center" } },
     {
       name: 'Shipper', prop: 'shipperName',
       customColumn: (data) => {
-        return data?.shipmentDetails[0]?.shipperName
+        return data?.shipmentDetails?.length>0?data?.shipmentDetails[0]?.shipperName:"";
       },
       action: { hAlign: "center", dAlign: "center" }
     },
     {
       name: 'Consignee', prop: 'consigneeName',
       customColumn: (data) => {
-        return data?.shipmentDetails[0]?.consigneeName
+        return data?.shipmentDetails?.length>0?data?.shipmentDetails[0]?.consigneeName:"";
       },
       action: { hAlign: "center", dAlign: "center" }
     },

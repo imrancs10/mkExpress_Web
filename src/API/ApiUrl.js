@@ -58,6 +58,7 @@ export const apiUrls = {
         update: `${apiPrfix}/members`,
         delete: `${apiPrfix}/members/`,
         get: `${apiPrfix}/members/get/`,
+        getByRole: `${apiPrfix}/members/get/by-role`,
         getAll: `${apiPrfix}/members`,
         search: `${apiPrfix}/members/search`,
         activeDeactive: `${apiPrfix}/members/update/active/`,
