@@ -103,6 +103,13 @@ const headerFormat = {
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Confirmed', prop: 'confirmed', action: {replace:{"true":"Yes","false":"No"}, hAlign: "center", dAlign: "center" } },
   ],
+  thirdPartyDetail:[
+    { name: 'Name', prop: 'name', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Email', prop: 'email', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Mobile', prop: 'mobile', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Contact No', prop: 'contact', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Tracking Url', prop: 'trackingUrl', action: { hAlign: "center", dAlign: "center" } },
+  ],
   containerDetail: [
     { name: 'Container No.', prop: 'containerNo', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "start" } },

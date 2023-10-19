@@ -34,6 +34,15 @@ export const apiUrls = {
         getAll: `${apiPrfix}/customer`,
         search: `${apiPrfix}/customer/search`,
     },
+    thirdPartyController:{
+        add: `${apiPrfix}/thirdParty`,
+        addThirdPartyShipment: `${apiPrfix}/thirdParty/add/shipments`,
+        update: `${apiPrfix}/thirdParty`,
+        delete: `${apiPrfix}/thirdParty/`,
+        get: `${apiPrfix}/thirdParty/get/`,
+        getAll: `${apiPrfix}/thirdParty`,
+        search: `${apiPrfix}/thirdParty/search`,
+    },
     logisticRegionController:{
         add: `${apiPrfix}/logisticRegion`,
         update: `${apiPrfix}/logisticRegion`,

@@ -18,7 +18,7 @@ export default function Inputbox({ labelText, isRequired, type, name, labelTextH
     onChangeHandler = common.defaultIfEmpty(onChangeHandler, () => { });
     onBlur = common.defaultIfEmpty(onBlur, () => { });
     onChangeHandlerData = common.defaultIfEmpty(onChangeHandlerData, undefined);
-    maxLength = common.defaultIfEmpty(maxLength, 150);
+    maxLength = common.defaultIfEmpty(maxLength, 250);
     errorMessage = common.defaultIfEmpty(errorMessage, undefined);
     showError = common.defaultIfEmpty(showError, true);
     showLabel = common.defaultIfEmpty(showLabel, true);

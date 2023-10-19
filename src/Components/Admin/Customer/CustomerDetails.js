@@ -13,6 +13,7 @@ import ButtonBox from '../../Common/ButtonBox';
 import Dropdown from '../../Common/Dropdown';
 import Label from '../../Common/Label';
 import ErrorLabel from '../../Common/ErrorLabel';
+import RegexFormat from '../../Utility/RegexFormat';
 
 
 export default function CustomerDetails() {
@@ -181,7 +182,7 @@ export default function CustomerDetails() {
     const { name, contactNo, maxDeliveryAttempt, preferredPickupTime,cityId,email,address,zipCode } = customerModel;
     const newError = {};
     if (!name || name === "") newError.name = validationMessage.reqName;
-    if (!email || email === "") newError.email = validationMessage.reqEmail;
+    if (!email || email === ""|| !email.match(RegexFormat.email)) newError.email = validationMessage.reqEmail;
     if (!address || address === "") newError.address = validationMessage.reqAddress;
     if (!zipCode || zipCode === "") newError.zipCode = validationMessage.reqZipcode;
     if (!cityId ||!common.validateGuid(cityId)) newError.cityId = validationMessage.reqCity;
