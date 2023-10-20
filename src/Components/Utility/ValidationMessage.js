@@ -16,6 +16,7 @@ const validationMessage = {
     reqAddress2:"Please enter address 2!",
     reqAddress1:"Please enter address 1!",
     reqCity:"Please select city!",
+    reqThirdParty:"Please select third party!",
     reqPhone:"Please enter phone number!",
     reqName:"Please enter name!",
     reqItemName:"Please enter item name!",
@@ -42,6 +43,8 @@ const validationMessage = {
     reqContainerRoute:"Please select container route!",
     reqContainerType:"Please select container type!",
     reqShipments:"Please add Shipments in container!",
+    shipmentsHasError:"Please remove invalid shipments!",
+    noShipmentError:"Please add some shipments!",
 }
 
 export {validationMessage};

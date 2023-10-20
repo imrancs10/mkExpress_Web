@@ -61,6 +61,7 @@ export const apiUrls = {
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
         validateShipments: `${apiPrfix}/shipment/validate/`,
+        validateThirdPartyShipment: `${apiPrfix}/shipment/validate/thirdparty?shipmentNo=`,
     },
     memberController:{
         add: `${apiPrfix}/members`,

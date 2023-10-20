@@ -30,7 +30,7 @@ export default function AssignForPickup({shipmetIds}) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <SearchableDropdown options={memberList} value={model.memberId} name="memberId" defaultText="Select Courier Person..." handleChange={handleTextChange} elementValue="firstName"></SearchableDropdown>
+                            <SearchableDropdown data={memberList} value={model.memberId} name="memberId" defaultText="Select Courier Person..." onChange={handleTextChange} elementValue="firstName"></SearchableDropdown>
                         </div>
                         <div className="modal-footer">
                             <div className='d-flex justify-content-end w-50'>

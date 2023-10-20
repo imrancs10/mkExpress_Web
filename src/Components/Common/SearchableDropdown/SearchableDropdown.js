@@ -3,13 +3,13 @@ import './dropdown.css'
 import { common } from "../../Utility/common";
 
 const SearchableDropdown = ({
-  options,
+  data,
   elementKey,
   elementValue,
   id,
   value,
   name,
-  handleChange,
+  onChange,
   defaultText,
   defaultValue
 }) => {
@@ -29,7 +29,7 @@ const SearchableDropdown = ({
 
   const selectOption = (option) => {
     setQuery(() => "");
-    handleChange({
+    onChange({
       target: {
         name: name,
         value: option[elementKey],
@@ -46,14 +46,14 @@ const SearchableDropdown = ({
 
   const getDisplayValue = () => {
     if (query) return query;
-    var val = options?.find(x => x[elementKey] === value);
+    var val = data?.find(x => x[elementKey] === value);
     if (value) return val === undefined ? "" : val[elementValue];
 
     return "";
   };
 
-  const filter = (options) => {
-    return options.filter(
+  const filter = (data) => {
+    return data?.filter(
       (option) => option[elementValue].toLowerCase().indexOf(query.toLowerCase()) > -1
     );
   };
@@ -69,25 +69,25 @@ const SearchableDropdown = ({
       if (!isOpen) {
         setIsOpen(true);
       }
-      if (navigateIndex < options?.length - 1)
+      if (navigateIndex < data?.length - 1)
         setNavigateIndex(pre => pre + 1)
       else
-        setNavigateIndex(options?.length - 1);
+        setNavigateIndex(data?.length - 1);
     }
     if (keyCode === 13) {
       setQuery(() => "");
-      handleChange({
+      onChange({
         target: {
           name: name,
-          value: options[navigateIndex][elementKey],
+          value: data[navigateIndex][elementKey],
           type: 'select-one'
         }
       });
-      setIsOpen((isOpen) => !isOpen);
+      setIsOpen(false);
     }
     if (keyCode === 8 && e.repeat) {
       setQuery(() => "");
-      handleChange({
+      onChange({
         target: {
           name: name,
           value: "",
@@ -102,7 +102,7 @@ const SearchableDropdown = ({
       <div className="control">
         <div className="selected-value">
           <input
-            onK={e => { navigateList(e) }}
+           // onKeyUp={e => { navigateList(e) }}
             onKeyDown={e => { navigateList(e) }}
             ref={inputRef}
             type="text"
@@ -110,7 +110,7 @@ const SearchableDropdown = ({
             name="searchTerm"
             onChange={(e) => {
               setQuery(e.target.value);
-              handleChange({
+              onChange({
                 target: {
                   name: name,
                   value: defaultValue,
@@ -119,14 +119,14 @@ const SearchableDropdown = ({
               });
             }}
             onClick={toggle}
-            className=" form-control  form-control-sm"
+            className=" form-control form-control-sm"
           />
         </div>
         <div className={`arrow ${isOpen ? "open" : ""}`}></div>
       </div>
 
       <div className={`options ${isOpen ? "open" : ""}`}>
-        {filter(options).map((option, index) => {
+        {filter(data)?.map((option, index) => {
           return (
             <div
               onClick={() => selectOption(option)}
