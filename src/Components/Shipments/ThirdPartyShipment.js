@@ -12,6 +12,7 @@ import { headerFormat } from '../Utility/tableHeaderFormat';
 import TableView from '../Table/TableView';
 import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
+import RegexFormat from '../Utility/RegexFormat';
 
 export default function ThirdPartyShipment({ data }) {
     const modelTemplate = {
@@ -69,11 +70,11 @@ export default function ThirdPartyShipment({ data }) {
                     tableOptionTemplet.data = newModel.shipmentList;
                     tableOptionTemplet.totalRecords = newModel.shipmentList.length;
                     setTableOption({ ...tableOptionTemplet });
-                    setErrors({ ...errors, ["shipmentNumber"]: undefined });
-                    setErrors({ ...errors, ["shipmentList"]: undefined });
+                    setErrors({ ...errors, "shipmentNumber": undefined });
+                    setErrors({ ...errors, "shipmentList": undefined });
                 }
             }).catch(err => {
-                setErrors({ ...errors, ["shipmentNumber"]: err?.response?.data?.Message });
+                setErrors({ ...errors, "shipmentNumber": err?.response?.data?.Message });
             });
     }
 
@@ -150,17 +151,19 @@ export default function ThirdPartyShipment({ data }) {
             .then(res => {
                 if (res.data) {
                     toast.success(toastMessage.saveSuccess);
+                    resetForm();
+                    common.closePopup('closeThirdPartyShipmentLabel');
                 }
             }).catch(err => {
                 if (err?.response?.data?.ErrorResponseType === "SomeShipmentsAlreadyAddedToThirdParty!") {
                     var newModel = model;
-                    var message = err?.response?.data?.Message?.match(/[20]\d{14}/gm);
+                    var message = err?.response?.data?.Message?.match(RegexFormat.shipmentNo);
                     newModel.shipmentList.forEach(res => {
                         if (message?.indexOf(res.shipmentNumber) > -1) {
                             res.hasError = true;
                         }
                     });
-                    setErrors({...errors,["shipmentList"]:validationMessage.shipmentsHasError+" "+err?.response?.data?.Message.split(":")[0]});
+                    setErrors({ ...errors, "shipmentList": `${validationMessage.shipmentsHasError} ${err?.response?.data?.Message.split(":")[0]}`});
                     setModel({ ...newModel });
                     tableOptionTemplet.data = newModel?.shipmentList;
                     tableOptionTemplet.totalRecords = newModel?.shipmentList?.length;
@@ -176,7 +179,7 @@ export default function ThirdPartyShipment({ data }) {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="modalThirdPartyShipmentLabel">Third Party Shipment</h1>
-                            <button type="button" className="btn-close" onClick={e => resetForm()} data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" id='closeThirdPartyShipmentLabel' onClick={e => resetForm()} data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className="row g-3">

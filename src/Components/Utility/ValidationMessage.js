@@ -45,6 +45,7 @@ const validationMessage = {
     reqShipments:"Please add Shipments in container!",
     shipmentsHasError:"Please remove invalid shipments!",
     noShipmentError:"Please add some shipments!",
+    reqDriver:"Please select driver!",
 }
 
 export {validationMessage};

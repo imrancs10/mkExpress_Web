@@ -49,7 +49,7 @@ export default function Shipment() {
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption({...tableOptionTemplet});
+                setTableOption({ ...tableOptionTemplet });
             })
     }, [pageNo, pageSize, clearFilter])
 
@@ -69,30 +69,35 @@ export default function Shipment() {
             setSelectedRows([]);
             return;
         }
-        var selectedIds = tableOption.data.map(x => x.id);
-        setSelectedRows([...selectedIds]);
+        setSelectedRows([...tableOption.data]);
     }
 
     const selectRowHandler = (e, data) => {
         if (!e.target.checked) {
             var filterIds = selectedRows.filter((x) => {
-                return x !== data?.id
+                return x?.id !== data?.id
             })
             setSelectedRows([...filterIds]);
             return;
         }
-        var selectedIds = selectedRows;
-        selectedIds.push(data?.id);
-        setSelectedRows([...selectedIds]);
+
+        if (selectedRows.filter(x => x.id === data?.id)?.length === 0) {
+            var selectedRowData = selectedRows;
+            selectedRowData.push(data);
+            setSelectedRows([...selectedRowData]);
+        }
     }
 
     var shipmentTableHeader = headerFormat.shipmentDetails;
+    
     shipmentTableHeader[0].name = () => {
         return <input type='checkbox' onChange={e => selectAllRowHandler(e)} checked={tableOption.totalRecords === selectedRows?.length && selectedRows.length > 0} id="checkAll"></input>
     }
+
     shipmentTableHeader[0].customColumn = (data) => {
-        return <input type='checkbox' onChange={e => selectRowHandler(e, data)} checked={selectedRows?.find(x => x === data?.id) !== undefined}></input>
+        return <input type='checkbox' onChange={e => selectRowHandler(e, data)} checked={selectedRows?.find(x => x?.id === data?.id) !== undefined}></input>
     }
+
     const tableOptionTemplet = {
         headers: shipmentTableHeader,
         data: [],
@@ -148,7 +153,7 @@ export default function Shipment() {
             <AssignToTransfer></AssignToTransfer>
             <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
             <PrintShipmentSlip shipmentIds={shipmentIdForPrint} />
-            <AssignForPickup></AssignForPickup>
+            <AssignForPickup data={selectedRows}></AssignForPickup>
         </>
     )
 }
