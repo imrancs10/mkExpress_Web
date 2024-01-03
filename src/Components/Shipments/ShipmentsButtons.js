@@ -3,7 +3,7 @@ import './shipment.css'
 import ButtonBox from '../Common/ButtonBox'
 
 export default function ShipmentsButtons({ selectedRows }) {
-    var isRowSelected = selectedRows?.length;
+    var isRowSelected = selectedRows?.length>0;
     return (
         <div className='card mb-2'>
             <div className='card-body' style={{ padding: '7px' }}>
