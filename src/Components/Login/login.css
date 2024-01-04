@@ -8,6 +8,12 @@
     width: 100vw;
     height: 100%;
 }
+
+.login-container .forget-pass a{
+    color: red;
+    text-decoration: none;
+    font-size: 0.7rem !important;
+}
 @media only screen and (max-width: 600px) {
     .login-container {
         height: 100vh;

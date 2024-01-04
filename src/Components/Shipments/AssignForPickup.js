@@ -80,7 +80,7 @@ export default function AssignForPickup({ data }) {
     const validateModel = () => {
         var { memberId, data } = model;
         var formError = {};
-        if (!memberId || common.validateGuid(memberId)) formError.memberId = validationMessage.reqDriver;
+        if (!memberId || !common.validateGuid(memberId)) formError.memberId = validationMessage.reqDriver;
         if (!data || data?.length === 0) formError.memberId = validationMessage.noShipmentError;
         return formError;
     }
@@ -92,7 +92,14 @@ export default function AssignForPickup({ data }) {
             return;
         }
 
-        Api.Post(apiUrls.shipmentController.assignForPickup, model)
+        var postData = [];
+        model?.data?.forEach(res => {
+            postData.push({
+                memberId: model?.memberId,
+                shipmentId: res?.id
+            })
+        });
+        Api.Post(apiUrls.shipmentController.assignForPickup, postData)
             .then(res => {
                 toast.success(toastMessage.saveSuccess);
                 common.closePopup('closeAssignForPickupModel');

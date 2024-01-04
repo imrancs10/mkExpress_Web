@@ -41,6 +41,11 @@ export default function ForgetPassword() {
                 toast.error(toastMessage.saveError);
             })
     }
+
+    const backToLoginHandler=()=>
+    {
+        window.location.href="/#/login"
+    }
     return (
         <>
             <div className="container login-container d-flex justify-content-center my-2" style={{ height: '100vh', 'alignItems': 'center' }}>
@@ -53,7 +58,7 @@ export default function ForgetPassword() {
                                         <img className='loginlogo' src='/logo512.png' alt='imk express logo'></img>
                                         <div className='text-center text-uppercase bold' style={{ fontWeight: '800' }}>{process.env.REACT_APP_COMPANY_NAME}</div>
                                     </div>
-                                    <div className='col-12 mb-2'>
+                                    <div className='col-12 mb-2 text-center'>
                                         <p style={{'fontSize': '12px'}}>Forgot your account’s password? Enter your email address and we’ll send you a recovery link.</p>
                                     </div>
                                     <div className='col-12 mb-2'>
@@ -65,8 +70,9 @@ export default function ForgetPassword() {
                                         </div>
                                         <ErrorLabel message={errors.email} />
                                     </div>
-                                    <div className='col-12 mb-2'>
-                                        <ButtonBox type="go" text="Send recovery email" icon="fa-brands fa-golang" showLoader={true} onClickHandler={forgetPasswordHandler}/>
+                                    <div className='col-12 mb-2 d-flex justify-content-between'>
+                                    <ButtonBox type="back" className="btn-sm" text="Login" showLoader={true} onClickHandler={backToLoginHandler}/>
+                                        <ButtonBox type="go" className="btn-sm" text="Send recovery email" icon="fa-brands fa-golang" showLoader={true} onClickHandler={forgetPasswordHandler}/>
                                     </div>
                                 </div>
                             </div>

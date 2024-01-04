@@ -31,6 +31,7 @@ export const apiUrls = {
         update: `${apiPrfix}/customer`,
         delete: `${apiPrfix}/customer/`,
         get: `${apiPrfix}/customer/get/`,
+        getDropdown: `${apiPrfix}/customer/get/dropdown`,
         getAll: `${apiPrfix}/customer`,
         search: `${apiPrfix}/customer/search`,
     },
@@ -61,6 +62,7 @@ export const apiUrls = {
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
         validateShipments: `${apiPrfix}/shipment/validate/`,
+        assignForPickup:`${apiPrfix}/shipment/assign/pickup/`,
         validateThirdPartyShipment: `${apiPrfix}/shipment/validate/thirdparty?shipmentNo=`,
     },
     memberController:{

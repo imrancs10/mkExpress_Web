@@ -18,8 +18,8 @@ const SearchableDropdown = ({
   const [navigateIndex, setNavigateIndex] = useState(0);
   const inputRef = useRef(null);
   defaultText = common.defaultIfEmpty(defaultText, "Select option...");
-  defaultValue = common.defaultIfEmpty(defaultText, "");
-  value = common.defaultIfEmpty(value, defaultText);
+  defaultValue = common.defaultIfEmpty(defaultValue, "");
+  value = common.defaultIfEmpty(value, "");
   elementKey = common.defaultIfEmpty(elementKey, "id");
   elementValue = common.defaultIfEmpty(elementValue, "value");
   useEffect(() => {
@@ -49,7 +49,7 @@ const SearchableDropdown = ({
     var val = data?.find(x => x[elementKey] === value);
     if (value) return val === undefined ? "" : val[elementValue];
 
-    return "";
+    return defaultText;
   };
 
   const filter = (data) => {
