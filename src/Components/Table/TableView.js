@@ -94,7 +94,7 @@ export default function TableView({ option }) {
                                                                         title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle.title ?? headerEle.name) : " "}
                                                                         data-toggle={(headerEle?.action?.showTooltip ?? true) === true ? "tooltip" : ""}
                                                                         data-bs-placement="top"
-                                                                        data-bs-original-title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle.title ?? headerEle.name) : ""}>
+                                                                        data-bs-original-title={(headerEle?.action?.showTooltip ?? true) === true ? (headerEle?.title ?? headerEle.name) : ""}>
                                                                         {columnDataPlotter(dataEle, headerEle)}
                                                                     </td>
                                                                 })

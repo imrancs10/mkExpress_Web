@@ -93,6 +93,9 @@ export default function LeftMenu({ setAuthData, authData, accessLogin, setAccess
                                                         <li>
                                                             <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-house" menuName="Third Party Company" link="admin/master/third-party" />
                                                         </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-gears" menuName="App Setting" link="admin/master/app-setting" />
+                                                        </li>
                                                     </ul>
                                                 </>
                                                 }

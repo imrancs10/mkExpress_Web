@@ -92,5 +92,13 @@ export const apiUrls = {
         checkOut: `${apiPrfix}/containers/out/`,
         closeContainer: `${apiPrfix}/containers/close/`,
         getContainerJourney: `${apiPrfix}/containers/get/journey/`,
+    },
+    appSettingController:{
+        create: `${apiPrfix}/appSetting`,
+        update: `${apiPrfix}/appSetting`,
+        delete: `${apiPrfix}/appSetting/`,
+        get: `${apiPrfix}/appSetting/get/`,
+        getAll: `${apiPrfix}/appSetting`,
+        search: `${apiPrfix}/appSetting/search`,
     }
 }

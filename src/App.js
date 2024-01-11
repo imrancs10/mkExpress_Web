@@ -25,6 +25,7 @@ import LogisticRegion from './Components/Admin/LogisticRegion/LogisticRegion';
 import MasterJourney from './Components/Admin/MasterJourney/MasterJourney';
 import ContainerDetail from './Components/Container/ContainerDetail';
 import ThirdPartyCourier from './Components/Admin/ThirdPartyCourier/ThirdPartyCourier';
+import AppSettingPage from './Components/Admin/AppSettingsPage/AppSettingPage';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -78,6 +79,7 @@ function App() {
                 <Route path='/admin/customer' element={<CustomerDetails />} />
                 <Route path='/admin/logistic-region' element={<LogisticRegion />} /> 
                 <Route path='/admin/journey' element={<MasterJourney />} />
+                <Route path='/admin/master/app-setting' element={<AppSettingPage/>}/>
               </Route>
               <Route path='*' element={<UrlNotFound />} />
               <Route path='/unauthorized' element={<UnauthorizedAccess/>}/>

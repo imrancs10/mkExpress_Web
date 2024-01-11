@@ -179,7 +179,7 @@ export default function ShipmentTracking({ shipmentId }) {
                                             <tbody>
                                                 {
                                                     trackingDetails?.map((res, index) => {
-                                                        return <tr style={{ fontSize: '12px' }}>
+                                                        return <tr key={index} style={{ fontSize: '12px' }}>
                                                             <td>{index + 1}</td>
                                                             <td>{common.formatDate(res?.createdAt)}</td>
                                                             <td>{res?.activity}</td>
