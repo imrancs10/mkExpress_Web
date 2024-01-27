@@ -4,9 +4,11 @@ import { apiUrls } from '../../API/ApiUrl';
 import Label from '../Common/Label';
 import { common } from '../Utility/common';
 import './shipment.css';
+import { Link } from 'react-router-dom';
 
 export default function ShipmentTracking({ shipmentId }) {
     const [trackingDetails, setTrackingDetails] = useState([]);
+    const [podImages, setPodImages] = useState([])
 
     useEffect(() => {
         if (shipmentId === undefined || !common.validateGuid(shipmentId))
@@ -14,11 +16,32 @@ export default function ShipmentTracking({ shipmentId }) {
         Api.Get(apiUrls.shipmentController.getTrackingByShipmentId + `/${shipmentId}`)
             .then(res => {
                 setTrackingDetails([...res.data]);
+                var images = [];
+                res.data?.forEach(element => {
+                    element?.shipmentImages?.forEach(img => {
+                        images.push(img);
+                    })
+                });
+                setPodImages(images)
             });
 
-    }, [shipmentId])
+    }, [shipmentId]);
 
-   return (
+    const createPodImageLink = (ele, forComment) => {
+        if (forComment > 1) {
+            if ((ele[`comment${forComment - 1}`] !== null && ele[`comment${forComment - 1}`] !== undefined))
+                return ele[`comment${forComment}`];
+        }
+        if (ele?.shipmentImages?.length === 0 || (ele[`comment${forComment}`] !== null && ele[`comment${forComment}`] !== undefined))
+            return ele[`comment${forComment}`];
+        else {
+            return ele?.shipmentImages?.map((img, imgIndex) => {
+                return <Link target='_blank' to={process.env.REACT_APP_API_URL + img?.url}>POD {imgIndex + 1}</Link>
+            })
+        }
+    }
+
+    return (
         <>
             <div className="modal fade" id="modalShipmentTracking" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalShipmentTrackingLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
@@ -143,18 +166,19 @@ export default function ShipmentTracking({ shipmentId }) {
                                                 </div>
                                                 <div className='col-12'>
                                                     <Label text={`Attached Images Urls:`}></Label>
-                                                    <div className='d-flex content-justify-start pod-img w-100'>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
-                                                        <img loading='lazy' src='./loader.gif' alt='POD'/>
+                                                    {
+                                                        podImages?.length === 0 && <div className='small-text text-danger'>POD images not available</div>
+                                                    }
+                                                    {podImages.length > 0 && <> <div className='d-flex content-justify-start pod-img w-100'>
+                                                        {
+                                                            podImages?.map((ele, index) => {
+                                                                return <img loading='lazy' title={ele?.remark} key={index} src={process.env.REACT_APP_API_URL + ele?.thumbnailUrl} alt='POD' />
+                                                            })
+                                                        }
                                                     </div>
+                                                    </>
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>
@@ -183,9 +207,9 @@ export default function ShipmentTracking({ shipmentId }) {
                                                             <td>{index + 1}</td>
                                                             <td>{common.formatDate(res?.createdAt)}</td>
                                                             <td>{res?.activity}</td>
-                                                            <td>{res?.comment1}</td>
-                                                            <td>{res?.comment2}</td>
-                                                            <td>{res?.comment3}</td>
+                                                            <td>{createPodImageLink(res, 1)}</td>
+                                                            <td>{createPodImageLink(res, 2)}</td>
+                                                            <td>{createPodImageLink(res, 3)}</td>
                                                             <td>{res?.commentByName}</td>
                                                         </tr>
                                                     })

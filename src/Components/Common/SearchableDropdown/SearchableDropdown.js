@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import './dropdown.css'
 import { common } from "../../Utility/common";
 
-const SearchableDropdown = ({
+export default function SearchableDropdown ({
   data,
   elementKey,
   elementValue,
@@ -12,7 +12,7 @@ const SearchableDropdown = ({
   onChange,
   defaultText,
   defaultValue
-}) => {
+}) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [navigateIndex, setNavigateIndex] = useState(0);
@@ -141,5 +141,3 @@ const SearchableDropdown = ({
     </div>
   );
 };
-
-export default SearchableDropdown;

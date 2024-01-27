@@ -42,6 +42,7 @@ export default function AssignForPickup({ data }) {
         var { name, value } = e.target;
         setModel({ ...model, [name]: value });
     }
+
     const removeShipment = (id) => {
         var newModel = model;
         var newShipmentList = [];
@@ -56,6 +57,7 @@ export default function AssignForPickup({ data }) {
         tableOptionTemplet.totalRecords = newShipmentList.length;
         setTableOption({ ...tableOptionTemplet });
     }
+    
     const tableOptionTemplet = {
         headers: headerFormat.containerShipments,
         showPagination: false,

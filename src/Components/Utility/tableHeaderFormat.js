@@ -57,8 +57,8 @@ const headerFormat = {
       action: { hAlign: "center", dAlign: "center" }
     },
     { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'Schedule Pickup Date', prop: 'schedulePickupDate', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Pickup Date', prop: 'pickupDate', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Schedule Pickup Date', prop: 'schedulePickupDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
+    { name: 'Pickup Date', prop: 'pickupDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
     {
       name: 'Shipper', prop: 'shipperName',
       customColumn: (data) => {
@@ -86,9 +86,9 @@ const headerFormat = {
     { name: 'Status Reason', prop: 'statusReason', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Courier', prop: 'idNumber', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Failed delivery', prop: 'failedDelivery', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Delivery Date', prop: 'deliveryDate', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Delivery Date', prop: 'deliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'Status Duration', prop: 'statusDuration', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Scheduled Delivery Date', prop: 'scheduleDeliveryDate', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Scheduled Delivery Date', prop: 'scheduleDeliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'Location', prop: 'location', action: { hAlign: "center", dAlign: "center" } },
   ],
   customerDetail: [

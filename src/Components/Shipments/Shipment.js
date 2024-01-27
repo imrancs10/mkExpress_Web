@@ -15,6 +15,7 @@ import AssignToTransfer from './AssignToTransfer';
 import ShipmentTracking from './ShipmentTracking';
 import PrintShipmentSlip from './PrintShipmentSlip';
 import AssignForPickup from './AssignForPickup';
+import CourierRunSheet from '../Runsheet/CourierRunSheet';
 
 export default function Shipment() {
     const filterYearStartFrom = 2022;
@@ -154,6 +155,7 @@ export default function Shipment() {
             <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
             <PrintShipmentSlip shipmentIds={shipmentIdForPrint} />
             <AssignForPickup data={selectedRows}></AssignForPickup>
+            <CourierRunSheet></CourierRunSheet>
         </>
     )
 }

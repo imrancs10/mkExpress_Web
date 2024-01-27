@@ -19,6 +19,7 @@ export default function AppSettingPage() {
         id: common.guid(),
         key: '',
         value: '',
+        dataType:'',
         group: 0
     }
     const [appSettingModel, setAppSettingModel] = useState(appSettingModelTemplate);
@@ -26,7 +27,8 @@ export default function AppSettingPage() {
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [errors, setErrors] = useState();
-    const groupData=[{id:1,value:'Shipment'},{id:2,value:'Container'},{id:3,value:'Admin'},{id:4,value:'Customer'}]
+    const groupData = [{ id: 1, value: 'Shipment' }, { id: 2, value: 'Container' }, { id: 3, value: 'Admin' }, { id: 4, value: 'Customer' }];
+    const dataType = [{ id: 1, value: 'String' }, { id: 2, value: 'Integer' }, { id: 3, value: 'Decimal' }, { id: 4, value: 'Boolean' }, { id: 5, value: 'Date' }]
     const handleDelete = (id) => {
         Api.Delete(apiUrls.appSettingController.delete + id).then(res => {
             if (res.data === 1) {
@@ -48,11 +50,10 @@ export default function AppSettingPage() {
     }
 
     const handleTextChange = (e) => {
-        var { value, name,type } = e.target;
+        var { value, name, type } = e.target;
         var data = appSettingModel;
-        if(type==='select-one')
-        {
-            value=parseInt(value);
+        if (type === 'select-one' && name!=='dataType') {
+            value = parseInt(value);
         }
         data[name] = value;
         setAppSettingModel({ ...data });
@@ -102,9 +103,10 @@ export default function AppSettingPage() {
 
     const tableOptionTemplet = {
         headers: [
-            { name: 'Group', prop: 'group',customColumn:(data)=>{return groupData.find(x=>x.id==data["group"])?.value} },
+            { name: 'Group', prop: 'group', customColumn: (data) => { return groupData.find(x => x.id == data["group"])?.value } },
             { name: 'Key', prop: 'key' },
-            { name: 'Value', prop: 'value' }
+            { name: 'Value', prop: 'value' },
+            { name: 'Data Type', prop: 'dataType' }
         ],
         data: [],
         showSerialNo: true,
@@ -118,7 +120,7 @@ export default function AppSettingPage() {
             showView: false,
             popupModelId: "add-appSetting",
             delete: {
-                handler: handleDelete
+                handler: handleDelete,
             },
             edit: {
                 handler: handleEdit
@@ -174,7 +176,7 @@ export default function AppSettingPage() {
         const newError = {};
         if (!value || value === "") newError.value = validationMessage.reqAppSettingValue;
         if (!key || key === "") newError.key = validationMessage.reqAppSettingKey;
-        if (!group || group === "" || group===0) newError.group = validationMessage.reqAppSettingGroup;
+        if (!group || group === "" || group === 0) newError.group = validationMessage.reqAppSettingGroup;
         return newError;
     }
     return (
@@ -203,9 +205,14 @@ export default function AppSettingPage() {
                                                 <Inputbox labelText="Value" className="form-control-sm" maxLength={100} labelFontSize='12px' isRequired={true} onChangeHandler={handleTextChange} name="value" value={appSettingModel.value} errorMessage={errors?.value} />
                                             </div>
                                             <div className="col-md-12">
+                                                <Label text="Data Type" isRequired={true}></Label>
+                                                <Dropdown data={dataType} elementKey="value" defaultText="Select Data Type" defaultValue="0" className="form-control-sm" onChange={handleTextChange} name="dataType" value={appSettingModel.dataType} />
+                                                <ErrorLabel message={errors?.dataType} />
+                                            </div>
+                                            <div className="col-md-12">
                                                 <Label text="Group" isRequired={true}></Label>
                                                 <Dropdown data={groupData} defaultText="Select Group" defaultValue="0" className="form-control-sm" onChange={handleTextChange} name="group" value={appSettingModel.group} />
-                                                <ErrorLabel message={errors?.group}/>
+                                                <ErrorLabel message={errors?.group} />
                                             </div>
                                         </div>
                                     </div>

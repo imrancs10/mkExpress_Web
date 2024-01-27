@@ -42,7 +42,7 @@ export default function NewShipment() {
         weight: "",
         statusReason: "",
         status: "",
-        shipmentDetails: []
+        shipmentDetail:{}
     };
     const [customerList, setCustomerList] = useState([])
     const [storeList, setStoreList] = useState([]);
@@ -116,8 +116,7 @@ export default function NewShipment() {
             return;
         }
         var model = shipmentModel;
-        model.shipmentDetails=[];
-        model.shipmentDetails.push({
+        model.shipmentDetail={
             shipmentId: model.id,
             fromStoreId: model.fromStoreId,
             toStoreId: model.toStoreId,
@@ -138,10 +137,10 @@ export default function NewShipment() {
             consigneeAddress3: model.consigneeAdd3,
             consigneeCityId: model.consigneeCityId,
             weight: model.weight,
-            totalPieces: model.totalPieces,
+            totalPieces: model.numberOfPieces,
             dimension: model.dimensions,
             description: model.description
-        })
+        };
         Api.Put(apiUrls.shipmentController.create, model)
             .then(res => {
                 if (common.validateGuid(res.data?.id)) {
