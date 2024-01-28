@@ -5,10 +5,13 @@ import Label from '../Common/Label';
 import { common } from '../Utility/common';
 import './shipment.css';
 import { Link } from 'react-router-dom';
+import ButtonBox from '../Common/ButtonBox';
 
 export default function ShipmentTracking({ shipmentId }) {
     const [trackingDetails, setTrackingDetails] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [podImages, setPodImages] = useState([])
+    const [selectedPodImageIndex, setSelectedPodImageIndex] = useState(0);
 
     useEffect(() => {
         if (shipmentId === undefined || !common.validateGuid(shipmentId))
@@ -51,7 +54,7 @@ export default function ShipmentTracking({ shipmentId }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <div className='row'>
+                         {currentPage===1 &&   <div className='row'>
                                 <div className='col-md-2 col-sm-12'>
                                     <Label text={`Number: ${trackingDetails[0]?.shipment?.shipmentNumber}`}></Label>
                                 </div>
@@ -71,6 +74,8 @@ export default function ShipmentTracking({ shipmentId }) {
                                     <Label text={`Reason: ${trackingDetails[0]?.shipment?.reason ?? ""}`}></Label>
                                 </div>
                             </div>
+}
+                           {currentPage===1 && <div className='page-1'>
                             <div className='row my-4'>
                                 <div className='col-md-4 col-sm-12 mb-4'>
                                     <div className='card'>
@@ -172,7 +177,7 @@ export default function ShipmentTracking({ shipmentId }) {
                                                     {podImages.length > 0 && <> <div className='d-flex content-justify-start pod-img w-100'>
                                                         {
                                                             podImages?.map((ele, index) => {
-                                                                return <img loading='lazy' title={ele?.remark} key={index} src={process.env.REACT_APP_API_URL + ele?.thumbnailUrl} alt='POD' />
+                                                                return <img loading='lazy' onClick={e=>{setCurrentPage(2);setSelectedPodImageIndex(index)}} title={ele?.remark} key={index} src={process.env.REACT_APP_API_URL + ele?.thumbnailUrl} alt='POD' />
                                                             })
                                                         }
                                                     </div>
@@ -185,6 +190,29 @@ export default function ShipmentTracking({ shipmentId }) {
                                     </div>
                                 </div>
                             </div>
+                            </div>
+}
+                          {currentPage===2 &&  <div className='page-2 mb-2'>
+                                <div className='row'>
+                                    <div className='col-12 mb-2'>
+                                        <ButtonBox type="back" onClickHandler={e=>{setCurrentPage(1)}} className="btn-sm"></ButtonBox>
+                                    </div>
+                                    <div className='col-12'>
+                                    <img loading='lazy' title={podImages[selectedPodImageIndex]?.remark} className='img-fluid rounded' src={process.env.REACT_APP_API_URL + podImages[selectedPodImageIndex]?.url} alt='POD' />
+                                    <div className='w-100 text-center pod-remark'>{podImages[selectedPodImageIndex]?.remark}</div>
+                                    </div>
+                                    <div className='col-12'>
+                                        <div className='pod-container'>
+                                            {podImages?.map((ele,index)=>{
+                                                return <div>
+                                                    <img loading='lazy' className={`img-fluid img-thumbnail rounded ${index===selectedPodImageIndex?'active':''}`} onClick={e=>{setSelectedPodImageIndex(index)}} title={ele?.remark} key={index} src={process.env.REACT_APP_API_URL + ele?.thumbnailUrl} alt='POD' />
+                                                </div>
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+}
                             <div className='row'>
                                 <div className='col-12'>
                                     <div style={{ overflowX: 'auto' }}>

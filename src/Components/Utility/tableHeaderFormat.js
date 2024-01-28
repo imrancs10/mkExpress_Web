@@ -62,14 +62,14 @@ const headerFormat = {
     {
       name: 'Shipper', prop: 'shipperName',
       customColumn: (data) => {
-        return data?.shipmentDetails?.length>0?data?.shipmentDetails[0]?.shipperName:"";
+        return common.defaultIfEmpty(data?.shipmentDetail?.shipperName,"");
       },
       action: { hAlign: "center", dAlign: "center" }
     },
     {
       name: 'Consignee', prop: 'consigneeName',
       customColumn: (data) => {
-        return data?.shipmentDetails?.length>0?data?.shipmentDetails[0]?.consigneeName:"";
+        return common.defaultIfEmpty(data?.shipmentDetail?.consigneeName,"");
       },
       action: { hAlign: "center", dAlign: "center" }
     },
@@ -87,7 +87,9 @@ const headerFormat = {
     { name: 'Courier', prop: 'idNumber', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Failed delivery', prop: 'failedDelivery', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Delivery Date', prop: 'deliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'Status Duration', prop: 'statusDuration', action: { hAlign: "center", dAlign: "center" } },
+    { name: 'Status Duration', prop: 'statusDuration',customColumn: (data) => {
+      return  `${ parseInt(Math.abs(new Date() - new Date(data?.lastStatusUpdate)) / 36e5)} Hour`;
+    }, action: { hAlign: "center", dAlign: "center" } },
     { name: 'Scheduled Delivery Date', prop: 'scheduleDeliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
     { name: 'Location', prop: 'location', action: { hAlign: "center", dAlign: "center" } },
   ],

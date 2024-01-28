@@ -46,3 +46,33 @@
     height: 400px;
     width: 10%;
 }
+.pod-remark{
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-transform: capitalize;
+    color: gray;
+}
+.pod-container{
+    display: flex;
+    margin: 20px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.pod-container div{
+    margin-right: 10px;
+}
+.pod-container div img
+{
+    transition: .5s all linear;
+}
+.pod-container div img:hover{
+    border-color: orange;
+    background-color: orange;    
+    transition: .5s all linear;
+}
+.pod-container div img.active{
+    border-color: rgb(73, 182, 254);
+    background-color: rgb(73, 182, 254); 
+    transition: .5s all linear;
+}
