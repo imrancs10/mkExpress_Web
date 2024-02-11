@@ -1,6 +1,6 @@
 import ButtonBox from "../Common/ButtonBox"
 import { common } from "./common"
-import {CheckInStation,CheckOutStation} from '../Container/ContainerCheckinModel'
+import { CheckInStation, CheckOutStation } from '../Container/ContainerCheckinModel'
 
 const getJourneyRoute = (data) => {
   return <>
@@ -56,20 +56,20 @@ const headerFormat = {
       },
       action: { hAlign: "center", dAlign: "center" }
     },
-    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'Schedule Pickup Date', prop: 'schedulePickupDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'Pickup Date', prop: 'pickupDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "center", ampm: true } },
+    { name: 'Schedule Pickup Date', prop: 'schedulePickupDate', action: { hAlign: "center", dAlign: "center", ampm: true } },
+    { name: 'Pickup Date', prop: 'pickupDate', action: { hAlign: "center", dAlign: "center", ampm: true } },
     {
       name: 'Shipper', prop: 'shipperName',
       customColumn: (data) => {
-        return common.defaultIfEmpty(data?.shipmentDetail?.shipperName,"");
+        return common.defaultIfEmpty(data?.shipmentDetail?.shipperName, "");
       },
       action: { hAlign: "center", dAlign: "center" }
     },
     {
       name: 'Consignee', prop: 'consigneeName',
       customColumn: (data) => {
-        return common.defaultIfEmpty(data?.shipmentDetail?.consigneeName,"");
+        return common.defaultIfEmpty(data?.shipmentDetail?.consigneeName, "");
       },
       action: { hAlign: "center", dAlign: "center" }
     },
@@ -86,11 +86,13 @@ const headerFormat = {
     { name: 'Status Reason', prop: 'statusReason', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Courier', prop: 'idNumber', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Failed delivery', prop: 'failedDelivery', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Delivery Date', prop: 'deliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
-    { name: 'Status Duration', prop: 'statusDuration',customColumn: (data) => {
-      return  `${ parseInt(Math.abs(new Date() - new Date(data?.lastStatusUpdate)) / 36e5)} Hour`;
-    }, action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Scheduled Delivery Date', prop: 'scheduleDeliveryDate', action: { hAlign: "center", dAlign: "center",ampm:true } },
+    { name: 'Delivery Date', prop: 'deliveryDate', action: { hAlign: "center", dAlign: "center", ampm: true } },
+    {
+      name: 'Status Duration', prop: 'statusDuration', customColumn: (data) => {
+        return `${parseInt(Math.abs(new Date() - new Date(data?.lastStatusUpdate)) / 36e5)} Hour`;
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
+    { name: 'Scheduled Delivery Date', prop: 'scheduleDeliveryDate', action: { hAlign: "center", dAlign: "center", ampm: true } },
     { name: 'Location', prop: 'location', action: { hAlign: "center", dAlign: "center" } },
   ],
   customerDetail: [
@@ -103,9 +105,9 @@ const headerFormat = {
     { name: 'Zip code', prop: 'zipCode', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Max Delivery Attempt', prop: 'maxDeliveryAttempt', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Preferred Pickup Time', prop: 'preferredPickupTime', action: { hAlign: "center", dAlign: "center" } },
-    { name: 'Confirmed', prop: 'confirmed', action: {replace:{"true":"Yes","false":"No"}, hAlign: "center", dAlign: "center" } },
+    { name: 'Confirmed', prop: 'confirmed', action: { replace: { "true": "Yes", "false": "No" }, hAlign: "center", dAlign: "center" } },
   ],
-  thirdPartyDetail:[
+  thirdPartyDetail: [
     { name: 'Name', prop: 'name', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Email', prop: 'email', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Mobile', prop: 'mobile', action: { hAlign: "center", dAlign: "center" } },
@@ -117,8 +119,8 @@ const headerFormat = {
     { name: 'Container Type', prop: 'containerType', action: { hAlign: "center", dAlign: "start" } },
     { name: 'Total Shipments', prop: 'totalShipments', action: { hAlign: "center", dAlign: "center" } },
     { name: 'Journey', prop: 'journey', action: { hAlign: "center", dAlign: "start" } },
-    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "start",ampm:true } },
-    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "start",ampm:true } },
+    { name: 'CreatedOn', prop: 'createdAt', action: { hAlign: "center", dAlign: "start", ampm: true } },
+    { name: 'ClosedOn', prop: 'closedOn', action: { hAlign: "center", dAlign: "start", ampm: true } },
     { name: 'ClosedBy', prop: 'closedByMember', action: { hAlign: "center", dAlign: "start" } },
   ],
   containerShipments: [
@@ -148,7 +150,7 @@ const headerFormat = {
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
     { name: 'Code', prop: 'code', action: { hAlign: "center", dAlign: "start" } },
     { name: 'Station', prop: 'stationName', action: { hAlign: "center", dAlign: "start" } },
-    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "start",ampm:true } },
+    { name: 'Created On', prop: 'createdAt', action: { hAlign: "center", dAlign: "start", ampm: true } },
     { name: 'Created By', prop: 'createdMember', action: { hAlign: "center", dAlign: "start" } },
   ],
   containerCheckInOut: [
@@ -161,9 +163,9 @@ const headerFormat = {
         else if (data?.arrivalAt === "0001-01-01T00:00:00")
           return <ButtonBox type="check-success" onClickHandler={CheckInStation} onClickHandlerData={data} className="btn-sm btn-success" text="Check-In"></ButtonBox>
         else
-          return common.getHtmlDate(data?.arrivalAt, 'ddmmyyyyhhmmss',12);
+          return common.getHtmlDate(data?.arrivalAt, 'ddmmyyyyhhmmss', 12);
 
-      }, action: { hAlign: "center", dAlign: "center",ampm:true }
+      }, action: { hAlign: "center", dAlign: "center", ampm: true }
     },
     {
       name: 'Departure On', prop: 'departureOn',
@@ -173,8 +175,8 @@ const headerFormat = {
         else if (data?.departureOn === "0001-01-01T00:00:00")
           return <ButtonBox type="check-danger" onClickHandler={CheckOutStation} onClickHandlerData={data} className="btn-sm btn-danger" text="Check-Out"></ButtonBox>
         else
-          return common.getHtmlDate(data?.departureOn, 'ddmmyyyyhhmmss',12);
-      }, action: { hAlign: "center", dAlign: "center",ampm:true }
+          return common.getHtmlDate(data?.departureOn, 'ddmmyyyyhhmmss', 12);
+      }, action: { hAlign: "center", dAlign: "center", ampm: true }
     },
   ],
   masterJourney: [
@@ -183,6 +185,72 @@ const headerFormat = {
         return getJourneyRoute(data);
       })
     },
+  ],
+  courierRunsheet: [
+    {
+      name: 'References', prop: 'id', customColumn: (data) => {
+        return <>
+          <span>Number : {data?.shipmentNumber}</span>
+          <br/>
+          <span>Reference: {data?.uniqueRefNo}</span>
+        </>
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Commodity', prop: 'id', customColumn: (data) => {
+        return <>
+          <span>Weight : {common.printDecimal(data?.weight)}</span>
+          <br/>
+          <span>Dimensions: {data?.dimension}</span>
+        </>
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Shipper', prop: 'id', customColumn: (data) => {
+        return `${data?.shipperName}, ${data?.shipperAddress1}, ${data?.shipperAddress2}, ${data?.shipperAddress3},${data?.shipperCity}`
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Consignee', prop: 'id', customColumn: (data) => {
+        return `${data?.consigneeName}, ${data?.consigneeAddress1}, ${data?.consigneeAddress2}, ${data?.consigneeAddress3},${data?.consigneeCity}`
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    { name: 'Customer', prop: 'customer', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'COD', prop: 'codAmount', action: { hAlign: "start",decimal:true, dAlign: "start" } },
+    { name: 'Number Of Pieces', prop: 'noOfPiece', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Status', prop: 'status', action: { hAlign: "start", dAlign: "start" } },
+  ],
+  receiveShipments: [
+    {
+      name: 'References', prop: 'id', customColumn: (data) => {
+        return <>
+          <span>Number : {data?.shipmentNumber}</span>
+          <br/>
+          <span>Reference: {data?.uniqueRefNo}</span>
+        </>
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Commodity', prop: 'id', customColumn: (data) => {
+        return <>
+          <span>Weight : {common.printDecimal(data?.shipmentDetail?.weight)}</span>
+          <br/>
+          <span>Dimensions: {data?.shipmentDetail?.dimension}</span>
+        </>
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Shipper', prop: 'id', customColumn: (data) => {
+        return `${data?.shipmentDetail?.shipperName}, ${data?.shipmentDetail?.shipperAddress1}, ${data?.shipmentDetail?.shipperAddress2}, ${data?.shipmentDetail?.shipperAddress3},${data?.shipmentDetail?.shipperCity}`
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    {
+      name: 'Consignee', prop: 'id', customColumn: (data) => {
+        return `${data?.shipmentDetail?.consigneeName}, ${data?.shipmentDetail?.consigneeAddress1}, ${data?.shipmentDetail?.consigneeAddress2}, ${data?.shipmentDetail?.consigneeAddress3},${data?.shipmentDetail?.consigneeCity}`
+      }, action: { hAlign: "start", dAlign: "start" }
+    },
+    { name: 'Customer', prop: 'customer', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Status', prop: 'status', action: { hAlign: "start", dAlign: "start" } },
   ]
 }
 

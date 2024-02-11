@@ -197,6 +197,13 @@ const modifyOnType = (type, text, className,icon) => {
             className: className += " btn-danger"
         }
     }
+    else if (type.toLowerCase() === "export") {
+        return {
+            icon: icon===""?"fa-solid fa-file-export":icon,
+            text: text === "" ? "Export" : text,
+            className: className += " btn-info"
+        }
+    }
     return {
         text, className,icon
     }

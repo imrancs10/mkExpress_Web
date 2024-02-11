@@ -4,6 +4,8 @@ import { Api } from '../../API/API';
 import { apiUrls } from '../../API/ApiUrl';
 import { headerFormat } from '../Utility/tableHeaderFormat';
 import ButtonBox from '../Common/ButtonBox';
+import TableView from '../Table/TableView';
+import { common } from '../Utility/common';
 
 export default function CourierRunSheet() {
     const modelTemplate = {
@@ -17,30 +19,50 @@ export default function CourierRunSheet() {
             .then(res => {
                 setMemberList(res.data);
             });
-    },[]);
+    }, []);
 
     const handleTextChange = (e) => {
         var { name, value } = e.target;
         setModel({ ...model, [name]: value });
     }
 
+    useEffect(() => {
+        getRunsheetData();
+    }, [model.memberId])
+
+    const getRunsheetData = () => {
+        if (common.validateGuid(model.memberId)) {
+            Api.Get(apiUrls.assignMemberController.courierRunsheet + `?memberId=${model.memberId}&pageSize=10000`)
+                .then(res => {
+                    tableOptionTemplet.data = res.data.data;
+                    tableOptionTemplet.totalRecords = res.data.totalRecords;
+                    setTableOption(tableOptionTemplet);
+                });
+        }
+    }
     const tableOptionTemplet = {
-        headers: headerFormat.containerShipments,
+        headers: headerFormat.courierRunsheet,
         showPagination: false,
         showTableTop: false,
         data: [],
         totalRecords: 0,
         showFooter: false,
         searchHandler: () => { },
-        actions: {
-            showDelete: false,
-            showEdit: false,
-            view: {
-                icon: 'fa-solid fa-xmark text-danger',
-                // handler: removeShipment,
-                title: 'Remove Shipment'
+        showAction: false,
+        toolbar: [
+            {
+                title: 'Refresh',
+                icon: 'fa-solid fa-arrows-rotate',
+                className: "btn-warning",
+                handler: getRunsheetData
+            },
+            {
+                title: 'Export',
+                icon: 'fa-solid fa-file-export',
+                className: "btn-info",
+                handler: ()=>{}
             }
-        }
+        ]
     };
 
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
@@ -57,6 +79,9 @@ export default function CourierRunSheet() {
                             <div className='row'>
                                 <div className='col-12'>
                                     <SearchableDropdown data={memberList} value={model.memberId} name="memberId" defaultText="Select Courier Person..." onChange={handleTextChange} elementValue="firstName"></SearchableDropdown>
+                                </div>
+                                <div className='col-12 mt-3'>
+                                    <TableView option={tableOption} />
                                 </div>
                             </div>
                         </div>

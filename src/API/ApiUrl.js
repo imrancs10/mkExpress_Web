@@ -3,6 +3,9 @@ export const apiUrls = {
     authController: {
         getToken: `${apiPrfix}/auth/user/login`,
     },
+    assignMemberController:{
+        courierRunsheet:`${apiPrfix}/AssignMember/get/courier/runsheet`,
+    },
     masterDataController: {
         add: `${apiPrfix}/masterData/master-data`,
         update: `${apiPrfix}/masterData/master-data`,
@@ -62,7 +65,8 @@ export const apiUrls = {
         getAll: `${apiPrfix}/shipment`,
         search: `${apiPrfix}/shipment/search`,
         validateShipments: `${apiPrfix}/shipment/validate/`,
-        assignForPickup:`${apiPrfix}/shipment/assign/pickup/`,
+        assignForPickup:`${apiPrfix}/shipment/assign/pickup/`, 
+        validateStatus:`${apiPrfix}/shipment/validate/status?shipmentNo=`,
         validateThirdPartyShipment: `${apiPrfix}/shipment/validate/thirdparty?shipmentNo=`,
     },
     memberController:{

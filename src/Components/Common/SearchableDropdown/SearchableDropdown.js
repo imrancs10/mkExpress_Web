@@ -49,12 +49,12 @@ export default function SearchableDropdown ({
     var val = data?.find(x => x[elementKey] === value);
     if (value) return val === undefined ? "" : val[elementValue];
 
-    return defaultText;
+    return '';
   };
 
   const filter = (data) => {
     return data?.filter(
-      (option) => option[elementValue].toLowerCase().indexOf(query.toLowerCase()) > -1
+      (option) => option[elementValue]?.toLowerCase()?.indexOf(query?.toLowerCase()) > -1
     );
   };
   const navigateList = (e) => {

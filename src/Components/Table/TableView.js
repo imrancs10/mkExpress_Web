@@ -5,6 +5,7 @@ import Pagination from './Pagination';
 import TableAction from './TableAction';
 import TableImageViewer from './TableImageViewer';
 import TableTop from './TableTop';
+import TableToolbar from './TableToolbar';
 
 export default function TableView({ option }) {
     option = common.defaultIfEmpty(option, {});
@@ -23,6 +24,7 @@ export default function TableView({ option }) {
     option.showFooter = common.defaultIfEmpty(option.showFooter, false);
     option.showSerialNo = common.defaultIfEmpty(option.showSerialNo, false);
     option.tableInCard = common.defaultIfEmpty(option.tableInCard, true);
+    option.toolbar = common.defaultIfEmpty(option.toolbar, []);
     option.changeRowClassHandler = common.defaultIfEmpty(option.changeRowClassHandler, () => { return '' });
     const handlePageSizeChange = (e) => {
         option.setPageSize(e.target.value);
@@ -56,6 +58,9 @@ export default function TableView({ option }) {
 
                                 </div>
                                 }
+                                <div className='col-12 text-end'>
+                                    <TableToolbar option={option.toolbar}></TableToolbar>
+                                </div>
                                 <div className="col-sm-12" style={{ maxHeight: option.maxHeight }}>
                                     <table id="example" className="table table-striped table-bordered fixTableHead" style={{ width: "100%" }} role="grid" aria-describedby="example_info">
                                         <thead>

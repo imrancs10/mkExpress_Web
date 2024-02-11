@@ -18,7 +18,7 @@ export default function ShipmentsButtons({ selectedRows }) {
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-box" modalId="#modalCourierRunsheet" text="Courier RunSheet" />}
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-person-walking-arrow-loop-left" text="Assign for return" />}
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-hand-holding-heart" text="Receive Returned" />}
-                        {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-hands-holding" text="Receive" />}
+                        {!isRowSelected && <ButtonBox modalId="#modalReceiveShipment" className="btn btn-primary btn-sm" icon="fa-solid fa-hands-holding" text="Receive" />}
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-shop" text="Store" />}
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-hand-holding-dollar" text="Hold" />}
                         {!isRowSelected && <ButtonBox className="btn btn-primary btn-sm" icon="fa-solid fa-hand-holding-hand" text="Assign For Delivery" />}

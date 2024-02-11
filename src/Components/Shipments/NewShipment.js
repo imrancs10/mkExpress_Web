@@ -9,6 +9,8 @@ import { Api } from '../../API/API';
 import Dropdown from '../Common/Dropdown';
 import { common } from '../Utility/common';
 import { toast } from 'react-toastify';
+import Inputbox from '../Common/Inputbox';
+import SearchableDropdown from '../Common/SearchableDropdown/SearchableDropdown';
 
 export default function NewShipment() {
     const shipmentModelTemplete = {
@@ -42,7 +44,7 @@ export default function NewShipment() {
         weight: "",
         statusReason: "",
         status: "",
-        shipmentDetail:{}
+        shipmentDetail: {}
     };
     const [customerList, setCustomerList] = useState([])
     const [storeList, setStoreList] = useState([]);
@@ -66,10 +68,9 @@ export default function NewShipment() {
         if (type === 'number') {
             value = parseInt(value);
         }
-        if(name==='weight')
-        {
+        if (name === 'weight') {
             value = parseFloat(value);
-            value=isNaN(value)?0:value;
+            value = isNaN(value) ? 0 : value;
         }
         setShipmentModel({ ...shipmentModel, [name]: value });
         if (!!errors[name]) {
@@ -81,15 +82,15 @@ export default function NewShipment() {
         var formError = {};
         var { customerId, uniqueRefNo, fromStoreId, toStoreId, shipperAdd2, shipperAdd1, shipperCityId,
             shipperPhone, shipperName, consigneeAdd2, consigneeAdd1, consigneeCityId, consigneePhone, consigneeName,
-            itemName, numberOfPieces, dimensions, weight } = shipmentModel;
+         numberOfPieces, weight } = shipmentModel;
 
-     //   if (!itemName || itemName === "") formError.itemName = validationMessage.reqItemName;
+        //   if (!itemName || itemName === "") formError.itemName = validationMessage.reqItemName;
         if (!numberOfPieces || numberOfPieces === 0) formError.numberOfPieces = validationMessage.reqNumberOfPieces;
         //if (!dimensions || dimensions === "") formError.dimensions = validationMessage.reqDimensions;
         if (!weight || isNaN(weight) || weight === 0) formError.weight = validationMessage.reqWeight;
 
         if (!customerId || customerId === 0) formError.customerId = validationMessage.reqCustomer;
-        if (!uniqueRefNo || uniqueRefNo === "") formError.uniqueRefNo = validationMessage.reqUniqueRefNumber;
+        //if (!uniqueRefNo || uniqueRefNo === "") formError.uniqueRefNo = validationMessage.reqUniqueRefNumber;
         if (!fromStoreId || fromStoreId === 0) formError.fromStoreId = validationMessage.reqFromStoreId;
         if (!toStoreId || toStoreId === 0) formError.toStoreId = validationMessage.reqToStoreId;
         if (!shipperAdd2 || shipperAdd2 === "") formError.shipperAdd2 = validationMessage.reqAddress2;
@@ -116,7 +117,7 @@ export default function NewShipment() {
             return;
         }
         var model = shipmentModel;
-        model.shipmentDetail={
+        model.shipmentDetail = {
             shipmentId: model.id,
             fromStoreId: model.fromStoreId,
             toStoreId: model.toStoreId,
@@ -161,13 +162,11 @@ export default function NewShipment() {
                             <div className='row'>
                                 <div className='col-sm-12 col-md-6'>
                                     <Label text="Customer" isRequired={true} fontSize='12px' bold={true}></Label>
-                                    <Dropdown data={customerList} text="name" value={shipmentModel.customerId} name="customerId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select Customer' />
+                                    <SearchableDropdown data={customerList} elementValue="name" text="name" value={shipmentModel.customerId} name="customerId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select Customer' />
                                     <ErrorLabel message={errors?.customerId} />
                                 </div>
                                 <div className='col-sm-12 col-md-6'>
-                                    <Label text="Unique Reference Number" isRequired={true} bold={true} fontSize='12px'></Label>
-                                    <input type='text' name="uniqueRefNo" value={shipmentModel.uniqueRefNo} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Unique Reference Number'></input>
-                                    <ErrorLabel message={errors?.uniqueRefNo} />
+                                    <Inputbox labelText="Unique Reference Number" type='text' name="uniqueRefNo" value={shipmentModel.uniqueRefNo} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Unique Reference Number' />
                                 </div>
                             </div>
                             <div className='row mt-2'>
@@ -177,47 +176,35 @@ export default function NewShipment() {
                                             <div className='card-title'>Shipper</div>
                                             <div className='col-12'>
                                                 <Label text="From Store" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={storeList} value={shipmentModel.fromStoreId} name="fromStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
-
+                                                <SearchableDropdown data={storeList} value={shipmentModel.fromStoreId} name="fromStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
                                                 <ErrorLabel message={errors?.fromStoreId} />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Name" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperName" value={shipmentModel.shipperName} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Name'></input>
-                                                <ErrorLabel message={errors?.shipperName} />
+                                                <Inputbox labelText="Name" isRequired={true} labelFontSize='12px' type='text' name="shipperName" value={shipmentModel.shipperName} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Name' errorMessage={errors?.shipperName} />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Email" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperEmail" value={shipmentModel.shipperEmail} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Email'></input>
+                                                <Inputbox labelText="Email" type='text' name="shipperEmail" value={shipmentModel.shipperEmail} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Email' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Phone" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperPhone" value={shipmentModel.shipperPhone} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Phone Number'></input>
-                                                <ErrorLabel message={errors?.shipperPhone} />
+                                                <Inputbox labelText="Phone" isRequired={true} message={errors?.shipperPhone} errorMessagetype='text' name="shipperPhone" value={shipmentModel.shipperPhone} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Phone Number' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Second Phone" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperSecondPhone" value={shipmentModel.shipperSecondPhone} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Second Phone Number'></input>
+                                                <Label bold={true} fontSize='12px'></Label>
+                                                <Inputbox type='text' labelText="Second Phone" name="shipperSecondPhone" value={shipmentModel.shipperSecondPhone} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Second Phone Number' />
                                             </div>
                                             <div className='col-12'>
                                                 <Label text="City" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={cityList} value={shipmentModel.shipperCityId} name="shipperCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
-
+                                                <SearchableDropdown data={cityList} value={shipmentModel.shipperCityId} name="shipperCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
                                                 <ErrorLabel message={errors?.shipperCityId} />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Address 1" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperAdd1" value={shipmentModel.shipperAdd1} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 1'></input>
-                                                <ErrorLabel message={errors?.shipperAdd1} />
+                                                <Inputbox labelText="Address 1" type='text' errorMessage={errors?.shipperAdd1} isRequired={true} name="shipperAdd1" value={shipmentModel.shipperAdd1} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 1' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Address 2" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperAdd2" value={shipmentModel.shipperAdd2} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 2'></input>
-                                                <ErrorLabel message={errors?.shipperAdd2} />
+                                                <Inputbox labelText="Address 2" isRequired={true} errorMessage={errors?.shipperAdd2} type='text' name="shipperAdd2" value={shipmentModel.shipperAdd2} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 2' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Address 3" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="shipperAdd3" value={shipmentModel.shipperAdd3} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 3'></input>
+                                                <Inputbox labelText="Address 3" type='text' name="shipperAdd3" value={shipmentModel.shipperAdd3} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Shipper Address 3' />
                                             </div>
                                         </div>
                                     </div>
@@ -228,47 +215,35 @@ export default function NewShipment() {
                                             <div className='card-title'>Consignee</div>
                                             <div className='col-12'>
                                                 <Label text="To Store" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={storeList} value={shipmentModel.toStoreId} name="toStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
+                                                <SearchableDropdown data={storeList} value={shipmentModel.toStoreId} name="toStoreId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select From Store' />
 
                                                 <ErrorLabel message={errors?.toStoreId} />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Name" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeName" value={shipmentModel.consigneeName} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Name'></input>
-                                                <ErrorLabel message={errors?.consigneeName} />
+                                                <Inputbox labelText="Name" isRequired={true} type='text' errorMessage={errors?.consigneeName} name="consigneeName" value={shipmentModel.consigneeName} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Name' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Email" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeEmail" value={shipmentModel.consigneeEmail} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Email'></input>
+                                                <Inputbox labelText="Email" type='text'  name="consigneeEmail"  value={shipmentModel.consigneeEmail} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Email' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Phone" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneePhone" value={shipmentModel.consigneePhone} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Phone Number'></input>
-                                                <ErrorLabel message={errors?.consigneePhone} />
+                                                <Inputbox errorMessage={errors?.consigneePhone} labelText="Phone" isRequired={true} type='text' name="consigneePhone" value={shipmentModel.consigneePhone} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Phone Number' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Second Phone" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeSecondPhone" value={shipmentModel.consigneeSecondPhone} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Second Phone Number'></input>
+                                                <Inputbox labelText="Second Phone" type='text' name="consigneeSecondPhone" value={shipmentModel.consigneeSecondPhone} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Second Phone Number' />
                                             </div>
                                             <div className='col-12'>
                                                 <Label text="City" isRequired={true} fontSize='12px' bold={true}></Label>
-                                                <Dropdown data={cityList} value={shipmentModel.consigneeCityId} name="consigneeCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
-
+                                                <SearchableDropdown data={cityList} value={shipmentModel.consigneeCityId} name="consigneeCityId" onChange={handleTextChange} className='form-control form-control-sm' style={{ fontSize: '11px' }} defaultText='Select City' />
                                                 <ErrorLabel message={errors?.consigneeCityId} />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Address 1" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeAdd1" value={shipmentModel.consigneeAdd1} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 1'></input>
-                                                <ErrorLabel message={errors?.consigneeAdd1} />
+                                                <Inputbox labelText="Address 1" errorMessage={errors?.consigneeAdd1} isRequired={true} type='text' name="consigneeAdd1" value={shipmentModel.consigneeAdd1} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 1' />
+                                             </div>
+                                            <div className='col-12'>
+                                                <Inputbox labelText="Address 2" isRequired={true} type='text' name="consigneeAdd2" value={shipmentModel.consigneeAdd2} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 2' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Address 2" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeAdd2" value={shipmentModel.consigneeAdd2} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 2'></input>
-                                                <ErrorLabel message={errors?.consigneeAdd2} />
-                                            </div>
-                                            <div className='col-12'>
-                                                <Label text="Address 3" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="consigneeAdd3" value={shipmentModel.consigneeAdd3} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 3'></input>
+                                                <Inputbox labelText="Address 3" type='text' name="consigneeAdd3" value={shipmentModel.consigneeAdd3} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Consignee Address 3' />
                                             </div>
                                         </div>
                                     </div>
@@ -279,30 +254,22 @@ export default function NewShipment() {
                                             <div className='card-title'>Commodity</div>
 
                                             <div className='col-12'>
-                                                <Label text="Weight" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="weight" value={shipmentModel.weight} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Weight'></input>
-                                                <ErrorLabel message={errors?.weight} />
+                                                <Inputbox type='text' errorMessage={errors?.weight} labelText="Weight" name="weight" value={shipmentModel.weight} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Weight' />
+                                             </div>
+                                            <div className='col-12'>
+                                                <Inputbox labelText="Dimensions" type='text' name="dimensions" value={shipmentModel.dimensions} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Dimensions' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Dimensions" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="dimensions" value={shipmentModel.dimensions} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Dimensions'></input>
+                                                <Inputbox labelText="COD" type='number' min={0.0} name="codAmount" value={shipmentModel.codAmount} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder="COD" />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="COD" bold={true} fontSize='12px'></Label>
-                                                <input type='number' min={0.0} name="codAmount" value={shipmentModel.codAmount} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder="COD"></input>
+                                                <Inputbox labelText="Description" type='text' name="description" value={shipmentModel.description} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Description' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Description" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="description" value={shipmentModel.description} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Description'></input>
+                                                <Inputbox isRequired={true} labelText="Number of pieces Minimum(1)" type='number' errorMessage={errors?.numberOfPieces} min={1} name="numberOfPieces" value={shipmentModel.numberOfPieces} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Number Of Pieces' />
                                             </div>
                                             <div className='col-12'>
-                                                <Label text="Number of pieces Minimum(1)" isRequired={true} bold={true} fontSize='12px'></Label>
-                                                <input type='number' min={1} name="numberOfPieces" value={shipmentModel.numberOfPieces} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Number Of Pieces'></input>
-                                                <ErrorLabel message={errors?.numberOfPieces} />
-                                            </div>
-                                            <div className='col-12'>
-                                                <Label text="Item Name" bold={true} fontSize='12px'></Label>
-                                                <input type='text' name="itemName" value={shipmentModel.itemName} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Item Name'></input>
+                                                <Inputbox labelText="Item Name" type='text' name="itemName" value={shipmentModel.itemName} onChangeHandler={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Item Name' />
                                             </div>
                                         </div>
                                     </div>

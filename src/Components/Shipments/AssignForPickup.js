@@ -140,7 +140,7 @@ export default function AssignForPickup({ data }) {
                         </div>
                         <div className="modal-footer">
                             <ButtonBox type="save" onClickHandler={handleSave} className="btn btn-sm"></ButtonBox>
-                            <ButtonBox type="cancel" onClickHandler={resetModel} className="btn btn-sm"></ButtonBox>
+                            <ButtonBox type="cancel" modelDismiss={true} onClickHandler={resetModel} className="btn btn-sm"></ButtonBox>
                         </div>
                     </div>
                 </div>

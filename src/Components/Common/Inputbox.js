@@ -5,7 +5,7 @@ import Label from './Label'
 import '../CSS/common.css'
 
 export default function Inputbox({ labelText, isRequired, type, name, labelTextHelp, max, min, id, className, onChangeHandler, maxLength, errorMessage, showError, showLabel, value, placeholder, disabled,
-    labelFontSize, overrideClass, onChangeHandlerData, checked, style, onBlur, title, disableTitle }) {
+    labelFontSize='12px', overrideClass, onChangeHandlerData, checked, style, onBlur, title, disableTitle,labelFontBold=true }) {
     const [showPassword, setShowPassword] = useState(false);
     labelText = common.defaultIfEmpty(labelText, "Label1");
     isRequired = common.defaultIfEmpty(isRequired, false);
@@ -35,7 +35,7 @@ export default function Inputbox({ labelText, isRequired, type, name, labelTextH
     style = common.defaultIfEmpty(style, {});
     return (
         <>
-            {showLabel && <Label text={labelText} helpText={labelTextHelp} fontSize={labelFontSize} isRequired={isRequired}></Label>}
+            {showLabel && <Label text={labelText} helpText={labelTextHelp} bold={labelFontBold} fontSize={labelFontSize} isRequired={isRequired}></Label>}
             <div className={type?.toLowerCase() === 'password' ? 'inp-password' : ''}>
                 <input
                     maxLength={maxLength}
