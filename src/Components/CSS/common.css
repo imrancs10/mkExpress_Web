@@ -11,3 +11,36 @@ position: relative;
 .inp-password input{
     padding-right: 30px;
 }
+
+.print-container {
+    width: 105mm;
+    height: 148mm;
+    padding: 10mm;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    page-break-after: always; /* Ensure each slip is on a separate page when printing */
+  }
+
+  .print-container .tbl-1{
+    width: 100%;
+  }
+  .print-container .tbl-1 tr td{
+    line-height: 20px;
+  }
+
+.print-container .tbl-2{
+    width: 100%;
+  }
+ 
+   .print-container .tbl-2 tr td{
+    line-height: 20px;
+  }
+
+  .print-container .vertical-barcode {
+    transform: rotate(90deg) !important;
+    position: absolute;
+  }
+  .print-container .vertical-barcode-container{
+    position: relative;
+  }

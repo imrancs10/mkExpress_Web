@@ -31,12 +31,13 @@
 .print-container
 {
     padding: 20px;
+    font-size: 11px;
 }
 .print-container table{
     /* border: 1px solid; */
 }
 .print-container table tr{
-
+line-height: 6px;
 }
 .print-container table tr td{
     border: 1px solid;
@@ -76,3 +77,11 @@
     background-color: rgb(73, 182, 254); 
     transition: .5s all linear;
 }
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-o5vb{border-color:#fe0000;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
