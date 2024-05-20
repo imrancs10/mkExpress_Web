@@ -103,6 +103,7 @@ export const apiUrls = {
         delete: `${apiPrfix}/appSetting/`,
         get: `${apiPrfix}/appSetting/get/`,
         getAll: `${apiPrfix}/appSetting`,
+        getAllGroup: `${apiPrfix}/appSetting/groups`,
         search: `${apiPrfix}/appSetting/search`,
     }
 }

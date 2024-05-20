@@ -39,11 +39,12 @@ export default function Login({ setLoginDetails }) {
             setErrors({ ...formError });
             return;
         }
-
-        Api.Post(apiUrls.authController.getToken, model)
+        var postMOdel = model;
+        postMOdel.password = btoa(model.password); //string to base64
+        Api.Post(apiUrls.authController.getToken, postMOdel)
             .then(res => {
                 if (common.validateGuid(res.data?.userResponse?.id)) {
-                    setLoginDetails({ ...res.data });
+                    setLoginDetails(res.data);
                     toast.success(toastMessage.loginSuccess);
                     window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(res.data));
                     redirect("/", { replace: true });
@@ -84,7 +85,7 @@ export default function Login({ setLoginDetails }) {
                         <div className='card card-info'>
                             <div className='card-header text-center text-uppercase bold' style={{ fontWeight: '800' }}>Employee/User Login</div>
                             <div className='card-body'>
-                                {common.defaultIfEmpty(responseError,"") !== "" && <AlertMessage type="warn" message={responseError}></AlertMessage>}
+                                {common.defaultIfEmpty(responseError, "") !== "" && <AlertMessage type="warn" message={responseError}></AlertMessage>}
                                 <form>
                                     <div className='row'>
                                         <div className='col-12 mb-4 text-center'>

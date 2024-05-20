@@ -8,7 +8,7 @@ import { common } from '../Components/Utility/common';
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
 axiosRetry(axios, {
-    retries: 3, 
+    retries: 3,
     retryDelay: (retryCount) => {
         return retryCount * 1000;
     }
@@ -69,7 +69,7 @@ export const Api = {
     },
     "Get": (url, useDefault) => {
         let head = useDefault !== undefined && useDefault !== null && !useDefault ? {} : {
-            'Access-Control-Allow-Origin': "*"
+            'Access-Control-Allow-Origin': "*",
         };
         return axios.get((useDefault !== undefined && useDefault !== null && !useDefault ? '' : apiBaseUrl) + url, {
             headers: head
@@ -80,17 +80,32 @@ export const Api = {
     }
 }
 
+axios.interceptors.request.use(
+    (config) => {
+        // if (config.url.indexOf(apiUrls.authController.getToken) > -1) {
+        //     return config;
+        // }
+        var token = localStorage.getItem(tokenStorageKey);
+        token = JSON.parse(token);
+        if (token) {
+            config.headers.Authorization = `Bearer ${token.accessToken}`;
+            document.body.classList.add('loading-indicator');
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 axios.interceptors.response.use(
     (res) => {
-        //Hide Loader on api call completion
         document.body.classList.remove('loading-indicator');
-        // Add configurations here
         if (res?.status === 200) {
         }
         return res;
     },
     (err) => {
-        //Hide Loader on api call completion
         document.body.classList.remove('loading-indicator');
         if (err?.status === 500)
             toast.error('Something Went Wrong');
@@ -102,27 +117,26 @@ axios.interceptors.response.use(
     }
 );
 
-axios.interceptors.request.use(
-    (req) => {
-        //Show Loader on api call
-        document.body.classList.add('loading-indicator');
+// axios.interceptors.request.use(
+//     (req) => {
+//         //Show Loader on api call
+//         debugger;
+//         document.body.classList.add('loading-indicator');
 
-        var token = localStorage.getItem(tokenStorageKey);
+//         var token = localStorage.getItem(tokenStorageKey);
 
-        if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
-            if (token === undefined || token === null)
-                return req;
-            token = JSON.parse(token);
-            var header = req.headers;
-            var tokenData = jwt_decode(token?.accessToken);
-            if (common.validateGuid(token?.userResponse?.id) && common.checkTokenExpiry(tokenData?.exp)) {
-                header['Authorization'] = `bearer ${token?.accessToken}`;
-                header['userId'] = token.userResponse?.id;
-                req.headers = header;
-                return req;
-            }
-        }
-        else
-        return req;
-    }
-)
+//         if (req.url.indexOf(apiUrls.authController.getToken) === -1) {
+//             if (token === undefined || token === null)
+//                 return req;
+//             token = JSON.parse(token);
+//             var tokenData = jwt_decode(token?.accessToken);
+
+//             if (common.validateGuid(token?.userResponse?.id) && common.checkTokenExpiry(tokenData?.exp)) {
+//                 req.headers.Authorization = `bearer ${token?.accessToken}`;
+//                 req.headers.userid = token.userResponse?.id;
+//                 return req;
+//             }
+//         }
+//         return req;
+//     }
+// )

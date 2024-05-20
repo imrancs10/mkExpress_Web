@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, redirect } from 'react-router-dom'
 import './Header.css'
 import { common } from '../../Utility/common';
+import HeaderMenuItem from './HeaderMenuItem';
 
 export default function Header({ loginDetails, setLoginDetails }) {
+    const [authData, setAuthData] = useState({});
     const logoutHandler = (e) => {
         e.preventDefault();
         var loginModel = {
@@ -12,6 +14,17 @@ export default function Header({ loginDetails, setLoginDetails }) {
         window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
         setLoginDetails({ ...loginModel })
     }
+
+    useEffect(() => {
+        var localAuthData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
+        try {
+            localAuthData = JSON.parse(localAuthData);
+            setAuthData(localAuthData);
+        } catch (error) {
+            redirect("/login");
+        }
+    }, [])
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light header-container">
@@ -43,40 +56,18 @@ export default function Header({ loginDetails, setLoginDetails }) {
                         </a>
                         {/* <!-- Left links --> */}
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ fontSize: '13px' }}>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/">Dashboard</Link>
-                            </li>
-                            <li className="nav-item">
-                            <Link className="nav-link" to="/containers">Containers</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/shipments">Shipments</Link>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Pickup Dispatch</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Drafts</a>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/customer">Customer</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/members">Members</Link>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">System Actions</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Cod</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Cod Report</a>
-                            </li>
+                            <HeaderMenuItem name="Dashboard" link="/" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/containers" name="Containers" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/" name="Pickup Dispatch" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/" name="Drafts" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/customer" name="Customer" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/members" name="Members" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/system/action" name="System Actions" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/" name="COD" currentRole={loginDetails?.userResponse?.role}/>
+                            <HeaderMenuItem link="/" name="COD Report" currentRole={loginDetails?.userResponse?.role}/>
                             {common.checkAdminRole(loginDetails?.userResponse?.role) &&
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/admin">Admin</Link>
-                                </li>
+                                <HeaderMenuItem link="/admin" name="Admin" currentRole={loginDetails?.userResponse?.role}/>
                             }
                         </ul>
                         {/* <!-- Left links --> */}

@@ -1,6 +1,7 @@
 .header-container{
     box-shadow: 2px 3px 10px 0px gray;
     z-index: 1000000;
+    margin-top: 30px;
 }
 .header-container .nav-item:hover {
     transition: all .2s;

@@ -20,14 +20,14 @@ export default function AppSettingPage() {
         key: '',
         value: '',
         dataType:'',
-        group: 0
+        groupId: 0
     }
     const [appSettingModel, setAppSettingModel] = useState(appSettingModelTemplate);
     const [isRecordSaving, setIsRecordSaving] = useState(true);
+    const [groupData, setGroupData] = useState([])
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [errors, setErrors] = useState();
-    const groupData = [{ id: 1, value: 'Shipment' }, { id: 2, value: 'Container' }, { id: 3, value: 'Admin' }, { id: 4, value: 'Customer' }];
     const dataType = [{ id: 1, value: 'String' }, { id: 2, value: 'Integer' }, { id: 3, value: 'Decimal' }, { id: 4, value: 'Boolean' }, { id: 5, value: 'Date' }]
     const handleDelete = (id) => {
         Api.Delete(apiUrls.appSettingController.delete + id).then(res => {
@@ -103,7 +103,7 @@ export default function AppSettingPage() {
 
     const tableOptionTemplet = {
         headers: [
-            { name: 'Group', prop: 'group', customColumn: (data) => { return groupData.find(x => x.id == data["group"])?.value } },
+            { name: 'Group', prop: 'groupName'},
             { name: 'Key', prop: 'key' },
             { name: 'Value', prop: 'value' },
             { name: 'Data Type', prop: 'dataType' }
@@ -170,13 +170,21 @@ export default function AppSettingPage() {
         }
     }, [isRecordSaving]);
 
+    useEffect(() => {
+        Api.Get(apiUrls.appSettingController.getAllGroup)
+        .then(res=>{
+            setGroupData(res.data)
+        })
+    }, [])
+    
+
 
     const validateError = () => {
-        const { key, value, group } = appSettingModel;
+        const { key, value, groupId } = appSettingModel;
         const newError = {};
         if (!value || value === "") newError.value = validationMessage.reqAppSettingValue;
         if (!key || key === "") newError.key = validationMessage.reqAppSettingKey;
-        if (!group || group === "" || group === 0) newError.group = validationMessage.reqAppSettingGroup;
+        if (!groupId || groupId <1) newError.groupId = validationMessage.reqAppSettingGroup;
         return newError;
     }
     return (
@@ -211,8 +219,8 @@ export default function AppSettingPage() {
                                             </div>
                                             <div className="col-md-12">
                                                 <Label text="Group" isRequired={true}></Label>
-                                                <Dropdown data={groupData} defaultText="Select Group" defaultValue="0" className="form-control-sm" onChange={handleTextChange} name="group" value={appSettingModel.group} />
-                                                <ErrorLabel message={errors?.group} />
+                                                <Dropdown data={groupData} defaultText="Select Group" defaultValue="0" className="form-control-sm" onChange={handleTextChange} name="groupId" value={appSettingModel.groupId} />
+                                                <ErrorLabel message={errors?.groupId} />
                                             </div>
                                         </div>
                                     </div>
