@@ -68,24 +68,24 @@ function App() {
               <Route path='/' element={<Dashboard />} />
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/customer' element={<Customer />} />
-              <Route path='/members' element={<Member loginDetails={loginDetails}/>} />
-              <Route path='/shipments' element={<Shipment loginDetails={loginDetails}/>} />
+              <Route path='/members' element={<Member loginDetails={loginDetails} />} />
+              <Route path='/shipments' element={<Shipment loginDetails={loginDetails} />} />
               <Route path='/containers' element={<ContainerDetail />} />
-              <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails}/>} />
+              <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails} />} />
               <Route path='/admin' element={<AdminLayout loginDetails={loginDetails} />}>
                 <Route path='/admin/master/data' element={<MasterData />} />
                 <Route path='/admin/master/third-party' element={<ThirdPartyCourier />} />
                 <Route path='/admin/master/type' element={<MasterDataType />} />
                 <Route path='/admin/customer' element={<CustomerDetails />} />
-                <Route path='/admin/logistic-region' element={<LogisticRegion />} /> 
+                <Route path='/admin/logistic-region' element={<LogisticRegion />} />
                 <Route path='/admin/journey' element={<MasterJourney />} />
-                <Route path='/admin/master/app-setting' element={<AppSettingPage/>}/>
+                <Route path='/admin/master/app-setting' element={<AppSettingPage />} />
               </Route>
               <Route path='*' element={<UrlNotFound />} />
-              <Route path='/unauthorized' element={<UnauthorizedAccess/>}/>
+              <Route path='/unauthorized' element={<UnauthorizedAccess />} />
             </Routes>
           </ErrorBoundary>
-          <ToastContainer style={{zIndex:'1000000000000'}}></ToastContainer>
+          <ToastContainer style={{ zIndex: '1000000000000' }}></ToastContainer>
         </div>
         <Footer></Footer>
       </Router>

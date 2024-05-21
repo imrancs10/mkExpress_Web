@@ -18,7 +18,7 @@ import AssignForPickup from './AssignForPickup';
 import CourierRunSheet from '../Runsheet/CourierRunSheet';
 import ReceiveShipments from './ReceiveShipments';
 
-export default function Shipment() {
+export default function Shipment({loginDetails}) {
     const filterYearStartFrom = 2022;
     const searchFilterTemplate = {
         customer: 0,
@@ -146,7 +146,7 @@ export default function Shipment() {
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <ShipmentSearchPanel setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
-            <ShipmentsButtons selectedRows={selectedRows}></ShipmentsButtons>
+            <ShipmentsButtons loginDetails={loginDetails} selectedRows={selectedRows}></ShipmentsButtons>
             <TableView option={tableOption}></TableView>
             <NewShipment></NewShipment>
             <ThirdPartyShipment></ThirdPartyShipment>

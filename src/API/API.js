@@ -1,9 +1,8 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry';
+
 import { toast } from 'react-toastify'
-import jwt_decode from "jwt-decode";
-import { apiUrls } from './ApiUrl';
-import { common } from '../Components/Utility/common';
+import { redirect } from 'react-router-dom'
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
@@ -103,6 +102,7 @@ axios.interceptors.response.use(
         document.body.classList.remove('loading-indicator');
         if (res?.status === 200) {
         }
+       
         return res;
     },
     (err) => {
@@ -112,6 +112,9 @@ axios.interceptors.response.use(
 
         if (err?.response?.status === 400) {
             toast.warn(err?.response?.data?.Message)
+        }
+        if (err?.response?.status === 401) { 
+            redirect("/login");
         }
         return Promise.reject(err);
     }

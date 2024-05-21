@@ -110,8 +110,8 @@ const common = {
         var m = date.getMinutes().toString().padStart(2, "0");
         var s = date.getSeconds().toString().padStart(2, "0");
         var y = date.getFullYear();
-        if(isNaN(month) ||isNaN(day) || isNaN(y))
-       return "Invalid Date";
+        if (isNaN(month) || isNaN(day) || isNaN(y))
+            return "Invalid Date";
         if (format === "yyyymmdd")
             return `${y}-${month}-${day}`;
         else if (format === "ddmmyyyy")
@@ -302,17 +302,38 @@ const common = {
         { id: 2, value: 'Female' },
     ],
     timeConvert: (time) => {
-        time=time.substr(0,8);
+        time = time.substr(0, 8);
         // Check correct time format and split into components
         time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
         if (time.length > 1) { // If time format correct
             time = time.slice(1);  // Remove full string match value
             time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-            time[0] = (+(time[0] % 12) || 12).toString().padStart(2,"0"); // Adjust hours
+            time[0] = (+(time[0] % 12) || 12).toString().padStart(2, "0"); // Adjust hours
         }
         return time.join(''); // return adjusted time or original string
-    }
+    },
+    hideMenuIfRole: ["customeradmin", "customer"],
+    displayMenu: (currentRole, link) => {
+        if (common.hideMenuIfRole === 0)
+            return true;
+        if (common.hideMenuIfRole.indexOf(currentRole?.toLowerCase()) > -1) {
+            if (link === "/shipments" || link === "/system/action")
+                return true
+            return false;
+        }
+        return true;
+    },
+    roles: ["opsofficer", "customerservice", "customeradmin", "customerservicemanager", "accountant", "sales", "courier", "cashier", "opssupervisor", "admin", "opsmanager"],
+    menus: [
+        { name: "Dashboard", code: "dashboard", link: "/" },
+        { name: "Dashboard", code: "customer", link: "/customer" },
+        { name: "Members", code: "members", link: "/members" },
+        { name: "Shipments", code: "shipments", link: "/shipments" },
+        { name: "Containers", code: "containers", link: "/containers" },
+        { name: "User Profile", code: "userProfile", link: "/user-profile" },
+        { name: "Admin", code: "admin", link: "/admin" }
+    ]
 }
 
 export { common };

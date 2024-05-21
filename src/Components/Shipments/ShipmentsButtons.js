@@ -2,7 +2,7 @@ import React from 'react'
 import './shipment.css'
 import ButtonBox from '../Common/ButtonBox'
 
-export default function ShipmentsButtons({ selectedRows }) {
+export default function ShipmentsButtons({ selectedRows,loginDetails }) {
     var isRowSelected = selectedRows?.length>0;
     return (
         <div className='card mb-2'>
