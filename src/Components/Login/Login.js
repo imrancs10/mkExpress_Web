@@ -39,9 +39,9 @@ export default function Login({ setLoginDetails }) {
             setErrors({ ...formError });
             return;
         }
-        var postMOdel = model;
-        postMOdel.password = btoa(model.password); //string to base64
-        Api.Post(apiUrls.authController.getToken, postMOdel)
+        var postModel =JSON.parse(JSON.stringify(model));
+        postModel.password = btoa(postModel.password); //string to base64
+        Api.Post(apiUrls.authController.getToken, postModel)
             .then(res => {
                 if (common.validateGuid(res.data?.userResponse?.id)) {
                     setLoginDetails(res.data);

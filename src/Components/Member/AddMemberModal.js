@@ -17,10 +17,14 @@ export default function AddMemberModal({isRecordSaving,setMemberModel,memberMode
     const [stationList, setStationList] = useState([]);
 
     useEffect(() => {
-        Api.Get(apiUrls.masterDataController.getByMasterDataTypes + `?masterDataTypes=role&masterDataTypes=station`)
+        var apiList=[]
+        apiList.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes + `?masterDataTypes=station`));
+        apiList.push(Api.Get(apiUrls.masterDataController.getAllRole + `?pageNo=1&pagesize=100000`));
+
+        Api.MultiCall(apiList)
             .then(res => {
-                setRoleList(res?.data?.filter(x => x.masterDataTypeCode === 'role'));
-                setStationList(res?.data?.filter(x => x.masterDataTypeCode === 'station'));
+                setRoleList(res[1]?.data.data);
+                setStationList(res[0]?.data);
             });
     }, []);
     const handleTextChange = (e) => {
@@ -124,7 +128,7 @@ export default function AddMemberModal({isRecordSaving,setMemberModel,memberMode
                                             }
                                             <div className="col-12">
                                                 <Label text="Role" isRequired={true} />
-                                                <Dropdown data={roleList} name="roleId" defaultText="Select Role" value={memberModel.roleId} className="form-control form-control-sm" onChange={handleTextChange} />
+                                                <Dropdown data={roleList} name="roleId" text="name" defaultText="Select Role" value={memberModel.roleId} className="form-control form-control-sm" onChange={handleTextChange} />
                                                 <ErrorLabel message={errors?.roleId} />
                                             </div>
                                             <div className="col-12">

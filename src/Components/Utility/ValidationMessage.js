@@ -30,6 +30,8 @@ const validationMessage = {
     reqMasterDataType:"Please enter master data type!",
     reqContactNo:"Please enter contact number!",
     reqRole:"Please select role!",
+    reqRoleName:"Please enter role name!",
+    reqRoleCode:"Please enter role code!",
     reqDeliveryAttempt:"Please enter max delivery attempt!",
     reqPreferredPickupTime:"Please enter preferred pickup time",
     invalidBothCity:"Both cities can't be same!",
@@ -49,6 +51,12 @@ const validationMessage = {
     shipmentsHasError:"Please remove invalid shipments!",
     noShipmentError:"Please add some shipments!",
     reqDriver:"Please select driver!",
+    reqMenuName:'Please enter menu name!',
+    reqMenuCode:'Please enter menu code!',
+    reqMenuLink:'Please enter menu Link!',
+    reqMenuPosition:'Please select menu Position!',
+    reqMenuTitle:'Please enter menu title!',
+    reqMenuDisplayOrder:'Please enter menu display order!',
 }
 
 export {validationMessage};

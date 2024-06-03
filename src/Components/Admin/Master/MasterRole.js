@@ -10,20 +10,19 @@ import TableView from '../../Table/TableView';
 import ButtonBox from '../../Common/ButtonBox';
 import Inputbox from '../../Common/Inputbox';
 
-
-export default function MasterDataType() {  
-    const masterDataModelTemplate = {
+export default function MasterRole() {
+    const masterRoleModelTemplate = {
         id: common.guid(),
         code: '',
-        value: ''
+        name: ''
     }
-    const [masterDataTypeModel, setMasterDataTypeModel] = useState(masterDataModelTemplate);
+    const [masterRoleModel, setMasterRoleModel] = useState(masterRoleModelTemplate);
     const [isRecordSaving, setIsRecordSaving] = useState(true);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [errors, setErrors] = useState();
     const handleDelete = (id) => {
-        Api.Delete(apiUrls.masterDataController.deleteDataType + id).then(res => {
+        Api.Delete(apiUrls.masterDataController.deleteRole + id).then(res => {
             if (res.data === 1) {
                 handleSearch('');
                 toast.success(toastMessage.deleteSuccess);
@@ -33,7 +32,7 @@ export default function MasterDataType() {
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
             return;
-        Api.Get(apiUrls.masterDataController.searchDataType + `?PageNo=${pageNo}&PageSize=${pageSize}&SearchTerm=${searchTerm}`).then(res => {
+        Api.Get(apiUrls.masterDataController.searchRole + `?PageNo=${pageNo}&PageSize=${pageSize}&SearchTerm=${searchTerm}`).then(res => {
             tableOptionTemplet.data = res.data.data;
             tableOptionTemplet.totalRecords = res.data.totalRecords;
             setTableOption({ ...tableOptionTemplet });
@@ -44,10 +43,10 @@ export default function MasterDataType() {
 
     const handleTextChange = (e) => {
         var { value, name } = e.target;
-        var data = masterDataTypeModel;
+        var data = masterRoleModel;
         data[name] = value;
         data.code = common.generateMasterDataCode(value);
-        setMasterDataTypeModel({ ...data });
+        setMasterRoleModel({ ...data });
 
         if (!!errors[name]) {
             setErrors({ ...errors, [name]: null })
@@ -61,20 +60,20 @@ export default function MasterDataType() {
             return
         }
 
-        let data = masterDataTypeModel;
+        let data = masterRoleModel;
         if (isRecordSaving) {
-            Api.Put(apiUrls.masterDataController.addDataType, data).then(res => {
-                if (res.data.id !==null) {
-                    common.closePopup('close-masterDataType');
+            Api.Put(apiUrls.masterDataController.addRole, data).then(res => {
+                if (res.data.id !== null) {
+                    common.closePopup('close-masterRoleModel');
                     toast.success(toastMessage.saveSuccess);
                     handleSearch('');
                 }
             })
         }
         else {
-            Api.Post(apiUrls.masterDataController.updateDataType, masterDataTypeModel).then(res => {
-                if (res.data.id!==null) {
-                    common.closePopup('close-masterDataType');
+            Api.Post(apiUrls.masterDataController.updateRole, masterRoleModel).then(res => {
+                if (res.data.id !== null) {
+                    common.closePopup('close-masterRoleModel');
                     toast.success(toastMessage.updateSuccess);
                     handleSearch('');
                 }
@@ -84,21 +83,21 @@ export default function MasterDataType() {
     const handleEdit = (masterDataId) => {
         setIsRecordSaving(false);
         setErrors({});
-        Api.Get(apiUrls.masterDataController.getDataType + masterDataId).then(res => {
-            if (res.data.id !=null) {
-                setMasterDataTypeModel(res.data);
+        Api.Get(apiUrls.masterDataController.getByIdRole + masterDataId).then(res => {
+            if (res.data.id != null) {
+                setMasterRoleModel(res.data);
             }
         });
     };
 
     const tableOptionTemplet = {
         headers: [
-            { name: 'Value', prop: 'value' },
+            { name: 'Role Name', prop: 'name' },
             { name: 'Code', prop: 'code' }
         ],
         data: [],
-        totalRecords: 0, 
-        showSerialNo:true,
+        totalRecords: 0,
+        showSerialNo: true,
         pageSize: pageSize,
         pageNo: pageNo,
         setPageNo: setPageNo,
@@ -106,7 +105,7 @@ export default function MasterDataType() {
         searchHandler: handleSearch,
         actions: {
             showView: false,
-            popupModelId: "add-masterDataType",
+            popupModelId: "add-masterRoleModel",
             delete: {
                 handler: handleDelete
             },
@@ -118,25 +117,25 @@ export default function MasterDataType() {
 
     const saveButtonHandler = () => {
 
-        setMasterDataTypeModel({ ...masterDataModelTemplate });
+        setMasterRoleModel({ ...masterRoleModelTemplate });
         setErrors({});
         setIsRecordSaving(true);
     }
     const [tableOption, setTableOption] = useState(tableOptionTemplet);
     const breadcrumbOption = {
-        title: 'Master Data Type',
+        title: 'Master User Role',
         items: [
             {
-                title: "Master Data Type'",
+                title: "Master User Role'",
                 icon: "fa-solid fa-code-branch",
                 isActive: false,
             }
         ],
         buttons: [
             {
-                text: "Master Data Type",
+                text: "Master User Role",
                 icon: 'fa-solid fa-plus',
-                modelId: 'add-masterDataType',
+                modelId: 'add-masterRoleModel',
                 handler: saveButtonHandler
             }
         ]
@@ -144,24 +143,24 @@ export default function MasterDataType() {
 
     useEffect(() => {
         setIsRecordSaving(true);
-        Api.Get(apiUrls.masterDataController.getAllDataType + `?PageNo=${pageNo}&PageSize=${pageSize}`).then(res => {
+        Api.Get(apiUrls.masterDataController.getAllRole + `?PageNo=${pageNo}&PageSize=${pageSize}`).then(res => {
             tableOptionTemplet.data = res.data.data;
             tableOptionTemplet.totalRecords = res.data.totalRecords;
             setTableOption({ ...tableOptionTemplet });
-        })
-           ;
+        });
     }, [pageNo, pageSize]);
 
     useEffect(() => {
         if (isRecordSaving) {
-            setMasterDataTypeModel({ ...masterDataModelTemplate });
+            setMasterRoleModel({ ...masterRoleModelTemplate });
         }
     }, [isRecordSaving]);
 
     const validateError = () => {
-        const { value } = masterDataTypeModel;
+        const { name, code } = masterRoleModel;
         const newError = {};
-        if (!value || value === "") newError.value = validationMessage.masterDataRequired;
+        if (!name || name === "") newError.value = validationMessage.reqRoleName;
+        if (!code || code === "") newError.code = validationMessage.reqRoleCode;
         return newError;
     }
     return (
@@ -171,12 +170,12 @@ export default function MasterDataType() {
             <TableView option={tableOption}></TableView>
 
             {/* <!-- Add Contact Popup Model --> */}
-            <div id="add-masterDataType" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div id="add-masterRoleModel" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">New Master Data Type</h5>
-                            <button type="button" id='close-masterDataType' className="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                            <h5 className="modal-title">New User Role</h5>
+                            <button type="button" id='close-masterRoleModel' className="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                         </div>
                         <div className="modal-body">
                             <div className="form-horizontal form-material">
@@ -184,7 +183,10 @@ export default function MasterDataType() {
                                     <div className="card-body">
                                         <div className="row g-3">
                                             <div className="col-md-12">
-                                                <Inputbox isRequired={true} maxLength={1000} errorMessage={errors?.value} labelText="Master Data" onChangeHandler={handleTextChange} name="value" value={masterDataTypeModel.value} type="text" id='value' className="form-control form-control-sm" />
+                                                <Inputbox isRequired={true} maxLength={1000} errorMessage={errors?.name} labelText="Role Name" onChangeHandler={handleTextChange} name="name" value={masterRoleModel.name} type="text" className="form-control form-control-sm" />
+                                            </div>
+                                            <div className="col-md-12">
+                                                <Inputbox isRequired={true} maxLength={1000} errorMessage={errors?.value} labelText="Role Code" onChangeHandler={handleTextChange} name="value" disabled={true} value={masterRoleModel.code} type="text" className="form-control form-control-sm" />
                                             </div>
                                         </div>
                                     </div>

@@ -7,7 +7,7 @@ import UnauthorizedAccess from '../Middleware/UnauthorizedAccess'
 
 export default function AdminLayout({ loginDetails }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  if(!common.checkAdminRole(loginDetails?.userResponse?.role))
+  if(!common.checkAdminRole(loginDetails?.userResponse?.roleCode))
   {
     return <UnauthorizedAccess></UnauthorizedAccess>
   }

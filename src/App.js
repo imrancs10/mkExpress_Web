@@ -26,6 +26,9 @@ import MasterJourney from './Components/Admin/MasterJourney/MasterJourney';
 import ContainerDetail from './Components/Container/ContainerDetail';
 import ThirdPartyCourier from './Components/Admin/ThirdPartyCourier/ThirdPartyCourier';
 import AppSettingPage from './Components/Admin/AppSettingsPage/AppSettingPage';
+import MasterRole from './Components/Admin/Master/MasterRole';
+import MasterMenu from './Components/Admin/Master/MasterMenu';
+import RoleMenuMapper from './Components/Admin/Master/RoleMenuMapper';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -80,6 +83,9 @@ function App() {
                 <Route path='/admin/logistic-region' element={<LogisticRegion />} />
                 <Route path='/admin/journey' element={<MasterJourney />} />
                 <Route path='/admin/master/app-setting' element={<AppSettingPage />} />
+                <Route path='/admin/master/role' element={<MasterRole />} />
+                <Route path='/admin/master/menu' element={<MasterMenu />} /> 
+                <Route path='/admin/master/role/menu/mapper' element={<RoleMenuMapper />} />
               </Route>
               <Route path='*' element={<UrlNotFound />} />
               <Route path='/unauthorized' element={<UnauthorizedAccess />} />

@@ -272,3 +272,49 @@
     transition: all .2s;
     min-height: 70vh;
 }
+
+.menu-container,.m-section
+{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.m-container-menu
+{
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 13px;
+    padding: 1px 4px;
+    margin: 4px;
+    cursor: pointer;
+    transition: .5s all ;
+}
+
+.m-container-menu:hover{
+    background-color:#6bbcf2;
+    transition: .5s all ;
+}
+
+.m-container-menu+.active{
+    background-color:#6bbcf2;
+}
+
+.m-container-menu span
+{
+    
+}
+
+.m-container-menu i {
+    margin-left: 5px;
+}
+
+.m-container-menu i:hover {
+    color: red;
+}
+
+.m-section{
+
+}

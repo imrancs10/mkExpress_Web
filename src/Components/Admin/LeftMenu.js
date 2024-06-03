@@ -9,7 +9,7 @@ export default function LeftMenu({ setAuthData, authData, accessLogin, setAccess
     const location = useLocation();
 
     useEffect(() => {
-        var roleName = accessLogin?.roleName?.toLowerCase();
+        var roleName = accessLogin?.roleCode?.toLowerCase();
         if (roleName === "superadmin" || roleName === "admin")
             return;
     }, [location]);
@@ -95,6 +95,15 @@ export default function LeftMenu({ setAuthData, authData, accessLogin, setAccess
                                                         </li>
                                                         <li>
                                                             <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-gears" menuName="App Setting" link="admin/master/app-setting" />
+                                                        </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-users" menuName="User Role" link="admin/master/role" />
+                                                        </li>
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-bars" menuName="Menu" link="admin/master/menu" />
+                                                        </li> 
+                                                        <li>
+                                                            <LeftMenuItem hasAccess={hasAccess} isSidebarCollapsed={isSidebarCollapsed} icon="fa-solid fa-circle-nodes" menuName="Role Menu Mapper" link="admin/master/role/menu/mapper" />
                                                         </li>
                                                     </ul>
                                                 </>

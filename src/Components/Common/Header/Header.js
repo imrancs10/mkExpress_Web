@@ -66,7 +66,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
                             <HeaderMenuItem link="/system/action" name="System Actions" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="COD" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="COD Report" currentRole={loginDetails?.userResponse?.role}/>
-                            {common.checkAdminRole(loginDetails?.userResponse?.role) &&
+                            {common.checkAdminRole(loginDetails?.userResponse?.roleCode) &&
                                 <HeaderMenuItem link="/admin" name="Admin" currentRole={loginDetails?.userResponse?.role}/>
                             }
                         </ul>

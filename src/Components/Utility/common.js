@@ -265,7 +265,7 @@ const common = {
         return exp > ((new Date().getTime() + 1) / 1000)
     },
     checkAdminRole: (role) => {
-        return role?.toLowerCase() === "admin"
+        return role?.toLowerCase() === "admin" || role?.toLowerCase() === "superadmin"
     },
     getShipmentNumber: () => {
         var d = new Date();
