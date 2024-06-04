@@ -6,20 +6,26 @@ import HeaderMenuItem from './HeaderMenuItem';
 
 export default function Header({ loginDetails, setLoginDetails }) {
     const [authData, setAuthData] = useState({});
+    const [permissionList, setPermissionList] = useState([]);
     const logoutHandler = (e) => {
         e.preventDefault();
         var loginModel = {
             isAuthenticated: false
         }
         window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
+        window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify({}));
         setLoginDetails({ ...loginModel })
     }
 
     useEffect(() => {
+        debugger;
         var localAuthData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
+        var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
         try {
             localAuthData = JSON.parse(localAuthData);
+            permissionData = JSON.parse(permissionData);
             setAuthData(localAuthData);
+            setPermissionList(permissionData);
         } catch (error) {
             redirect("/login");
         }
@@ -56,8 +62,13 @@ export default function Header({ loginDetails, setLoginDetails }) {
                         </a>
                         {/* <!-- Left links --> */}
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ fontSize: '13px' }}>
-                            <HeaderMenuItem name="Dashboard" link="/" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>
+                            {
+                                permissionList?.filter(x=>x?.menu?.menuPosition==="header")?.map((ele,index)=>{
+                                    return  <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role}/>
+                                })
+                            }
+                           
+                            {/* <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/containers" name="Containers" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="Pickup Dispatch" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="Drafts" currentRole={loginDetails?.userResponse?.role}/>
@@ -65,10 +76,10 @@ export default function Header({ loginDetails, setLoginDetails }) {
                             <HeaderMenuItem link="/members" name="Members" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/system/action" name="System Actions" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="COD" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/" name="COD Report" currentRole={loginDetails?.userResponse?.role}/>
-                            {common.checkAdminRole(loginDetails?.userResponse?.roleCode) &&
+                            <HeaderMenuItem link="/" name="COD Report" currentRole={loginDetails?.userResponse?.role}/> */}
+                            {/* {common.checkAdminRole(loginDetails?.userResponse?.roleCode) &&
                                 <HeaderMenuItem link="/admin" name="Admin" currentRole={loginDetails?.userResponse?.role}/>
-                            }
+                            } */}
                         </ul>
                         {/* <!-- Left links --> */}
                     </div>

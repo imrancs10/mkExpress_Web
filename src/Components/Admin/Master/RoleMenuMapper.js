@@ -13,7 +13,7 @@ import ErrorLabel from '../../Common/ErrorLabel';
 
 export default function RoleMenuMapper() {
     const modelTemplate = {
-        roleId: common.guid(),
+        roleId: '',
         menuId: [],
         data: []
     }
@@ -55,6 +55,14 @@ export default function RoleMenuMapper() {
                     dataModel.menuId.push(ele?.menuId);
                 })
                 setModel(dataModel);
+                var mPosition = [];
+                menuList.forEach(ele => {
+                    if (mPosition.indexOf(ele.menuPosition) === -1) {
+                        mPosition.push(ele.menuPosition);
+                    }
+                });
+                setMenuPosition(mPosition);
+                setIsRecordSaving(false);
             });
     }
 
@@ -81,9 +89,12 @@ export default function RoleMenuMapper() {
             .then(res => {
                 if (res.data) {
                     toast.success(toastMessage.saveSuccess);
+                    setIsRecordSaving(true);
+                    common.closePopup('close-masterRoleModel');
+                    setFilter({...filter});
+                    setModel(modelTemplate);
                 }
-            })
-
+            });
     }
 
     const tableOptionTemplet = {
@@ -125,7 +136,7 @@ export default function RoleMenuMapper() {
             setMenuList(res[1].data.data);
             var mPosition = [];
             res[1]?.data?.data.forEach(ele => {
-                if (!mPosition.includes(ele.menuPosition)) {
+                if (mPosition.indexOf(ele.menuPosition) === -1) {
                     mPosition.push(ele.menuPosition);
                 }
             });
@@ -167,7 +178,7 @@ export default function RoleMenuMapper() {
         var data = model
 
         if (name === 'menuId') {
-            if (!data?.menuId.includes(value)) {
+            if (data?.menuId.indexOf(value) === -1) {
                 data.menuId.push(value);
             }
         }
@@ -204,8 +215,9 @@ export default function RoleMenuMapper() {
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <hr />
             <div className='row'>
-                <div className='col-12'>
-                    <Dropdown data={roleList} text="name" name="roleId" value={filter.roleId} onChange={filterChangeHandler} className="form-control-sm form-control" />
+                <div className='col-12 mb-2'>
+                    <Label bold={true} text="Select role to view mapper menus"/>
+                    <Dropdown data={roleList} text="name" defaultText="Select Role..." name="roleId" value={filter.roleId} onChange={filterChangeHandler} className="form-control-sm form-control" />
                 </div>
             </div>
             <TableView option={tableOption}></TableView>
@@ -227,15 +239,15 @@ export default function RoleMenuMapper() {
                                                 <ErrorLabel message={errors?.roleId} />
                                             </div>
                                             <div className="col-md-12">
+                                                <ErrorLabel message={errors?.menuId} />
                                                 <div className='menu-container'>
-                                                    <ErrorLabel message={errors?.menuId} />
                                                     {menuPosition?.map((ele, index) => {
                                                         return <>
                                                             <h6 key={index} style={{ textTransform: "uppercase", marginTop: '10px' }}>{ele}</h6>
                                                             <hr style={{ width: '100%', marginTop: '0.5rem' }} />
                                                             <div className='m-section'>
                                                                 {menuList?.filter(x => x.menuPosition === ele)?.map((eleInner, indexInner) => {
-                                                                    return <div key={indexInner} className={model?.menuId.includes(eleInner?.id) ? 'm-container-menu active' : 'm-container-menu'}>
+                                                                    return <div key={indexInner} className={model?.menuId.indexOf(eleInner?.id) > -1 ? 'm-container-menu-active' : 'm-container-menu'}>
                                                                         <span onClick={() => {
                                                                             changeHandler({
                                                                                 target: {
