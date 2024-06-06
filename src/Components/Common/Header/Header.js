@@ -29,7 +29,17 @@ export default function Header({ loginDetails, setLoginDetails }) {
         } catch (error) {
             redirect("/login");
         }
-    }, [])
+    }, []);
+
+    const getDynamicMenu = () => {
+        if (permissionList.length > 0) {
+            return permissionList?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
+                return <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role} />
+            })
+        }
+        else
+            return <></>
+    }
 
     return (
         <>
@@ -63,9 +73,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
                         {/* <!-- Left links --> */}
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ fontSize: '13px' }}>
                             {
-                                permissionList?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
-                                    return <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role} />
-                                })
+                                getDynamicMenu()
                             }
 
                             {/* <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>

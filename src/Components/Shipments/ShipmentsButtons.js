@@ -7,7 +7,6 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
     const [permissionList, setPermissionList] = useState([]);
     var isRowSelected = selectedRows?.length > 0;
     useEffect(() => {
-debugger;
         var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
         try {
             permissionData = JSON.parse(permissionData);
@@ -15,18 +14,39 @@ debugger;
         } catch (error) {
             redirect("/login");
         }
-    }, [])
+    }, []);
+
+    const getDynamicMenu = () => {
+        if (permissionList.length > 0) {
+            return permissionList?.filter(x => x?.menu?.menuPosition === "shipment_actions")?.map((ele, index) => {
+                return <ButtonBox key={index}
+                    modalId={"#" + ele?.menu?.link}
+                    className="btn btn-primary btn-sm"
+                    style={{ margin: "1px" }}
+                    icon={ele?.menu?.icon}
+                    text={ele?.menu?.name} />
+            })
+        }
+        else
+            return <></>
+    }
     return (
         <div className='card mb-2'>
             <div className='card-body' style={{ padding: '7px' }}>
                 <div className='ship-btn-container'>
-                    <div className="btn-group mb-1 btn-group-sm" role="group" aria-label="Second group" style={{ width: '100%', fontSize: '10px' }}>
+                    <div className="" role="group" aria-label="Second group" style={{
+                        display: 'flex',
+                        textAlign: 'right',
+                        width: '100%',
+                        fontSize: '10px',
+                        fontSize: '10px',
+                        flexWrap: 'wrap',
+                        flexDirection: 'row-reverse'
+                    }}>
                         {
-                            permissionList?.map((ele, index) => {
-                                return <ButtonBox key={index} modalId={"#" + ele?.menu?.link} className="btn btn-primary btn-sm" icon={ele?.menu?.icon} text={ele?.menu?.name} />
-                            })
+                            getDynamicMenu()
                         }
-                        
+
                     </div>
                 </div>
             </div>

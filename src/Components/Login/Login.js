@@ -6,7 +6,7 @@ import { Api } from '../../API/API';
 import { apiUrls } from '../../API/ApiUrl';
 import { validationMessage } from '../Utility/ValidationMessage';
 import ErrorLabel from '../Common/ErrorLabel';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
 import { common } from '../Utility/common';
 import AlertMessage from '../Common/AlertMessage';
@@ -47,7 +47,6 @@ export default function Login({ setLoginDetails }) {
                     setLoginDetails(res.data);
                     toast.success(toastMessage.loginSuccess);
                     window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(res.data));
-                    debugger;
                     Api.Get(apiUrls.masterDataController.getByIdRoleMenuMapper+res?.data?.userResponse?.roleId)
                     .then(roleRes=>{
                         window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify(roleRes.data));
@@ -126,6 +125,7 @@ export default function Login({ setLoginDetails }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer style={{ zIndex: '1000000000000' }}></ToastContainer>
         </>
     )
 }
