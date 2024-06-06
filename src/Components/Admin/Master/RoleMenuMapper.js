@@ -24,7 +24,8 @@ export default function RoleMenuMapper() {
     const [model, setModel] = useState(modelTemplate);
     const [filter, setFilter] = useState({ roleId: '' });
     const [menuPosition, setMenuPosition] = useState([]);
-
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
     const handleSearch = (searchTerm) => {
         searchTerm = searchTerm === undefined || searchTerm === null || searchTerm === "" ? "all" : searchTerm;
         Api.Get(apiUrls.masterDataController.searchRoleMenuMapper + `?searchTerm=${searchTerm}`)
@@ -113,7 +114,10 @@ export default function RoleMenuMapper() {
         data: [],
         totalRecords: 0,
         showSerialNo: true,
-        showPagination: false,
+        pageNo: pageNo,
+        pageSize: pageSize,
+        setPageNo: setPageNo,
+        setPageSize: setPageSize,
         searchHandler: handleSearch,
         actions: {
             showView: false,
@@ -196,7 +200,7 @@ export default function RoleMenuMapper() {
                 setTableOption(tableOptionTemplet);
             });
         }
-    }, [filter.roleId])
+    }, [filter.roleId,pageNo,pageSize])
 
     const removeMenu = (menuId) => {
         var data = model;
