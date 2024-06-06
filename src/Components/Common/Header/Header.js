@@ -63,11 +63,11 @@ export default function Header({ loginDetails, setLoginDetails }) {
                         {/* <!-- Left links --> */}
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{ fontSize: '13px' }}>
                             {
-                                permissionList?.filter(x=>x?.menu?.menuPosition==="header")?.map((ele,index)=>{
-                                    return  <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role}/>
+                                permissionList?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
+                                    return <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role} />
                                 })
                             }
-                           
+
                             {/* <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/containers" name="Containers" currentRole={loginDetails?.userResponse?.role}/>
                             <HeaderMenuItem link="/" name="Pickup Dispatch" currentRole={loginDetails?.userResponse?.role}/>
@@ -143,8 +143,12 @@ export default function Header({ loginDetails, setLoginDetails }) {
                                 aria-labelledby="navbarDropdownMenuAvatar"
                             >
                                 <li>
+                                    <div className="dropdown-item disabled" style={{ fontSize: '12px' }}>Role : {loginDetails?.userResponse?.role}</div>
+                                </li>
+                                <li>
                                     <Link to="/user-profile" className="dropdown-item">Profile</Link>
                                 </li>
+                                <li className='divider'></li>
                                 <li>
                                     <a className="dropdown-item" href="#">Settings</a>
                                 </li>
