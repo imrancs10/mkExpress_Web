@@ -10,7 +10,7 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
         var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
         try {
             permissionData = JSON.parse(permissionData);
-            setPermissionList(permissionData?.filter(x => x?.menu?.menuPosition === "shipment_actions"));
+            setPermissionList([...permissionData?.filter(x => x?.menu?.menuPosition === "shipment_actions")]);
         } catch (error) {
             redirect("/login");
         }

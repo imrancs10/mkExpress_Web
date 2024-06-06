@@ -25,7 +25,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
             localAuthData = JSON.parse(localAuthData);
             permissionData = JSON.parse(permissionData);
             setAuthData(localAuthData);
-            setPermissionList(permissionData);
+            setPermissionList([...permissionData]);
         } catch (error) {
             redirect("/login");
         }
