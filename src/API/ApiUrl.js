@@ -123,5 +123,9 @@ export const apiUrls = {
         getAll: `${apiPrfix}/appSetting`,
         getAllGroup: `${apiPrfix}/appSetting/groups`,
         search: `${apiPrfix}/appSetting/search`,
+    },
+    dashboardController:{
+        getShipmentCount:`${apiPrfix}/Dashboard/dashboard/status/count?`,
+        getShipmentStatusWiseCount:`${apiPrfix}/Dashboard/dashboard/status/wise/count?`
     }
 }

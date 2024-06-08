@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, redirect } from 'react-router-dom'
 import './Header.css'
-import { common } from '../../Utility/common';
 import HeaderMenuItem from './HeaderMenuItem';
 
 export default function Header({ loginDetails, setLoginDetails }) {
@@ -18,7 +17,6 @@ export default function Header({ loginDetails, setLoginDetails }) {
     }
 
     useEffect(() => {
-        debugger;
         var localAuthData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
         var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
         try {
