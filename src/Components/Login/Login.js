@@ -47,10 +47,6 @@ export default function Login({ setLoginDetails }) {
                     setLoginDetails(res.data);
                     toast.success(toastMessage.loginSuccess);
                     window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(res.data));
-                    Api.Get(apiUrls.masterDataController.getByIdRoleMenuMapper+res?.data?.userResponse?.roleId)
-                    .then(roleRes=>{
-                        window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify(roleRes.data));
-                    });
                     redirect("/", { replace: true });
                 }
                 else {

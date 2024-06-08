@@ -2,7 +2,7 @@ import axios from 'axios'
 import axiosRetry from 'axios-retry';
 
 import { toast } from 'react-toastify'
-import { redirect } from 'react-router-dom'
+import { redirect,Navigate } from 'react-router-dom'
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
@@ -79,11 +79,17 @@ export const Api = {
     }
 }
 
+const logoutHandler = (e) => {
+    e?.preventDefault();
+    var loginModel = {
+        isAuthenticated: false
+    }
+    window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
+    window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify({}));
+}
+
 axios.interceptors.request.use(
     (config) => {
-        // if (config.url.indexOf(apiUrls.authController.getToken) > -1) {
-        //     return config;
-        // }
         var token = localStorage.getItem(tokenStorageKey);
         token = JSON.parse(token);
         if (token) {
@@ -114,7 +120,8 @@ axios.interceptors.response.use(
             toast.warn(err?.response?.data?.Message)
         }
         if (err?.response?.status === 401) { 
-            redirect("/login");
+            logoutHandler();
+           return redirect("/login");
         }
         return Promise.reject(err);
     }

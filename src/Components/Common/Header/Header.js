@@ -5,33 +5,28 @@ import HeaderMenuItem from './HeaderMenuItem';
 
 export default function Header({ loginDetails, setLoginDetails }) {
     const [authData, setAuthData] = useState({});
-    const [permissionList, setPermissionList] = useState([]);
     const logoutHandler = (e) => {
         e.preventDefault();
         var loginModel = {
             isAuthenticated: false
         }
         window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
-        window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify({}));
         setLoginDetails({ ...loginModel })
     }
 
     useEffect(() => {
         var localAuthData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
-        var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
         try {
             localAuthData = JSON.parse(localAuthData);
-            permissionData = JSON.parse(permissionData);
             setAuthData(localAuthData);
-            setPermissionList([...permissionData]);
         } catch (error) {
             redirect("/login");
         }
     }, []);
 
     const getDynamicMenu = () => {
-        if (permissionList.length > 0) {
-            return permissionList?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
+        if (authData?.userResponse?.permissions?.length??0 > 0) {
+            return authData.userResponse.permissions?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
                 return <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role} />
             })
         }

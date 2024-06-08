@@ -46,6 +46,8 @@ export default function Shipment({loginDetails}) {
     const [selectedRows, setSelectedRows] = useState([]);
     const [shipmentIdForPrint, setShipmentIdForPrint] = useState("")
     const [shipmentIdForTracking, setShipmentIdForTracking] = useState("")
+    const [refreshGrid, setRefreshGrid] = useState(0)
+
     useEffect(() => {
         Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}`)
             .then(res => {
@@ -53,7 +55,7 @@ export default function Shipment({loginDetails}) {
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
                 setTableOption({ ...tableOptionTemplet });
             })
-    }, [pageNo, pageSize, clearFilter])
+    }, [pageNo, pageSize, clearFilter,refreshGrid])
 
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
@@ -148,7 +150,7 @@ export default function Shipment({loginDetails}) {
             <ShipmentSearchPanel setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
             <ShipmentsButtons loginDetails={loginDetails} selectedRows={selectedRows}></ShipmentsButtons>
             <TableView option={tableOption}></TableView>
-            <NewShipment></NewShipment>
+            <NewShipment setRefreshGrid={setRefreshGrid}></NewShipment>
             <ThirdPartyShipment></ThirdPartyShipment>
             <ScanToPrint></ScanToPrint>
             <BulkScanToPrint></BulkScanToPrint>

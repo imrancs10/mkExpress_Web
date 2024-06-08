@@ -52,10 +52,9 @@ export default function CustomerDetails() {
       tableOptionTemplet.data = res.data.data;
       tableOptionTemplet.totalRecords = res.data.totalRecords;
       setTableOption({ ...tableOptionTemplet });
-    }).catch(err => {
-
-    });
+    })
   }
+
   useEffect(() => {
     Api.Get(apiUrls.masterDataController.getByMasterDataType + "city")
       .then(res => {
@@ -76,6 +75,7 @@ export default function CustomerDetails() {
       setErrors({ ...errors, [name]: null })
     }
   }
+
   const handleSave = () => {
     const formError = validateError();
     if (Object.keys(formError).length > 0) {
@@ -90,8 +90,6 @@ export default function CustomerDetails() {
           toast.success(toastMessage.saveSuccess);
           handleSearch('');
         }
-      }).catch(err => {
-        toast.error(toastMessage.saveError);
       });
     }
     else {
@@ -106,6 +104,7 @@ export default function CustomerDetails() {
       });
     }
   }
+
   const handleEdit = (customerId) => {
     Api.Get(apiUrls.customerController.get + customerId).then(res => {
       if (res.data.id !== null) {
@@ -138,10 +137,12 @@ export default function CustomerDetails() {
       }
     }
   }
+
   const saveButtonHandler = () => {
     setCustomerModel({ ...customerModelTemplate });
     setIsRecordSaving(true);
   }
+
   const [tableOption, setTableOption] = useState(tableOptionTemplet);
 
   const breadcrumbOption = {
@@ -163,14 +164,14 @@ export default function CustomerDetails() {
     ]
   }
 
-    useEffect(() => {
-        Api.Get(apiUrls.customerController.getAll + `?pageNo=${pageNo}&PageSize=${pageSize}`)
-            .then(res => {
-                tableOptionTemplet.data = res.data.data;
-                tableOptionTemplet.totalRecords = res.data.totalRecords;
-                setTableOption({...tableOptionTemplet});
-            })
-    }, [pageNo, pageSize])
+  useEffect(() => {
+    Api.Get(apiUrls.customerController.getAll + `?pageNo=${pageNo}&PageSize=${pageSize}`)
+      .then(res => {
+        tableOptionTemplet.data = res.data.data;
+        tableOptionTemplet.totalRecords = res.data.totalRecords;
+        setTableOption({ ...tableOptionTemplet });
+      })
+  }, [pageNo, pageSize])
 
   useEffect(() => {
     if (isRecordSaving) {
@@ -179,18 +180,19 @@ export default function CustomerDetails() {
   }, [isRecordSaving])
 
   const validateError = () => {
-    const { name, contactNo, maxDeliveryAttempt, preferredPickupTime,cityId,email,address,zipCode } = customerModel;
+    const { name, contactNo, maxDeliveryAttempt, preferredPickupTime, cityId, email, address, zipCode } = customerModel;
     const newError = {};
     if (!name || name === "") newError.name = validationMessage.reqName;
-    if (!email || email === ""|| !email.match(RegexFormat.email)) newError.email = validationMessage.reqEmail;
+    if (!email || email === "" || !email.match(RegexFormat.email)) newError.email = validationMessage.reqEmail;
     if (!address || address === "") newError.address = validationMessage.reqAddress;
     if (!zipCode || zipCode === "") newError.zipCode = validationMessage.reqZipcode;
-    if (!cityId ||!common.validateGuid(cityId)) newError.cityId = validationMessage.reqCity;
+    if (!cityId || !common.validateGuid(cityId)) newError.cityId = validationMessage.reqCity;
     if (!contactNo || contactNo === "") newError.contactNo = validationMessage.reqContactNo;
     if (!maxDeliveryAttempt || maxDeliveryAttempt < 1) newError.maxDeliveryAttempt = validationMessage.reqDeliveryAttempt;
     if (!preferredPickupTime || preferredPickupTime === "") newError.preferredPickupTime = validationMessage.reqPreferredPickupTime;
     return newError;
   }
+
   return (
     <>
       <Breadcrumb option={breadcrumbOption}></Breadcrumb>

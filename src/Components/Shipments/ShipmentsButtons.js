@@ -7,10 +7,10 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
     const [permissionList, setPermissionList] = useState([]);
     var isRowSelected = selectedRows?.length > 0;
     useEffect(() => {
-        var permissionData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY);
+        var authData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
         try {
-            permissionData = JSON.parse(permissionData);
-            setPermissionList([...permissionData?.filter(x => x?.menu?.menuPosition === "shipment_actions")]);
+            authData = JSON.parse(authData);
+            setPermissionList([...authData?.userResponse?.permissions?.filter(x => x?.menu?.menuPosition === "shipment_actions")]);
         } catch (error) {
             redirect("/login");
         }
@@ -18,7 +18,7 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
 
     const getDynamicMenu = () => {
         if (permissionList.length > 0) {
-            return permissionList?.filter(x => x?.menu?.menuPosition === "shipment_actions")?.map((ele, index) => {
+            return permissionList?.map((ele, index) => {
                 return <ButtonBox key={index}
                     modalId={"#" + ele?.menu?.link}
                     className="btn btn-primary btn-sm"

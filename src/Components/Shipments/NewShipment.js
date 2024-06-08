@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import Inputbox from '../Common/Inputbox';
 import SearchableDropdown from '../Common/SearchableDropdown/SearchableDropdown';
 
-export default function NewShipment() {
+export default function NewShipment({setRefreshGrid}) {
     const shipmentModelTemplete = {
         id: common.guid(),
         shipmentNumber: common.getShipmentNumber(),
@@ -145,9 +145,12 @@ export default function NewShipment() {
         Api.Put(apiUrls.shipmentController.create, model)
             .then(res => {
                 if (common.validateGuid(res.data?.id)) {
+                    common.closePopup("closeModalNewShipment");
+                    setShipmentModel(shipmentModelTemplete);
                     toast.success(toastMessage.saveSuccess);
+                    setRefreshGrid(pre=>pre+1);
                 }
-            })
+            });
     }
     return (
         <>
@@ -156,7 +159,7 @@ export default function NewShipment() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="modalNewShipmentLabel">New Shipment</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" id='closeModalNewShipment' className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <div className='row'>
