@@ -24,62 +24,58 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
         if (name === 'customer') {
             setQueryString(urlParams,"customerId", value);
         }
-        if (name === 'reason') {
+        else if (name === 'reason') {
             setQueryString(urlParams,"reason", value);
         }
-        if (name === 'status') {
+        else if (name === 'status') {
             setQueryString(urlParams,"status",common.addSpaceBeforeCapitalLetters(value));
         }
-        if (name === 'courier') {
+        else if (name === 'courier') {
             setQueryString(urlParams,"courier", value);
         }
-        if (name === 'stationId') {
+        else if (name === 'stationId') {
             setQueryString(urlParams,"stationId", value);
         }
-        if (name === 'consigneeCity') {
+        else if (name === 'consigneeCity') {
             setQueryString(urlParams,"consigneeCity", value);
         }
-        if (name === 'createdFrom') {
+        else if (name === 'createdFrom') {
             setQueryString(urlParams,"createdFrom", value);
             setQueryString(urlParams,"createdTo", searchFilter?.createdTo);
         }
-        if (name === 'createdTo') {
+        else if (name === 'createdTo') {
             setQueryString(urlParams,"createdFrom", searchFilter?.createdFrom);
             setQueryString(urlParams,"createdTo", value);
         }
-
-        if (name === 'deliveredFrom') {
+        else if (name === 'deliveredFrom') {
             setQueryString(urlParams,"deliveredFrom", value);
             setQueryString(urlParams,"deliveredTo", searchFilter?.deliveredTo);
         }
-        if (name === 'deliveredTo') {
+        else if (name === 'deliveredTo') {
             setQueryString(urlParams,"deliveredFrom", searchFilter?.deliveredFrom);
             setQueryString(urlParams,"deliveredTo", value);
         }
-
-        if (name === 'receivedFrom') {
+        else if (name === 'receivedFrom') {
             setQueryString(urlParams,"receivedFrom", value);
             setQueryString(urlParams,"receivedTo", searchFilter?.receivedTo);
         }
-        if (name === 'receivedTo') {
+        else if (name === 'receivedTo') {
             setQueryString(urlParams,"receivedFrom", searchFilter?.receivedFrom);
             setQueryString(urlParams,"receivedTo", value);
-        }
-        
-        if (name === 'returnFrom') {
+        }        
+        else if (name === 'returnFrom') {
             setQueryString(urlParams,"returnFrom", value);
             setQueryString(urlParams,"returnTo", searchFilter?.returnTo);
         }
-        if (name === 'returnTo') {
+        else if (name === 'returnTo') {
             setQueryString(urlParams,"returnFrom", searchFilter?.returnFrom);
             setQueryString(urlParams,"returnTo", value);
-        }
-        
-        if (name === 'codDateFrom') {
+        }        
+        else if (name === 'codDateFrom') {
             setQueryString(urlParams,"codDateFrom", value);
             setQueryString(urlParams,"codDateTo", searchFilter?.codDateTo);
         }
-        if (name === 'codDateTo') {
+        else if (name === 'codDateTo') {
             setQueryString(urlParams,"codDateFrom", searchFilter?.codDateFrom);
             setQueryString(urlParams,"codDateTo", value);
         }
@@ -94,7 +90,7 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
     useEffect(() => {
         var apis = [];
         apis.push(Api.Get(apiUrls.customerController.getDropdown));
-        apis.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes + '?masterDataTypes=reason&masterDataTypes=status&masterDataTypes=courier'));
+        apis.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes + '?masterDataTypes=reason&masterDataTypes=status&masterDataTypes=courier&masterDataTypes=station&masterDataTypes=city'));
         Api.MultiCall(apis)
             .then(res => {
                 setCustomerList([...res[0].data]);
@@ -125,17 +121,17 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Courier" bold={true}></Label>
-                            <SearchableDropdown value={searchFilter.courier} name="courier" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <SearchableDropdown value={searchFilter.courier} elementKey="value" name="courier" data={masterList.filter(x => x.masterDataTypeCode === 'courier')} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Station" bold={true}></Label>
-                            <SearchableDropdown value={searchFilter.stationId} name="stationId" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <SearchableDropdown value={searchFilter.stationId} name="stationId" data={masterList.filter(x => x.masterDataTypeCode === 'station')} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Consignee City" bold={true}></Label>
-                            <SearchableDropdown value={searchFilter.consigneeCityId} name="consigneeCityId" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <SearchableDropdown value={searchFilter.consigneeCityId} name="consigneeCityId" data={masterList.filter(x => x.masterDataTypeCode === 'city')} onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
@@ -182,7 +178,6 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
 function setQueryString(urlParams, param, value) {
     if (urlParams.has(param))
         urlParams.delete(param);
-    else
         urlParams.append(param, value);
 }
 
