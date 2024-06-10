@@ -51,8 +51,7 @@ export default function Shipment({loginDetails}) {
     const [searchUrl, setSearchUrl] = useState("?")
 
     useEffect(() => {
-        debugger;
-        Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}&${searchUrl.replaceAll('+'," ")}`)
+        Api.Get(apiUrls.shipmentController.search + `?pageNo=${pageNo}&pageSize=${pageSize}&${searchUrl.replaceAll('+'," ")}`)
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;

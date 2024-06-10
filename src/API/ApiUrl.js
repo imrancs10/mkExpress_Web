@@ -76,6 +76,7 @@ export const apiUrls = {
     shipmentController:{
         create: `${apiPrfix}/shipment`,
         update: `${apiPrfix}/shipment`,
+        search: `${apiPrfix}/shipment/search`,
         delete: `${apiPrfix}/shipment/`,
         get: `${apiPrfix}/shipment/get/`,
         getByIds: `${apiPrfix}/shipment/get/by-ids/`,
