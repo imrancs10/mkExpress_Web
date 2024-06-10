@@ -4,17 +4,86 @@ import ButtonBox from '../Common/ButtonBox'
 import { apiUrls } from '../../API/ApiUrl';
 import { Api } from '../../API/API';
 import SearchableDropdown from '../Common/SearchableDropdown/SearchableDropdown'
+import Inputbox from '../Common/Inputbox';
+import { common } from '../Utility/common';
 
-export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, searchFilterTemplate, setClearFilter }) {
+export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, searchFilterTemplate, setClearFilter,setSearchUrl,searchUrl }) {
     const [showPanel, setShowPanel] = useState(true);
     const [customerList, setCustomerList] = useState([]);
     const [masterList, setMasterList] = useState([]);
+    
+    
 
     const handleTextChange = (e) => {
         var { type, name, value } = e.target;
+        const urlParams = new URLSearchParams(searchUrl);
+        debugger;
         if (type === 'select-one') {
-           // value = parseInt(value);
+            // value = parseInt(value);
         }
+        if (name === 'customer') {
+            setQueryString(urlParams,"customerId", value);
+        }
+        if (name === 'reason') {
+            setQueryString(urlParams,"reason", value);
+        }
+        if (name === 'status') {
+            setQueryString(urlParams,"status",common.addSpaceBeforeCapitalLetters(value));
+        }
+        if (name === 'courier') {
+            setQueryString(urlParams,"courier", value);
+        }
+        if (name === 'stationId') {
+            setQueryString(urlParams,"stationId", value);
+        }
+        if (name === 'consigneeCity') {
+            setQueryString(urlParams,"consigneeCity", value);
+        }
+        if (name === 'createdFrom') {
+            setQueryString(urlParams,"createdFrom", value);
+            setQueryString(urlParams,"createdTo", searchFilter?.createdTo);
+        }
+        if (name === 'createdTo') {
+            setQueryString(urlParams,"createdFrom", searchFilter?.createdFrom);
+            setQueryString(urlParams,"createdTo", value);
+        }
+
+        if (name === 'deliveredFrom') {
+            setQueryString(urlParams,"deliveredFrom", value);
+            setQueryString(urlParams,"deliveredTo", searchFilter?.deliveredTo);
+        }
+        if (name === 'deliveredTo') {
+            setQueryString(urlParams,"deliveredFrom", searchFilter?.deliveredFrom);
+            setQueryString(urlParams,"deliveredTo", value);
+        }
+
+        if (name === 'receivedFrom') {
+            setQueryString(urlParams,"receivedFrom", value);
+            setQueryString(urlParams,"receivedTo", searchFilter?.receivedTo);
+        }
+        if (name === 'receivedTo') {
+            setQueryString(urlParams,"receivedFrom", searchFilter?.receivedFrom);
+            setQueryString(urlParams,"receivedTo", value);
+        }
+        
+        if (name === 'returnFrom') {
+            setQueryString(urlParams,"returnFrom", value);
+            setQueryString(urlParams,"returnTo", searchFilter?.returnTo);
+        }
+        if (name === 'returnTo') {
+            setQueryString(urlParams,"returnFrom", searchFilter?.returnFrom);
+            setQueryString(urlParams,"returnTo", value);
+        }
+        
+        if (name === 'codDateFrom') {
+            setQueryString(urlParams,"codDateFrom", value);
+            setQueryString(urlParams,"codDateTo", searchFilter?.codDateTo);
+        }
+        if (name === 'codDateTo') {
+            setQueryString(urlParams,"codDateFrom", searchFilter?.codDateFrom);
+            setQueryString(urlParams,"codDateTo", value);
+        }
+        setSearchUrl(urlParams.toString());
         setSearchFilter({ ...searchFilter, [name]: value });
     }
     const handleClearFiler = () => {
@@ -25,7 +94,7 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
     useEffect(() => {
         var apis = [];
         apis.push(Api.Get(apiUrls.customerController.getDropdown));
-        apis.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes+'?masterDataTypes=reason&masterDataTypes=status&masterDataTypes=courier'));
+        apis.push(Api.Get(apiUrls.masterDataController.getByMasterDataTypes + '?masterDataTypes=reason&masterDataTypes=status&masterDataTypes=courier'));
         Api.MultiCall(apis)
             .then(res => {
                 setCustomerList([...res[0].data]);
@@ -42,55 +111,61 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
                     </div>
                     {showPanel && <>
                         <div className='col-md-2 col-sm-12 mb-1'>
+                            <Label text="Customer" bold={true}></Label>
                             <SearchableDropdown value={searchFilter.customer} defaultText="Customers" data={customerList} name="customer" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} placeholder='Customer' />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
-                            <SearchableDropdown value={searchFilter.reason} data={masterList.filter(x=>x.masterDataTypeCode==='reason')} defaultText="Reason" name="reason" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Label text="Reason" bold={true}></Label>
+                            <SearchableDropdown value={searchFilter.reason} data={masterList.filter(x => x.masterDataTypeCode === 'reason')} defaultText="Reason" name="reason" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
-                            <SearchableDropdown value={searchFilter.status} name="status" data={masterList.filter(x=>x.masterDataTypeCode==='status')} defaultText="Status" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <Label text="Status" bold={true}></Label>
+                            <SearchableDropdown elementKey="value" value={searchFilter.status} name="status" data={masterList.filter(x => x.masterDataTypeCode === 'status')} defaultText="Status" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
+                            <Label text="Courier" bold={true}></Label>
                             <SearchableDropdown value={searchFilter.courier} name="courier" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
-                            <SearchableDropdown value={searchFilter.station} name="station" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <Label text="Station" bold={true}></Label>
+                            <SearchableDropdown value={searchFilter.stationId} name="stationId" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
-                            <SearchableDropdown value={searchFilter.consigneeCity} name="consigneeCity" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
+                            <Label text="Consignee City" bold={true}></Label>
+                            <SearchableDropdown value={searchFilter.consigneeCityId} name="consigneeCityId" onChange={e => handleTextChange(e)} className='form-control form-control-sm' style={{ fontSize: '11px' }}>
                             </SearchableDropdown>
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Created From-To" bold={true}></Label>
-                            <input value={searchFilter.createdFrom} name="createdFrom" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
-                            <input value={searchFilter.createdTo} name="createdTo" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.createdFrom} name="createdFrom" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.createdTo} name="createdTo" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Delivered From-To" bold={true}></Label>
-                            <input value={searchFilter.deliveredFrom} name="deliveredFrom" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
-                            <input value={searchFilter.deliveredTo} name="deliveredTo" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.deliveredFrom} name="deliveredFrom" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.deliveredTo} name="deliveredTo" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Received From-To" bold={true}></Label>
-                            <input value={searchFilter.receivedFrom} name="receivedFrom" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
-                            <input value={searchFilter.receivedTo} name="receivedTo" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.receivedFrom} name="receivedFrom" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.receivedTo} name="receivedTo" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="COD Date From-To" bold={true}></Label>
-                            <input value={searchFilter.codDateFrom} name="codDateFrom" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
-                            <input value={searchFilter.codDateTo} name="codDateTo" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.codDateFrom} name="codDateFrom" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.codDateTo} name="codDateTo" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <Label text="Return From-To" bold={true}></Label>
-                            <input value={searchFilter.returnFrom} name="returnFrom" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
-                            <input value={searchFilter.returnTo} name="returnTo" onChange={e => handleTextChange(e)} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.returnFrom} name="returnFrom" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm  mb-1' style={{ fontSize: '11px' }} />
+                            <Inputbox showLabel={false} value={searchFilter.returnTo} name="returnTo" onChangeHandler={handleTextChange} type='date' className='form-control form-control-sm' style={{ fontSize: '11px' }} />
                         </div>
                         <div className='col-md-2 col-sm-12 mb-1'>
                             <div className="input-group mb-1">
-                                <input value={searchFilter.searchTerm} name="searchTerm" onChange={e => handleTextChange(e)} type="text" className="form-control form-control-sm" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" style={{ fontSize: '11px' }} />
+                                <Inputbox showLabel={false} value={searchFilter.searchTerm} name="searchTerm" onChangeHandler={handleTextChange} type="text" className="form-control form-control-sm" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" style={{ fontSize: '11px' }} />
                                 <div className="input-group-append">
                                     <button className="btn btn-sm btn-primary btn-outline-secondary" type="button"><i className="fa-brands fa-searchengin"></i></button>
                                 </div>
@@ -104,3 +179,10 @@ export default function ShipmentSearchPanel({ setSearchFilter, searchFilter, sea
         </div>
     )
 }
+function setQueryString(urlParams, param, value) {
+    if (urlParams.has(param))
+        urlParams.delete(param);
+    else
+        urlParams.append(param, value);
+}
+

@@ -17,16 +17,17 @@ import PrintShipmentSlip from './PrintShipmentSlip';
 import AssignForPickup from './AssignForPickup';
 import CourierRunSheet from '../Runsheet/CourierRunSheet';
 import ReceiveShipments from './ReceiveShipments';
+import HoldShipment from './HoldShipment';
 
 export default function Shipment({loginDetails}) {
     const filterYearStartFrom = 2022;
     const searchFilterTemplate = {
-        customer: 0,
+        customerId: 0,
         reason: 0,
         status: 0,
         courier: 0,
-        station: 0,
-        consigneeCity: 0,
+        stationId: 0,
+        consigneeCityId: 0,
         createdFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
         createdTo: common.getHtmlDate(new Date()),
         deliveredFrom: common.getHtmlDate(new Date().setFullYear(filterYearStartFrom)),
@@ -44,18 +45,20 @@ export default function Shipment({loginDetails}) {
     const [searchFilter, setSearchFilter] = useState(searchFilterTemplate);
     const [clearFilter, setClearFilter] = useState(0);
     const [selectedRows, setSelectedRows] = useState([]);
-    const [shipmentIdForPrint, setShipmentIdForPrint] = useState("")
-    const [shipmentIdForTracking, setShipmentIdForTracking] = useState("")
-    const [refreshGrid, setRefreshGrid] = useState(0)
+    const [shipmentIdForPrint, setShipmentIdForPrint] = useState("");
+    const [shipmentIdForTracking, setShipmentIdForTracking] = useState("");
+    const [refreshGrid, setRefreshGrid] = useState(0);
+    const [searchUrl, setSearchUrl] = useState("?")
 
     useEffect(() => {
-        Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}`)
+        debugger;
+        Api.Get(apiUrls.shipmentController.getAll + `?pageNo=${pageNo}&pageSize=${pageSize}&${searchUrl.replaceAll('+'," ")}`)
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
                 setTableOption({ ...tableOptionTemplet });
             })
-    }, [pageNo, pageSize, clearFilter,refreshGrid])
+    }, [pageNo, pageSize, clearFilter,refreshGrid,searchUrl])
 
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
@@ -147,7 +150,7 @@ export default function Shipment({loginDetails}) {
     return (
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
-            <ShipmentSearchPanel setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
+            <ShipmentSearchPanel searchUrl={searchUrl} setSearchUrl={setSearchUrl} setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
             <ShipmentsButtons loginDetails={loginDetails} selectedRows={selectedRows}></ShipmentsButtons>
             <TableView option={tableOption}></TableView>
             <NewShipment setRefreshGrid={setRefreshGrid}></NewShipment>
@@ -160,6 +163,7 @@ export default function Shipment({loginDetails}) {
             <AssignForPickup data={selectedRows}></AssignForPickup>
             <ReceiveShipments data={selectedRows}></ReceiveShipments>
             <CourierRunSheet></CourierRunSheet>
+            <HoldShipment data={selectedRows}></HoldShipment>
         </>
     )
 }

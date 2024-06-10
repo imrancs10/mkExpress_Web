@@ -325,15 +325,9 @@ const common = {
         return true;
     },
     roles: ["opsofficer", "customerservice", "customeradmin", "customerservicemanager", "accountant", "sales", "courier", "cashier", "opssupervisor", "admin", "opsmanager"],
-    menus: [
-        { name: "Dashboard", code: "dashboard", link: "/" },
-        { name: "Dashboard", code: "customer", link: "/customer" },
-        { name: "Members", code: "members", link: "/members" },
-        { name: "Shipments", code: "shipments", link: "/shipments" },
-        { name: "Containers", code: "containers", link: "/containers" },
-        { name: "User Profile", code: "userProfile", link: "/user-profile" },
-        { name: "Admin", code: "admin", link: "/admin" }
-    ]
+    addSpaceBeforeCapitalLetters:(str)=> {
+        return str.replace(/([A-Z])/g, ' $1').trim();
+    }
 }
 
 export { common };

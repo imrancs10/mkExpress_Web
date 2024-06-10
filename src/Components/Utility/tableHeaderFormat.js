@@ -137,6 +137,20 @@ const headerFormat = {
       }, action: { hAlign: "center", dAlign: "center" }
     }
   ],
+  holdShipments: [
+    { name: 'Shipment No.', prop: 'shipmentNumber', action: { hAlign: "start", dAlign: "start" } },
+    { name: 'Status', prop: 'status', action: { hAlign: "center", dAlign: "center" } },
+    {
+      name: 'Consignee City', prop: 'cosigneeCity', customColumn: (data) => {
+        return data?.shipmentDetail?.consigneeCity;
+      }, action: { hAlign: "center", dAlign: "center" }
+    },
+    {
+      name: 'Shipper City', prop: 'ShipperCity', customColumn: (data) => {
+        return data?.shipmentDetail?.shipperCity;
+      }, action: { hAlign: "center", dAlign: "center" }
+    }
+  ],
   logisticRegion: [
     { name: 'Id', prop: 'id', action: { hAlign: "start", dAlign: "start" } },
     { name: 'Country', prop: 'country', action: { hAlign: "center", dAlign: "center" } },

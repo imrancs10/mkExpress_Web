@@ -2,7 +2,7 @@ import axios from 'axios'
 import axiosRetry from 'axios-retry';
 
 import { toast } from 'react-toastify'
-import { redirect,Navigate } from 'react-router-dom'
+import { redirect } from 'react-router-dom'
 
 const apiBaseUrl = process.env.REACT_APP_API_URL;
 const tokenStorageKey = process.env.REACT_APP_ACCESS_STORAGE_KEY;
@@ -84,8 +84,7 @@ const logoutHandler = (e) => {
     var loginModel = {
         isAuthenticated: false
     }
-    window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel));
-    window.localStorage.setItem(process.env.REACT_APP_ACCESS_PERMISSION_KEY, JSON.stringify({}));
+    window.localStorage.setItem(process.env.REACT_APP_ACCESS_STORAGE_KEY, JSON.stringify(loginModel)); 
 }
 
 axios.interceptors.request.use(

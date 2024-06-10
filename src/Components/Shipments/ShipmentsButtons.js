@@ -5,6 +5,7 @@ import { redirect } from 'react-router-dom'
 
 export default function ShipmentsButtons({ selectedRows, loginDetails }) {
     const [permissionList, setPermissionList] = useState([]);
+    var hideMenuOnRowSelect = ["Assign For Pickup", "Courier RunSheet", "Assign for return", "Receive Returned", "Receive", "Store", "Hold", "Assign For Delivery"];
     var isRowSelected = selectedRows?.length > 0;
     useEffect(() => {
         var authData = window.localStorage.getItem(process.env.REACT_APP_ACCESS_STORAGE_KEY);
@@ -16,15 +17,19 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
         }
     }, []);
 
+
     const getDynamicMenu = () => {
         if (permissionList.length > 0) {
             return permissionList?.map((ele, index) => {
-                return <ButtonBox key={index}
-                    modalId={"#" + ele?.menu?.link}
-                    className="btn btn-primary btn-sm"
-                    style={{ margin: "1px" }}
-                    icon={ele?.menu?.icon}
-                    text={ele?.menu?.name} />
+                if (hideMenuOnRowSelect.indexOf(ele?.menu?.name) > -1 && !isRowSelected)
+                    return <></>
+                else
+                    return <ButtonBox key={index}
+                        modalId={"#" + ele?.menu?.link}
+                        className="btn btn-primary btn-sm"
+                        style={{ margin: "1px" }}
+                        icon={ele?.menu?.icon}
+                        text={ele?.menu?.name} />
             })
         }
         else
@@ -46,7 +51,6 @@ export default function ShipmentsButtons({ selectedRows, loginDetails }) {
                         {
                             getDynamicMenu()
                         }
-
                     </div>
                 </div>
             </div>

@@ -41,6 +41,7 @@ export default function AddMemberModal({isRecordSaving,setMemberModel,memberMode
         }
     }
     const handleSave = () => {
+        debugger;
         const formError = validateError();
         if (Object.keys(formError).length > 0) {
             setErrors(formError);
@@ -80,7 +81,9 @@ export default function AddMemberModal({isRecordSaving,setMemberModel,memberMode
         if (!gender || (gender > 2 || gender < 0)) newError.gender = validationMessage.reqGender;
         if (!idNumber || idNumber === "") newError.idNumber = validationMessage.reqIdNumber;
         if (!mobile || mobile === "") newError.mobile = validationMessage.reqContactNo;
+        if(isRecordSaving){
         if (!password || password === "") newError.password = validationMessage.reqPassword;
+        }
         return newError;
     }
     return (

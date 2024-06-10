@@ -84,6 +84,7 @@ export const apiUrls = {
         search: `${apiPrfix}/shipment/search`,
         validateShipments: `${apiPrfix}/shipment/validate/`,
         assignForPickup:`${apiPrfix}/shipment/assign/pickup/`, 
+        holdShipment:`${apiPrfix}/shipment/assign/hold`, 
         validateStatus:`${apiPrfix}/shipment/validate/status?shipmentNo=`,
         validateThirdPartyShipment: `${apiPrfix}/shipment/validate/thirdparty?shipmentNo=`,
     },
