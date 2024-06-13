@@ -25,7 +25,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
     }, []);
 
     const getDynamicMenu = () => {
-        if (authData?.userResponse?.permissions?.length??0 > 0) {
+        if (authData?.userResponse?.permissions?.length ?? 0 > 0) {
             return authData.userResponse.permissions?.filter(x => x?.menu?.menuPosition === "header")?.map((ele, index) => {
                 return <HeaderMenuItem key={index} name={ele?.menu?.name} link={ele?.menu?.link} currentRole={loginDetails?.userResponse?.role} />
             })
@@ -68,19 +68,6 @@ export default function Header({ loginDetails, setLoginDetails }) {
                             {
                                 getDynamicMenu()
                             }
-
-                            {/* <HeaderMenuItem name="Shipments" link="/shipments" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/containers" name="Containers" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/" name="Pickup Dispatch" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/" name="Drafts" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/customer" name="Customer" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/members" name="Members" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/system/action" name="System Actions" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/" name="COD" currentRole={loginDetails?.userResponse?.role}/>
-                            <HeaderMenuItem link="/" name="COD Report" currentRole={loginDetails?.userResponse?.role}/> */}
-                            {/* {common.checkAdminRole(loginDetails?.userResponse?.roleCode) &&
-                                <HeaderMenuItem link="/admin" name="Admin" currentRole={loginDetails?.userResponse?.role}/>
-                            } */}
                         </ul>
                         {/* <!-- Left links --> */}
                     </div>
@@ -150,6 +137,9 @@ export default function Header({ loginDetails, setLoginDetails }) {
                                     <Link to="/user-profile" className="dropdown-item">Profile</Link>
                                 </li>
                                 <li className='divider'></li>
+                                <li> 
+                                    <Link to="/change-password" className="dropdown-item">Change Passwords</Link>
+                                </li>
                                 <li>
                                     <a className="dropdown-item" href="#">Settings</a>
                                 </li>

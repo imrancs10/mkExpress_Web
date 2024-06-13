@@ -2,6 +2,7 @@ const apiPrfix = "v1";
 export const apiUrls = {
     authController: {
         getToken: `${apiPrfix}/auth/user/login`,
+        changePassword: `${apiPrfix}/auth/user/change/password`,
     },
     assignMemberController:{
         courierRunsheet:`${apiPrfix}/AssignMember/get/courier/runsheet`,

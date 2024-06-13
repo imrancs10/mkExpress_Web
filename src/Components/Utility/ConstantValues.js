@@ -1,6 +1,7 @@
 
 const toastMessage = {
     saveSuccess: 'Added successfully!',
+    passwordChangeSuccess: 'Password Changed successfully!',
     loginSuccess: 'Login successfully!',
     saveError:'Error while adding record. Please try after sometime!',
     updateSuccess: 'Updated successfully!',
