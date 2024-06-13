@@ -18,8 +18,9 @@ import AssignForPickup from './AssignForPickup';
 import CourierRunSheet from '../Runsheet/CourierRunSheet';
 import ReceiveShipments from './ReceiveShipments';
 import HoldShipment from './HoldShipment';
+import ApiLoader from '../Loader/ApiLoader';
 
-export default function Shipment({loginDetails}) {
+export default function Shipment({ loginDetails }) {
     const filterYearStartFrom = 2022;
     const searchFilterTemplate = {
         customerId: 0,
@@ -48,16 +49,25 @@ export default function Shipment({loginDetails}) {
     const [shipmentIdForPrint, setShipmentIdForPrint] = useState("");
     const [shipmentIdForTracking, setShipmentIdForTracking] = useState("");
     const [refreshGrid, setRefreshGrid] = useState(0);
-    const [searchUrl, setSearchUrl] = useState("?")
+    const [searchUrl, setSearchUrl] = useState("?");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        Api.Get(apiUrls.shipmentController.search + `?pageNo=${pageNo}&pageSize=${pageSize}&${searchUrl.replaceAll('+'," ")}`)
+        setLoading(true);
+        var initialLoader = document.getElementsByClassName('loader'); //get the global api data loader element
+        if (initialLoader) {
+            initialLoader[0].style.display = "none";
+        }
+        Api.Get(apiUrls.shipmentController.search + `?pageNo=${pageNo}&pageSize=${pageSize}&${searchUrl.replaceAll('+', " ")}`)
             .then(res => {
                 tableOptionTemplet.data = res.data.data;
                 tableOptionTemplet.totalRecords = res.data.totalRecords;
                 setTableOption({ ...tableOptionTemplet });
+            }).finally(fl => {
+                debugger;
+                setLoading(false);
             })
-    }, [pageNo, pageSize, clearFilter,refreshGrid,searchUrl])
+    }, [pageNo, pageSize, clearFilter, refreshGrid, searchUrl])
 
     const handleSearch = (searchTerm) => {
         if (searchTerm.length > 0 && searchTerm.length < 3)
@@ -95,7 +105,7 @@ export default function Shipment({loginDetails}) {
     }
 
     var shipmentTableHeader = headerFormat.shipmentDetails;
-    
+
     shipmentTableHeader[0].name = () => {
         return <input type='checkbox' onChange={e => selectAllRowHandler(e)} checked={tableOption.totalRecords === selectedRows?.length && selectedRows.length > 0} id="checkAll"></input>
     }
@@ -148,6 +158,7 @@ export default function Shipment({loginDetails}) {
     }
     return (
         <>
+            {loading && <ApiLoader></ApiLoader>}
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
             <ShipmentSearchPanel searchUrl={searchUrl} setSearchUrl={setSearchUrl} setSearchFilter={setSearchFilter} searchFilter={searchFilter} setClearFilter={setClearFilter} searchFilterTemplate={searchFilterTemplate}></ShipmentSearchPanel>
             <ShipmentsButtons loginDetails={loginDetails} selectedRows={selectedRows}></ShipmentsButtons>
