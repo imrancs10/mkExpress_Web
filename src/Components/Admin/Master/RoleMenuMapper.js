@@ -24,6 +24,7 @@ export default function RoleMenuMapper() {
     const [model, setModel] = useState(modelTemplate);
     const [filter, setFilter] = useState({ roleId: '' });
     const [menuPosition, setMenuPosition] = useState([]);
+    const [menuByRole, setMenuByRole] = useState([]);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const handleSearch = (searchTerm) => {
@@ -92,7 +93,7 @@ export default function RoleMenuMapper() {
                     toast.success(toastMessage.saveSuccess);
                     setIsRecordSaving(true);
                     common.closePopup('close-masterRoleModel');
-                    setFilter({...filter});
+                    setFilter({ ...filter });
                     setModel(modelTemplate);
                 }
             });
@@ -200,7 +201,23 @@ export default function RoleMenuMapper() {
                 setTableOption(tableOptionTemplet);
             });
         }
-    }, [filter.roleId,pageNo,pageSize])
+    }, [filter.roleId, pageNo, pageSize, model.roleId])
+
+    useEffect(() => {
+        if (model.roleId !== "") {
+            Api.Get(apiUrls.masterDataController.getByIdRoleMenuMapper + `${model.roleId}`)
+                .then(res => {
+                    setMenuByRole(res.data);
+                    var m = model;
+                    res?.data?.forEach(ele => {
+                        if (m?.menuId?.indexOf(ele?.menuId) === -1) {
+                            m?.menuId?.push(ele.menuId)
+                        }
+                    });
+                    setModel({ ...m });
+                });
+        }
+    }, [model.roleId])
 
     const removeMenu = (menuId) => {
         var data = model;
@@ -212,6 +229,14 @@ export default function RoleMenuMapper() {
         });
         data.menuId = newMenus;
         setModel({ ...data });
+
+        var mbr = [];
+        menuByRole?.forEach(ele => {
+            if (ele?.menuId !== menuId) {
+                mbr.push(ele);
+            }
+        });
+        setMenuByRole(mbr);
     }
 
     return (
@@ -220,7 +245,7 @@ export default function RoleMenuMapper() {
             <hr />
             <div className='row'>
                 <div className='col-12 mb-2'>
-                    <Label bold={true} text="Select role to view mapper menus"/>
+                    <Label bold={true} text="Select role to view mapper menus" />
                     <Dropdown data={roleList} text="name" defaultText="Select Role..." name="roleId" value={filter.roleId} onChange={filterChangeHandler} className="form-control-sm form-control" />
                 </div>
             </div>
@@ -246,12 +271,15 @@ export default function RoleMenuMapper() {
                                                 <ErrorLabel message={errors?.menuId} />
                                                 <div className='menu-container'>
                                                     {menuPosition?.map((ele, index) => {
-                                                        return <>
-                                                            <h6 key={index} style={{ textTransform: "uppercase", marginTop: '10px' }}>{ele}</h6>
+                                                        return <div key={index}>
+                                                            <div style={{display:'flex',justifyContent: 'space-between'}}>
+                                                                <h6 style={{ textTransform: "uppercase", marginTop: '10px' }}>{ele}</h6>
+                                                              <div> Select All <input type='checkbox' name={ele}></input></div>
+                                                            </div>
                                                             <hr style={{ width: '100%', marginTop: '0.5rem' }} />
                                                             <div className='m-section'>
                                                                 {menuList?.filter(x => x.menuPosition === ele)?.map((eleInner, indexInner) => {
-                                                                    return <div key={indexInner} className={model?.menuId.indexOf(eleInner?.id) > -1 ? 'm-container-menu-active' : 'm-container-menu'}>
+                                                                    return <div key={(indexInner + 1) * 1000} className={model?.menuId?.indexOf(eleInner?.id) > -1 || menuByRole?.find(x => x?.menuId === eleInner.id) !== undefined ? 'm-container-menu-active' : 'm-container-menu'}>
                                                                         <span onClick={() => {
                                                                             changeHandler({
                                                                                 target: {
@@ -264,7 +292,7 @@ export default function RoleMenuMapper() {
                                                                     </div>
                                                                 })}
                                                             </div>
-                                                        </>
+                                                        </div>
                                                     })}
                                                 </div>
                                             </div>
