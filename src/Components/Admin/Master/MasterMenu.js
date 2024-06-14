@@ -85,7 +85,7 @@ export default function MasterMenu() {
         let data = masterMenuModel;
         if (isRecordSaving) {
             Api.Put(apiUrls.masterDataController.addMenu, data).then(res => {
-                if (res.data.id !== null) {
+                if (res.data===true) {
                     common.closePopup('close-masterMenuModel');
                     toast.success(toastMessage.saveSuccess);
                     handleSearch('');

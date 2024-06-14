@@ -30,6 +30,8 @@ import MasterRole from './Components/Admin/Master/MasterRole';
 import MasterMenu from './Components/Admin/Master/MasterMenu';
 import RoleMenuMapper from './Components/Admin/Master/RoleMenuMapper';
 import ChangePassword from './Components/Login/ChangePassword';
+import Notification from './Components/Notification/Notification';
+import SystemAction from './Components/SystemAction/SystemAction';
 
 function App() {
   const [loginDetails, setLoginDetails] = useState({
@@ -77,6 +79,8 @@ function App() {
               <Route path='/containers' element={<ContainerDetail />} />
               <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails} />} />
               <Route path='/change-password' element={<ChangePassword/>}/>
+              <Route path='/notification' element={<Notification />} />
+              <Route path='/system-action' element={<SystemAction />} />
               <Route path='/admin' element={<AdminLayout loginDetails={loginDetails} />}>
                 <Route path='/admin/master/data' element={<MasterData />} />
                 <Route path='/admin/master/third-party' element={<ThirdPartyCourier />} />
