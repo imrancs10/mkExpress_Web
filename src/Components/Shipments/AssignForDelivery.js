@@ -12,7 +12,7 @@ import { validationMessage } from '../Utility/ValidationMessage';
 import { toast } from 'react-toastify';
 import { toastMessage } from '../Utility/ConstantValues';
 
-export default function AssignForPickup({ data }) {
+export default function AssignForDelivery({ data }) {
     const modelTemplate = {
         memberId: "",
         data: data
@@ -104,7 +104,7 @@ export default function AssignForPickup({ data }) {
                 shipmentId: res?.id
             })
         });
-        Api.Post(apiUrls.shipmentController.assignForPickup, postData)
+        Api.Post(apiUrls.shipmentController.assignForDelivery, postData)
             .then(res => {
                 toast.success(toastMessage.saveSuccess);
                 common.closePopup('closeAssignForPickupModel');
@@ -123,11 +123,11 @@ export default function AssignForPickup({ data }) {
     }
     return (
         <>
-            <div className="modal fade" id="modalAssignForPickup" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modalAssignForPickupLabel" aria-hidden="true">
+            <div className="modal fade" id="modelAssignForDelivery" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="modelAssignForDeliveryLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="modalAssignForPickupLabel">Assign For Pickup</h1>
+                            <h1 className="modal-title fs-5" id="modelAssignForDeliveryLabel">Assign For Delivery</h1>
                             <button type="button" className="btn-close" onClick={e => resetModel()} id='closeAssignForPickupModel' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -142,7 +142,7 @@ export default function AssignForPickup({ data }) {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <ButtonBox type="save" onClickHandler={handleSave} className="btn btn-sm"></ButtonBox>
+                            <ButtonBox type="save" text="Assign" onClickHandler={handleSave} className="btn btn-sm"></ButtonBox>
                             <ButtonBox type="cancel" modelDismiss={true} onClickHandler={resetModel} className="btn btn-sm"></ButtonBox>
                         </div>
                     </div>

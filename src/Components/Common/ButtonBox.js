@@ -204,6 +204,20 @@ const modifyOnType = (type, text, className,icon) => {
             className: className += " btn-info"
         }
     }
+    else if (type.toLowerCase() === "search") {
+        return {
+            icon: icon===""?"fa-solid fa-magnifying-glass":icon,
+            text: text === "" ? "Search" : text,
+            className: className += " btn-warning"
+        }
+    }
+    else if (type.toLowerCase() === "live") {
+        return {
+            icon: icon===""?"fa-solid fa-circle text-danger":icon,
+            text: text === "" ? "Live" : text,
+            className: className += " btn-warning"
+        }
+    }
     return {
         text, className,icon
     }

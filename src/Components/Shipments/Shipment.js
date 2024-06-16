@@ -19,6 +19,7 @@ import CourierRunSheet from '../Runsheet/CourierRunSheet';
 import ReceiveShipments from './ReceiveShipments';
 import HoldShipment from './HoldShipment';
 import ApiLoader from '../Loader/ApiLoader';
+import AssignForDelivery from './AssignForDelivery';
 
 export default function Shipment({ loginDetails }) {
     const filterYearStartFrom = 2022;
@@ -171,6 +172,7 @@ export default function Shipment({ loginDetails }) {
             <ShipmentTracking shipmentId={shipmentIdForTracking}></ShipmentTracking>
             <PrintShipmentSlip shipmentIds={shipmentIdForPrint} />
             <AssignForPickup data={selectedRows}></AssignForPickup>
+            <AssignForDelivery data={selectedRows}></AssignForDelivery>
             <ReceiveShipments data={selectedRows}></ReceiveShipments>
             <CourierRunSheet></CourierRunSheet>
             <HoldShipment data={selectedRows}></HoldShipment>

@@ -80,7 +80,7 @@ function App() {
               <Route path='/user-profile' element={<UserProfile loginDetails={loginDetails} />} />
               <Route path='/change-password' element={<ChangePassword/>}/>
               <Route path='/notification' element={<Notification />} />
-              <Route path='/system-action' element={<SystemAction />} />
+              <Route path='/system/action' element={<SystemAction />} />
               <Route path='/admin' element={<AdminLayout loginDetails={loginDetails} />}>
                 <Route path='/admin/master/data' element={<MasterData />} />
                 <Route path='/admin/master/third-party' element={<ThirdPartyCourier />} />

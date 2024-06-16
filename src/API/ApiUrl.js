@@ -31,6 +31,7 @@ export const apiUrls = {
         getJourneyDropdown: `${apiPrfix}/masterData/master-journey/dropdown/journey`,
         addRole: `${apiPrfix}/masterData/master-role`,
         updateRole: `${apiPrfix}/masterData/master-role`,
+        getShipmentStatusList: `${apiPrfix}/masterData/master-data/shipment/status/list`,
         deleteRole: `${apiPrfix}/masterData/master-role/`,
         getAllRole: `${apiPrfix}/masterData/master-role`,
         getByIdRole: `${apiPrfix}/masterData/master-role/get/`,
@@ -86,6 +87,7 @@ export const apiUrls = {
         search: `${apiPrfix}/shipment/search`,
         validateShipments: `${apiPrfix}/shipment/validate/`,
         assignForPickup:`${apiPrfix}/shipment/assign/pickup/`, 
+        assignForDelivery:`${apiPrfix}/shipment/assign/delivery/`, 
         holdShipment:`${apiPrfix}/shipment/assign/hold`, 
         validateStatus:`${apiPrfix}/shipment/validate/status?shipmentNo=`,
         validateThirdPartyShipment: `${apiPrfix}/shipment/validate/thirdparty?shipmentNo=`,
@@ -130,5 +132,8 @@ export const apiUrls = {
     dashboardController:{
         getShipmentCount:`${apiPrfix}/Dashboard/dashboard/status/count?`,
         getShipmentStatusWiseCount:`${apiPrfix}/Dashboard/dashboard/status/wise/count?`
+    },
+    systemActionController:{
+        getAll:`${apiPrfix}/systemAction/system/action/get/all`
     }
 }
