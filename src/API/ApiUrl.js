@@ -57,6 +57,8 @@ export const apiUrls = {
         getDropdown: `${apiPrfix}/customer/get/dropdown`,
         getAll: `${apiPrfix}/customer`,
         search: `${apiPrfix}/customer/search`,
+        resetPassword:`${apiPrfix}/customer/reset/password/`,
+        blockUnblocked:`${apiPrfix}/customer/blocked/unblocked/`
     },
     thirdPartyController:{
         add: `${apiPrfix}/thirdParty`,

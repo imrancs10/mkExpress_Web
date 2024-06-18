@@ -239,6 +239,26 @@ export default function RoleMenuMapper() {
         setMenuByRole(mbr);
     }
 
+    const onSelectAllHandler = (e, menuPosition) => {
+        debugger;
+        var isChecked = e.target.checked;
+        var tempModel = model;
+        menuList?.filter(x => x.menuPosition === menuPosition)?.forEach(ele => {
+            if (model.menuId.indexOf(ele?.id) === -1 && isChecked) {
+                tempModel.menuId.push(ele.id)
+            }
+            if (!isChecked) {
+                tempModel.menuId = tempModel.menuId.filter(item => item !== ele.id);
+            }
+        });
+
+        setModel({ ...tempModel });
+    }
+
+    const isMenuSelected = (menuId) => {
+        return model?.menuId?.indexOf(menuId) > -1 || menuByRole?.find(x => x?.menuId === menuId) !== undefined
+    }
+
     return (
         <>
             <Breadcrumb option={breadcrumbOption}></Breadcrumb>
@@ -251,7 +271,7 @@ export default function RoleMenuMapper() {
             </div>
             <TableView option={tableOption}></TableView>
             <div id="add-masterRoleModel" className="modal fade in" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">New Role Menu Mapper</h5>
@@ -272,14 +292,14 @@ export default function RoleMenuMapper() {
                                                 <div className='menu-container'>
                                                     {menuPosition?.map((ele, index) => {
                                                         return <div key={index}>
-                                                            <div style={{display:'flex',justifyContent: 'space-between'}}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                                 <h6 style={{ textTransform: "uppercase", marginTop: '10px' }}>{ele}</h6>
-                                                              <div> Select All <input type='checkbox' name={ele}></input></div>
+                                                                <div> Select All <input type='checkbox' onChange={e => onSelectAllHandler(e, ele)} name={ele}></input></div>
                                                             </div>
                                                             <hr style={{ width: '100%', marginTop: '0.5rem' }} />
                                                             <div className='m-section'>
                                                                 {menuList?.filter(x => x.menuPosition === ele)?.map((eleInner, indexInner) => {
-                                                                    return <div key={(indexInner + 1) * 1000} className={model?.menuId?.indexOf(eleInner?.id) > -1 || menuByRole?.find(x => x?.menuId === eleInner.id) !== undefined ? 'm-container-menu-active' : 'm-container-menu'}>
+                                                                    return <div key={(indexInner + 1) * 1000} className={isMenuSelected(eleInner?.id) ? 'm-container-menu-active' : 'm-container-menu'}>
                                                                         <span onClick={() => {
                                                                             changeHandler({
                                                                                 target: {
@@ -288,7 +308,7 @@ export default function RoleMenuMapper() {
                                                                                 }
                                                                             })
                                                                         }}>{eleInner?.name}</span>
-                                                                        <i onClick={() => { removeMenu(eleInner?.id) }} className='fa-solid fa-times'></i>
+                                                                        {isMenuSelected(eleInner?.id) && <i onClick={() => { removeMenu(eleInner?.id) }} className='fa-solid fa-times text-danger'></i>}
                                                                     </div>
                                                                 })}
                                                             </div>

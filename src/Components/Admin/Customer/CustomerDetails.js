@@ -14,6 +14,8 @@ import Dropdown from '../../Common/Dropdown';
 import Label from '../../Common/Label';
 import ErrorLabel from '../../Common/ErrorLabel';
 import RegexFormat from '../../Utility/RegexFormat';
+import CustomerBlockUnblockModel from './CustomerBlockUnblockModel';
+import CustomerResetPasswordModel from './CustomerResetPasswordModel';
 
 
 export default function CustomerDetails() {
@@ -35,6 +37,7 @@ export default function CustomerDetails() {
   const [pageSize, setPageSize] = useState(20);
   const [errors, setErrors] = useState({});
   const [cityList, setCityList] = useState([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState()
   const handleDelete = (id) => {
     Api.Delete(apiUrls.customerController.delete + id).then(res => {
       if (res.data > 0) {
@@ -134,7 +137,33 @@ export default function CustomerDetails() {
       },
       edit: {
         handler: handleEdit
-      }
+      },
+      buttons: [
+        {
+          title: (id, data) => {
+            return data?.isBlocked ? 'Unblock Customer' : 'Block Customer'
+          },
+          icon: (id, data) => {
+            return !data?.isBlocked ? 'fa-solid fa-user-slash text-danger' : 'fa-solid fa-user text-success'
+          },
+          modelId: 'customerBlockUnblockModel',
+          showModel: true,
+          handler: (id, data) => {
+            setSelectedCustomerId({ ...data });
+          }
+        },
+        {
+          title: 'Reset to default password',
+          icon: (id, data) => {
+            return 'fa-solid fa-unlock'
+          },
+          modelId: 'customerPasswordResetModel',
+          showModel: true,
+          handler: (id, data) => {
+            setSelectedCustomerId({ ...data });
+          }
+        }
+      ]
     }
   }
 
@@ -253,6 +282,8 @@ export default function CustomerDetails() {
           </div>
         </div>
       </div>
+      <CustomerBlockUnblockModel handleSearch={handleSearch} data={selectedCustomerId}></CustomerBlockUnblockModel>
+      <CustomerResetPasswordModel data={selectedCustomerId}/>
     </>
   )
 }

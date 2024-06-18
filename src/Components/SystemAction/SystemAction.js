@@ -127,7 +127,6 @@ export default function SystemAction() {
         connection.on("ReceiveShipmentUpdate", (user, message) => {
             if (isLive) {
                 // Fetch the updated shipment list or just add the new shipment
-                debugger;
                 fetchTrackings();
             }
         });
