@@ -3,6 +3,7 @@ export const apiUrls = {
     authController: {
         getToken: `${apiPrfix}/auth/user/login`,
         changePassword: `${apiPrfix}/auth/user/change/password`,
+        updateUserProfileImage: `${apiPrfix}/auth/user/update/profile/image`,
     },
     assignMemberController:{
         courierRunsheet:`${apiPrfix}/AssignMember/get/courier/runsheet`,

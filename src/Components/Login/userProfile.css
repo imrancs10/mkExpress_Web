@@ -15,3 +15,25 @@
     align-items: center;
     margin-bottom: -75px;
 }
+
+.user-profile:hover {
+    background-color: #2980b9;
+}
+
+.user-profile i {
+    font-size: 24px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    transition: .5s all;
+}
+
+.user-profile i:hover {
+    color: red;
+    transition: .5s all;
+}
+
+.user-profile:hover i {
+    opacity: 1;
+}

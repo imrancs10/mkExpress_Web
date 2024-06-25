@@ -119,7 +119,7 @@ export default function Header({ loginDetails, setLoginDetails }) {
                                 aria-expanded="false"
                             >
                                 <img
-                                    src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                                    src={loginDetails?.userResponse?.profileImagePath===null || loginDetails?.userResponse?.profileImagePath===''? 'https://mdbcdn.b-cdn.net/img/new/avatars/2.webp':process.env.REACT_APP_API_URL+loginDetails?.userResponse?.profileImagePath}
                                     className="rounded-circle"
                                     height="25"
                                     alt="Black and White Portrait of a Man"
